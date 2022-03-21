@@ -1,9 +1,10 @@
 import os
-from flask import (
-    Flask, flash, render_template, redirect, request, session, url_for, Blueprint
-    )
-from flask_pymongo import PyMongo
+
 from bson.objectid import ObjectId
+from flask import (Blueprint, Flask, flash, redirect, render_template, request,
+                   session, url_for)
+from flask_paginate import Pagination, get_page_parameter
+from flask_pymongo import PyMongo
 
 if os.path.exists("env.py"):
     import env
@@ -14,7 +15,6 @@ app = Flask(__name__)
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
-
 
 mongo = PyMongo(app)
 
@@ -29,6 +29,7 @@ def circuits():
     circuits = list(mongo.db.circuits.find())
     return render_template("circuits.html", circuits=circuits)
 
+
 @app.route("/constructors")
 def constructors():
     constructors = list(mongo.db.constructors.find())
@@ -37,8 +38,10 @@ def constructors():
 
 @app.route("/drivers")
 def drivers():
+    page = request.args.get(get_page_parameter(), type=int, default=1)
     drivers = list(mongo.db.drivers.find())
-    return render_template("drivers.html", drivers=drivers)
+    pagination = Pagination(page=page, per_page=20, total=len(drivers))
+    return render_template("drivers.html", drivers=drivers, pagination = pagination)
 
 @app.route("/edit_drivers/<driver_id>", methods=["GET", "POST"])
 def edit_drivers(driver_id):

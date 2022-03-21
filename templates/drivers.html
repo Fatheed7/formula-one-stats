@@ -1,10 +1,8 @@
 {% extends "base.html" %} {% block content %}
 
 <table class="striped centered responsive-table">
-{{ pagination.links }}
   <thead>
     <tr>
-      <th>#</th>
       <th>Forename</th>
       <th>Surname</th>
       <th>Code</th>
@@ -18,7 +16,6 @@
   <tbody>
     {% for driver in drivers %}
     <tr>
-      <td>{{ loop.index + pagination.skip }}</td>
       <td>{{ driver.forename }}</td>
       <td>{{ driver.surname }}</td>
       <td>{{ driver.code }}</td>
@@ -31,5 +28,4 @@
     {% endfor %}
   </tbody>
 </table>
-{{ pagination.links }}
 {% endblock %}

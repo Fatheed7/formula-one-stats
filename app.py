@@ -22,14 +22,18 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/home")
 def home():
-    status = list(mongo.db.status.find().sort("statusId", 1))
-    return render_template("home.html", status=status)
+    return render_template("home.html")
 
 
 @app.route("/circuits")
 def circuits():
     circuits = list(mongo.db.circuits.find())
     return render_template("circuits.html", circuits=circuits)
+
+@app.route("/constructors")
+def constructors():
+    constructors = list(mongo.db.constructors.find())
+    return render_template("constructors.html", constructors=constructors)
 
 
 @app.route("/drivers")
@@ -43,6 +47,12 @@ def seasons():
     seasons = list(mongo.db.seasons.find())
     races = list(mongo.db.races.find())
     return render_template("seasons.html", seasons=seasons, races=races)
+
+
+@app.route("/statuses")
+def statuses():
+    status = list(mongo.db.status.find().sort("statusId", 1))
+    return render_template("statuses.html", status=status)
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),

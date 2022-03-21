@@ -1,0 +1,24 @@
+{% extends "base.html" %} {% block content %}
+<table class="striped centered responsive-table">
+  <thead>
+    <tr>
+      <th>Constructor</th>
+      <th>Nationality</th>
+      <th>Wikipedia</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for constructor in constructors %}
+    <tr>
+      <td>{{ constructor.name }}</td>
+      <td>{{ constructor.nationality }}</td>
+      <td>
+        <a target="_blank" href="{{ constructor.url }}"
+          >{{ constructor.url }}</a
+        >
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

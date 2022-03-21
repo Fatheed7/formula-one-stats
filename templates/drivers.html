@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% block content %}
+<table class="striped centered responsive-table">
+  <thead>
+    <tr>
+      <th>Forename</th>
+      <th>Surname</th>
+      <th>Code</th>
+      <th>Number</th>
+      <th>Date of Birth</th>
+      <th>Nationality</th>
+      <th>Wikipedia Link</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for driver in drivers %}
+    <tr>
+      <td>{{ driver.forename }}</td>
+      <td>{{ driver.surname }}</td>
+      <td>{{ driver.code }}</td>
+      <td>{{ driver.number }}</td>
+      <td>{{ driver.dob }}</td>
+      <td>{{ driver.nationality }}</td>
+      <td><a target="_blank" href={{ driver.url }}>{{ driver.url }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

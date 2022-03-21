@@ -25,6 +25,12 @@ def home():
     status = list(mongo.db.status.find().sort("statusId", 1))
     return render_template("home.html", status=status)
 
+
+@app.route("/drivers")
+def drivers():
+    drivers = list(mongo.db.drivers.find())
+    return render_template("drivers.html", drivers=drivers)
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
     port=int(os.environ.get("PORT")),

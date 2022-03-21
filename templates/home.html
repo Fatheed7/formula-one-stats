@@ -1,0 +1,19 @@
+{% extends "base.html" %} 
+{% block content %} 
+<table class="striped centered responsive-table">
+    <thead>
+        <tr>
+            <th>Status ID</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for i in status %} 
+        <tr>
+            <td>{{ i.statusId }}</td>
+            <td>{{ i.status }}</td>
+        </tr>
+    {% endfor %} 
+    </tbody>
+    </table>
+{% endblock %}

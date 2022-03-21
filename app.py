@@ -19,6 +19,12 @@ app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
 
+@app.route("/")
+@app.route("/home")
+def home():
+    status = list(mongo.db.status.find().sort("statusId", 1))
+    return render_template("home.html", status=status)
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
     port=int(os.environ.get("PORT")),

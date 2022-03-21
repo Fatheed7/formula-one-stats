@@ -4,7 +4,6 @@ from flask import (
     )
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
-from flask_paginate import Pagination, get_page_parameter
 
 if os.path.exists("env.py"):
     import env
@@ -38,11 +37,8 @@ def constructors():
 
 @app.route("/drivers")
 def drivers():
-    page_size = 20
-    page = request.args.get(get_page_parameter(), type=int, default=1)
     drivers = list(mongo.db.drivers.find())
-    pagination = Pagination(page=page, per_page=page_size,total=len(drivers))
-    return render_template("drivers.html", drivers=drivers, pagination=pagination)
+    return render_template("drivers.html", drivers=drivers)
 
 @app.route("/edit_drivers/<driver_id>", methods=["GET", "POST"])
 def edit_drivers(driver_id):

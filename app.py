@@ -41,6 +41,25 @@ def drivers():
     drivers = list(mongo.db.drivers.find())
     return render_template("drivers.html", drivers=drivers)
 
+@app.route("/edit_drivers/<driver_id>", methods=["GET", "POST"])
+def edit_drivers(driver_id):
+    if request.method == "POST":
+        submit = {
+            "forename": request.form.get("forename"),
+            "surname": request.form.get("surname"),
+            "number": request.form.get("number"),
+            "code": request.form.get("code"),
+            "nationality": request.form.get("nationality"),
+            "dob": request.form.get("dob"),
+            "url": request.form.get("url")
+        }
+        mongo.db.drivers.update({"_id": ObjectId(driver_id)}, submit)
+        flash("Category Successfully Updated")
+
+    drivers = mongo.db.drivers.find_one({"_id": ObjectId(driver_id)})
+    countries = list(mongo.db.countries.find().sort("nationality", 1))
+    return render_template("edit_drivers.html", countries=countries, drivers=drivers)
+
 @app.route("/races")
 def races():
     races = list(mongo.db.races.find())

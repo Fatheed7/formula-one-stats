@@ -1,0 +1,29 @@
+{% extends "base.html" %} {% block content %}
+<table class="striped centered responsive-table">
+  <thead>
+    <tr>
+      <th>Race Name</th>
+      <th>Date</th>
+      <th>Circuit</th>
+      <th>Season</th>
+      <th>Wikipedia</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for race in races %}
+    <tr>
+      <td>{{ race.name }}</td>
+      <td>{{ race.date }}</td>
+      <td>
+      {% for circuit in circuits %}
+        {% if race.circuitId == circuit.circuitId %}
+        {{circuit.name}} {% endif %} {% endfor %}
+      </td>
+      <td>
+        {{race.year}} </td>
+      <td><a target="_blank" href="{{ race.url }}">{{ race.url }}</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -41,12 +41,18 @@ def drivers():
     drivers = list(mongo.db.drivers.find())
     return render_template("drivers.html", drivers=drivers)
 
+@app.route("/races")
+def races():
+    races = list(mongo.db.races.find())
+    seasons = list(mongo.db.seasons.find())
+    circuits = list(mongo.db.circuits.find())
+    return render_template("races.html", races=races, seasons=seasons, circuits=circuits)
+
 
 @app.route("/seasons")
 def seasons():
     seasons = list(mongo.db.seasons.find())
-    races = list(mongo.db.races.find())
-    return render_template("seasons.html", seasons=seasons, races=races)
+    return render_template("seasons.html", seasons=seasons)
 
 
 @app.route("/statuses")

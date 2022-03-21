@@ -13,7 +13,7 @@
       </div>
       <div class="row">
         <div class="input-field col s4">
-          <input id="numer" name="numer" type="text" maxlength="2" pattern="[0-9]" value="{{drivers.number}}">
+          <input id="numer" name="numer" type="text" maxlength="2" value="{{drivers.number}}">
             <label for="number">Number</label>
         </div>
         <div class="input-field col s4">
@@ -22,7 +22,7 @@
         </div>
         <div class="input-field col s4">
           <select id="nationality" name="nationality" class="icons" required>
-            <option value="{{drivers.nationality}}" disabled selected>{{drivers.nationality}}</option>
+            <option value="{{drivers.nationality}}" selected>{{drivers.nationality}}</option>
             {% for country in countries %}
             <option value="{{country.nationality}}" data-icon="../static/svg/{{country.code}}.svg" class="left">{{ country.nationality }}</option>
             {% endfor %}

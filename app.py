@@ -57,7 +57,6 @@ def edit_drivers(driver_id):
             "url": request.form.get("url")
         }
         mongo.db.drivers.update({"_id": ObjectId(driver_id)}, submit)
-        flash("Category Successfully Updated")
 
     drivers = mongo.db.drivers.find_one({"_id": ObjectId(driver_id)})
     countries = list(mongo.db.countries.find().sort("nationality", 1))

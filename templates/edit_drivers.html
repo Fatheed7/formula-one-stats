@@ -24,7 +24,7 @@
           <select id="nationality" name="nationality" class="icons" required>
             <option value="{{drivers.nationality}}" selected>{{drivers.nationality}}</option>
             {% for country in countries %}
-            <option value="{{country.nationality}}" data-icon="../static/svg/{{country.code}}.svg" class="left">{{ country.nationality }}</option>
+            <option value="{{country.nationality}}" data-icon="../static/svg/{{(country.code).lower()}}.svg" class="left">{{ country.nationality }}</option>
             {% endfor %}
           </select>
           <label for="nationality">Country of Birth</label>

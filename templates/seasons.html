@@ -1,0 +1,20 @@
+{% extends "base.html" %} {% block content %}
+<table class="striped centered responsive-table">
+  <thead>
+    <tr>
+      <th>Year</th>
+      <th>No of Races</th>
+      <th>Wikipedia</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for season in seasons %}
+    <tr>
+      <td>{{ season.year }}</td>
+      <td>{{ season.no_of_races }}</td>
+      <td><a target="_blank" href="{{ season.url }}">{{ season.url }}</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -31,10 +31,18 @@ def circuits():
     circuits = list(mongo.db.circuits.find())
     return render_template("circuits.html", circuits=circuits)
 
+
 @app.route("/drivers")
 def drivers():
     drivers = list(mongo.db.drivers.find())
     return render_template("drivers.html", drivers=drivers)
+
+
+@app.route("/seasons")
+def seasons():
+    seasons = list(mongo.db.seasons.find())
+    races = list(mongo.db.races.find())
+    return render_template("seasons.html", seasons=seasons, races=races)
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),

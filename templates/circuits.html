@@ -1,0 +1,30 @@
+{% extends "base.html" %} {% block content %}
+<table class="striped centered responsive-table">
+  <thead>
+    <tr>
+      <th>Circuit Name</th>
+      <th>Location</th>
+      <th>Country</th>
+      <th>Google Maps</th>
+      <th>Wikipedia</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for circuit in circuits %}
+    <tr>
+      <td>{{ circuit.name }}</td>
+      <td>{{ circuit.location }}</td>
+      <td>{{ circuit.country }}</td>
+      <td>
+        <a
+          target="_blank"
+          href="https://www.google.com/maps/search/{{ circuit.lat }},{{ circuit.lng }}"
+          >Link</a
+        >
+      </td>
+      <td><a target="_blank" href="{{ circuit.url }}">{{ circuit.url }}</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

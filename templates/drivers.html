@@ -8,7 +8,7 @@
       <th>Number</th>
       <th>Date of Birth</th>
       <th>Nationality</th>
-      <th>Wikipedia Link</th>
+      <th>Wikipedia</th>
     </tr>
   </thead>
   <tbody>
@@ -20,7 +20,7 @@
       <td>{{ driver.number }}</td>
       <td>{{ driver.dob }}</td>
       <td>{{ driver.nationality }}</td>
-      <td><a target="_blank" href={{ driver.url }}>{{ driver.url }}</td>
+      <td><a target="_blank" href="{{ driver.url }}">{{ driver.url }}</a></td>
     </tr>
     {% endfor %}
   </tbody>

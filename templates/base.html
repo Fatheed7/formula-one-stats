@@ -41,48 +41,26 @@
       <br /><br />
       <hr />
       <li class="bold">
-        <a href="#" class="collapsible-header waves-effect waves-teal"
+        <a href="{{url_for('circuits')}}" class="waves-effect waves-teal"
           >Circuits</a
         >
       </li>
-      <li class="no-padding">
-        <ul class="collapsible collapsible-accordion">
-          <li class="bold">
-            <a class="collapsible-header waves-effect waves-teal"
-              >Constructors</a
-            >
-            <div class="collapsible-body">
-              <ul>
-                <li><a href="#">Constructors</a></li>
-                <li><a href="#">Constructor Standings</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="bold">
-            <a class="collapsible-header waves-effect waves-teal">Drivers</a>
-            <div class="collapsible-body">
-              <ul>
-                <li><a href="{{url_for('drivers')}}">Drivers</a></li>
-                <li><a href="#">Driver Standings</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="bold">
-            <a href="#" class="collapsible-header waves-effect waves-teal"
-              >Races</a
-            >
-          </li>
-          <li class="bold">
-            <a href="#" class="collapsible-header waves-effect waves-teal"
-              >Seasons</a
-            >
-          </li>
-          <li class="bold">
-            <a href="#" class="collapsible-header waves-effect waves-teal"
-              >Statuses</a
-            >
-          </li>
-        </ul>
+      <li class="bold">
+        <a href="#" class="waves-effect waves-teal">Constructors</a>
+      </li>
+      <li class="bold">
+        <a href="{{url_for('drivers')}}" class="waves-effect waves-teal"
+          >Drivers</a
+        >
+      </li>
+      <li class="bold">
+        <a href="#" class="waves-effect waves-teal">Races</a>
+      </li>
+      <li class="bold">
+        <a href="#" class="waves-effect waves-teal">Seasons</a>
+      </li>
+      <li class="bold">
+        <a href="#" class="waves-effect waves-teal">Statuses</a>
       </li>
     </ul>
 

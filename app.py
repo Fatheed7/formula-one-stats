@@ -26,6 +26,11 @@ def home():
     return render_template("home.html", status=status)
 
 
+@app.route("/circuits")
+def circuits():
+    circuits = list(mongo.db.circuits.find())
+    return render_template("circuits.html", circuits=circuits)
+
 @app.route("/drivers")
 def drivers():
     drivers = list(mongo.db.drivers.find())

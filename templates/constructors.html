@@ -12,11 +12,7 @@
     <tr>
       <td>{{ constructor.name }}</td>
       <td>{{ constructor.nationality }}</td>
-      <td>
-        <a target="_blank" href="{{ constructor.url }}"
-          >{{ constructor.url }}</a
-        >
-      </td>
+      <td><a class="waves-effect waves-light btn" target="_blank" href="{{ constructor.url }}"><i class="fa-brands fa-wikipedia-w"></i>View Article</a></td>
     </tr>
     {% endfor %}
   </tbody>

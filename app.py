@@ -85,17 +85,28 @@ def statuses():
     return render_template("statuses.html", status=status)
 
 
+@app.route("/view_circuit/<circuit_id>")
+def view_circuit(circuit_id):
+    circuits = mongo.db.circuits.find_one({"_id": ObjectId(circuit_id)})
+    races = list(mongo.db.races.find().sort("year", 1))
+    return render_template(
+        "view_circuit.html", races=races, circuits=circuits)
+
+
 @app.route("/view_race/<race_id>")
 def view_race(race_id):
     races = mongo.db.races.find_one({"_id": ObjectId(race_id)})
     statuses = list(mongo.db.status.find())
     drivers = list(mongo.db.drivers.find())
+    driver_standings = list(mongo.db.driver_standings.find().sort("position", 1))
     circuits = list(mongo.db.circuits.find())
     qualifying = list(mongo.db.qualifying.find().sort("position", 1))
     constructors = list(mongo.db.constructors.find())
+    constructor_standings = list(mongo.db.constructor_standings.find().sort("position", 1))
     results = list(mongo.db.results.find().sort("position", 1))
     return render_template(
-        "view_race.html", statuses=statuses, races=races, results=results, drivers=drivers, constructors=constructors, qualifying=qualifying, circuits=circuits)
+        "view_race.html", statuses=statuses, races=races, results=results, drivers=drivers, constructors=constructors, qualifying=qualifying, 
+        circuits=circuits, driver_standings=driver_standings, constructor_standings=constructor_standings)
 
 @app.route("/view_season/<season_id>")
 def view_season(season_id):

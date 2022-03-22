@@ -13,7 +13,7 @@
     <tr>
       <td>{{ season.year }}</td>
       <td>{{ season.no_of_races }}</td>
-      <td><a target="_blank" href="{{ season.url }}">{{ season.year }} Formula One Season</a></td>
+      <td><a class="waves-effect waves-light btn" target="_blank" href="{{ season.url }}"><i class="fa-brands fa-wikipedia-w"></i>View Article</a></td>
       <td><td><a href="{{ url_for('view_season', season_id=season._id) }}" class="btn green accent-4">View Season</a></td></td>
     </tr>
     {% endfor %}

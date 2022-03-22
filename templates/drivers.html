@@ -25,7 +25,7 @@
       <td>{{ driver.number }}</td>
       <td>{{ driver.dob }}</td>
       <td>{{ driver.nationality }}</td>
-      <td><a target="_blank" href="{{ driver.url }}">{{ driver.forename }} {{ driver.surname }}</a></td>
+      <td><a class="waves-effect waves-light btn" target="_blank" href="{{ driver.url }}"><i class="fa-brands fa-wikipedia-w"></i>View Article</a></td>
       <td><a href="{{ url_for('edit_drivers', driver_id=driver._id) }}" class="btn green accent-4">Edit</a></td>
     </tr>
     {% endfor %}

@@ -5,6 +5,7 @@
       <th>Year</th>
       <th>No of Races</th>
       <th>Wikipedia</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -13,6 +14,7 @@
       <td>{{ season.year }}</td>
       <td>{{ season.no_of_races }}</td>
       <td><a target="_blank" href="{{ season.url }}">{{ season.year }} Formula One Season</a></td>
+      <td><td><a href="{{ url_for('view_season', season_id=season._id) }}" class="btn green accent-4">View Season</a></td></td>
     </tr>
     {% endfor %}
   </tbody>

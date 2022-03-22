@@ -1,30 +1,132 @@
 {% extends "base.html" %} {% block content %}
-<table class="striped centered responsive-table">
-  <thead>
-    <tr>
-      <th>Circuit Name</th>
-      <th>Location</th>
-      <th>Country</th>
-      <th>Google Maps</th>
-      <th>Wikipedia</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for circuit in circuits %}
-    <tr>
-      <td>{{ circuit.name }}</td>
-      <td>{{ circuit.location }}</td>
-      <td>{{ circuit.country }}</td>
-      <td>
-        <a
-          target="_blank"
-          href="https://www.google.com/maps/search/{{ circuit.lat }},{{ circuit.lng }}"
-          >Link</a
-        >
-      </td>
-      <td><a target="_blank" href="{{ circuit.url }}">{{ circuit.url }}</a></td>
-    </tr>
+<h3 class="light-blue-text text-darken-4 center-align">{{ races.year}} {{ races.name }}</h3>
+<h4 class="light-blue-text text-darken-4 center-align">Round {{ races.round}} - {{ races.date }}</h4>
+<div class="row">
+  <div class="row">
+    <div class="col s4 m4">
+      <div class="card-panel center-align grey darken-4">
+        <span class="white-text ">
+          {% for circuit in circuits %}
+          {% if circuit.circuitId == races.circuitId %}
+            <b>Circuit:</b> {{circuit.name}}
+          {% endif %} 
+        {% endfor %}
+      </span>
+    </div>
+  </div>
+  <div class="col s4 m4">
+    <div class="card-panel center-align grey darken-4">
+      <span class="white-text ">
+        {% for circuit in circuits %}
+        {% if circuit.circuitId == races.circuitId %}
+          <b>Location:</b> {{circuit.location}}
+        {% endif %} 
+      {% endfor %}
+    </span>
+  </div>
+</div>
+<div class="col s4 m4">
+  <div class="card-panel center-align grey darken-4">
+    <span class="white-text ">
+      {% for circuit in circuits %}
+      {% if circuit.circuitId == races.circuitId %}
+        <b>Country:</b> {{circuit.country}}
+      {% endif %} 
     {% endfor %}
-  </tbody>
-</table>
+  </span>
+</div>
+</div>
+</div>
+          
+<ul class="collapsible">
+  <li>
+    <div class="collapsible-header"><i class="fa-solid fa-stopwatch"></i>Qualifying Results</div>
+    <div class="collapsible-body">
+      <table class="striped centered responsive-table">
+        <thead>
+          <tr>
+            <th>Position</th>
+            <th>Driver</th>
+            <th>Constructor</th>
+            <th>Q1</th>
+            <th>Q2</th>
+            <th>Q3</th>
+          </tr>
+        </thead>
+        <tbody>
+        
+          {% for quali in qualifying | selectattr('raceId', 'equalto', races.raceId) %}
+          <tr>
+            <td>{{ quali.position }}</td>
+            <td>
+              {% for driver in drivers %}
+                {% if quali.driverId == driver.driverId %}
+                  {{driver.forename}} {{driver.surname}}
+                {% endif %} 
+              {% endfor %}
+            </td>
+            <td>
+              {% for constructor in constructors %}
+                {% if quali.constructorId == constructor.constructorId %}
+                  {{constructor.name}}
+                {% endif %} 
+              {% endfor %}
+            </td>
+            <td>{{ quali.q1 }}</td>
+            <td>{{ quali.q2 }}</td>
+            <td>{{ quali.q3 }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </li>
+  <li>
+    <div class="collapsible-header"><i class="fa-solid fa-flag-checkered"></i>Race Results</div>
+    <div class="collapsible-body"><table class="striped centered responsive-table">
+      <thead>
+        <tr>
+          <th>Position</th>
+          <th>Driver</th>
+          <th>Constructor</th>
+          <th>Points</th>
+          <th>Laps</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+      
+        {% for result in results | selectattr('raceId', 'equalto', races.raceId) %}
+        <tr>
+          <td>{{ result.position }}</td>
+          <td>
+            {% for driver in drivers %}
+              {% if result.driverId == driver.driverId %}
+                {{driver.forename}} {{driver.surname}}
+              {% endif %} 
+            {% endfor %}
+          </td>
+          <td>
+            {% for constructor in constructors %}
+              {% if result.constructorId == constructor.constructorId %}
+                {{constructor.name}}
+              {% endif %} 
+            {% endfor %}
+          </td>
+          <td>{{ result.points }}</td>
+          <td>{{ result.laps }}</td>
+          <td>
+          {% for status in statuses %}
+            {% if result.statusId == status.statusId %}
+              {{status.status}}
+            {% endif %} 
+          {% endfor %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table></div>
+  </li>
+</ul>
+      
 {% endblock %}

@@ -40,7 +40,9 @@ def constructors():
 def drivers():
     page = request.args.get(get_page_parameter(), type=int, default=1)
     drivers = list(mongo.db.drivers.find())
-    pagination = Pagination(page=page, per_page=20, total=len(drivers))
+    per_page = 20
+    offset = (page - 1) * per_page
+    pagination = Pagination(page=page, per_page=per_page, offset=offset, total=len(drivers))
     return render_template("drivers.html", drivers=drivers, pagination = pagination)
 
 @app.route("/edit_drivers/<driver_id>", methods=["GET", "POST"])
@@ -53,7 +55,9 @@ def edit_drivers(driver_id):
             "code": request.form.get("code"),
             "nationality": request.form.get("nationality"),
             "dob": request.form.get("dob"),
-            "url": request.form.get("url")
+            "url": request.form.get("url"),
+            "driverId": request.form.get("driverId"),
+            "driverRef": request.form.get("driverRef"),
         }
         mongo.db.drivers.update({"_id": ObjectId(driver_id)}, submit)
 
@@ -71,7 +75,7 @@ def races():
 
 @app.route("/seasons")
 def seasons():
-    seasons = list(mongo.db.seasons.find())
+    seasons = list(mongo.db.seasons.find().sort("year", 1))
     return render_template("seasons.html", seasons=seasons)
 
 
@@ -79,6 +83,26 @@ def seasons():
 def statuses():
     status = list(mongo.db.status.find().sort("statusId", 1))
     return render_template("statuses.html", status=status)
+
+
+@app.route("/view_race/<race_id>")
+def view_race(race_id):
+    races = mongo.db.races.find_one({"_id": ObjectId(race_id)})
+    statuses = list(mongo.db.status.find())
+    drivers = list(mongo.db.drivers.find())
+    circuits = list(mongo.db.circuits.find())
+    qualifying = list(mongo.db.qualifying.find().sort("position", 1))
+    constructors = list(mongo.db.constructors.find())
+    results = list(mongo.db.results.find().sort("position", 1))
+    return render_template(
+        "view_race.html", statuses=statuses, races=races, results=results, drivers=drivers, constructors=constructors, qualifying=qualifying, circuits=circuits)
+
+@app.route("/view_season/<season_id>")
+def view_season(season_id):
+    seasons = mongo.db.seasons.find_one({"_id": ObjectId(season_id)})
+    races = list(mongo.db.races.find().sort("round", 1))
+    return render_template(
+        "view_season.html", races=races, seasons=seasons)
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),

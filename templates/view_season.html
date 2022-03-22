@@ -1,0 +1,33 @@
+{% extends "base.html" %} {% block content %}
+<h3 class="light-blue-text text-darken-4 center-align">{{ seasons.year}} Formula One Season</h3>
+<h4 class="light-blue-text text-darken-4 center-align">Number of Races: {{ seasons.no_of_races}}</h4>
+<table class="striped centered responsive-table">
+    <thead>
+      <tr>
+        <th>Round #</th>
+        <th>Circuit</th>
+        <th>Race Name</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Wikipedia</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for race in races %}
+        {% if seasons.year == race.year %}
+          <tr>
+            <td>{{ race.round }}</td>
+            <td>{{ race.circuitId }}</td>
+            <td>{{ race.name }}</td>
+            <td>{{ race.date }}</td>
+            <td>{{ race.time }}</td>
+            <td><a target="_blank" href="{{ race.url }}">{{ race.year }} {{ race.name }}</a></td>
+            <td><a href="{{ url_for('view_race', race_id=race._id) }}" class="btn green accent-4">View Race</a></td>
+          </tr>
+        {% endif %} 
+      {% endfor %}
+    </tbody>
+  </table>
+      
+{% endblock %}

@@ -7,6 +7,7 @@
       <th>Circuit</th>
       <th>Season</th>
       <th>Wikipedia</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -22,6 +23,7 @@
       <td>
         {{race.year}} </td>
       <td><a target="_blank" href="{{ race.url }}">{{ race.year }} {{ race.name }}</a></td>
+      <td><a href="{{ url_for('view_race', race_id=race._id) }}" class="btn green accent-4">View Race</a></td>
     </tr>
     {% endfor %}
   </tbody>

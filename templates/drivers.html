@@ -1,15 +1,7 @@
 {% extends "base.html" %} {% block content %}
 
 <table class="striped centered">
-  <ul class="pagination">
-    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-    <li class="active"><a href="#!">1</a></li>
-    <li class="waves-effect"><a href="#!">2</a></li>
-    <li class="waves-effect"><a href="#!">3</a></li>
-    <li class="waves-effect"><a href="#!">4</a></li>
-    <li class="waves-effect"><a href="#!">5</a></li>
-    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-  </ul>
+
   <thead>
     <tr>
       <th>#</th>
@@ -20,6 +12,9 @@
       <th>Date of Birth</th>
       <th>Nationality</th>
       <th>Wikipedia</th>
+      {% if session.user|lower == "admin"|lower %}
+      <th>Edit</th>
+      {% endif %}
     </tr>
   </thead>
   <tbody>
@@ -33,6 +28,9 @@
       <td>{{ driver.dob }}</td>
       <td>{{ driver.nationality }}</td>
       <td><a class="waves-effect waves-light btn" target="_blank" href="{{ driver.url }}"><i class="fa-brands fa-wikipedia-w"></i>View Article</a></td>
+      {% if session.user|lower == "admin"|lower %}
+      <td><a href="{{ url_for('edit_drivers', driver_id=driver._id) }}" class="btn green accent-4">Edit</a></td>
+      {% endif %}
     </tr>
     {% endfor %}
   </tbody>

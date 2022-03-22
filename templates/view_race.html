@@ -1,15 +1,23 @@
 {% extends "base.html" %} {% block content %}
-<h3 class="light-blue-text text-darken-4 center-align">{{ races.year}} {{ races.name }}</h3>
-<h4 class="light-blue-text text-darken-4 center-align">Round {{ races.round}} - {{ races.date }}</h4>
+
+<div class="center-align">
+<h3 class="light-blue-text text-darken-4 ">{{ races.year}} {{ races.name }}</h3>
+<h4 class="light-blue-text text-darken-4 ">Round {{ races.round}} - {{ races.date }}</h4>
+{% for season in seasons %}
+  {% if season.year == races.year %}
+    <a href="{{ url_for('view_season', season_id=season._id) }}" class="btn green accent-4">View Season</a>
+  {% endif %}
+{% endfor %}
+</div>
 <div class="row">
   <div class="row">
     <div class="col s4 m4">
       <div class="card-panel center-align orange lighten-3">
         <span>
           {% for circuit in circuits %}
-          {% if circuit.circuitId == races.circuitId %}
-            <b>Circuit:</b> {{circuit.name}}
-          {% endif %} 
+            {% if circuit.circuitId == races.circuitId %}
+              <b>Circuit:</b> {{circuit.name}}
+            {% endif %} 
         {% endfor %}
       </span>
     </div>

@@ -1,8 +1,11 @@
+import base64
+from io import BytesIO
 import os
 
 from bson.objectid import ObjectId
 from flask import (Blueprint, Flask, flash, redirect, render_template, request,
                    session, url_for)
+from matplotlib.figure import Figure
 from flask_paginate import Pagination, get_page_parameter
 from flask_pymongo import PyMongo
 
@@ -22,6 +25,7 @@ mongo = PyMongo(app)
 @app.route("/home")
 def home():
     return render_template("home.html")
+
 
 
 @app.route("/circuits")
@@ -79,12 +83,6 @@ def seasons():
     return render_template("seasons.html", seasons=seasons)
 
 
-@app.route("/statuses")
-def statuses():
-    status = list(mongo.db.status.find().sort("statusId", 1))
-    return render_template("statuses.html", status=status)
-
-
 @app.route("/view_circuit/<circuit_id>")
 def view_circuit(circuit_id):
     circuits = mongo.db.circuits.find_one({"_id": ObjectId(circuit_id)})
@@ -98,6 +96,7 @@ def view_race(race_id):
     races = mongo.db.races.find_one({"_id": ObjectId(race_id)})
     statuses = list(mongo.db.status.find())
     drivers = list(mongo.db.drivers.find())
+    seasons = list(mongo.db.seasons.find())
     driver_standings = list(mongo.db.driver_standings.find().sort("position", 1))
     circuits = list(mongo.db.circuits.find())
     qualifying = list(mongo.db.qualifying.find().sort("position", 1))
@@ -106,7 +105,7 @@ def view_race(race_id):
     results = list(mongo.db.results.find().sort("position", 1))
     return render_template(
         "view_race.html", statuses=statuses, races=races, results=results, drivers=drivers, constructors=constructors, qualifying=qualifying, 
-        circuits=circuits, driver_standings=driver_standings, constructor_standings=constructor_standings)
+        circuits=circuits, driver_standings=driver_standings, constructor_standings=constructor_standings, seasons=seasons)
 
 @app.route("/view_season/<season_id>")
 def view_season(season_id):

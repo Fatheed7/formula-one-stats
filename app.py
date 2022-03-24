@@ -98,11 +98,11 @@ def view_race(race_id):
     statuses = list(mongo.db.status.find())
     drivers = list(mongo.db.drivers.find())
     seasons = list(mongo.db.seasons.find())
-    driver_standings = list(mongo.db.driver_standings.find({"raceId": races[raceId]}).sort("position", 1))
+    driver_standings = list(mongo.db.driver_standings.find({"raceId": races["raceId"]}).sort("position", 1))
     circuits = list(mongo.db.circuits.find())
-    qualifying = list(mongo.db.qualifying.find({"raceId": races[raceId]}).sort("position", 1))
+    qualifying = list(mongo.db.qualifying.find({"raceId": races["raceId"]}).sort("position", 1))
     constructors = list(mongo.db.constructors.find())
-    constructor_standings = list(mongo.db.constructor_standings.find({"raceId": races[raceId]}).sort("position", 1))
+    constructor_standings = list(mongo.db.constructor_standings.find({"raceId": races["raceId"]}).sort("position", 1))
     results = list(mongo.db.results.find().sort("position", 1))
     return render_template(
         "view_race.html", statuses=statuses, races=races, results=results, drivers=drivers, constructors=constructors, qualifying=qualifying, 

@@ -42,6 +42,10 @@
             <li><a href="{{url_for('races')}}">Races</a></li>
             <li><a href="{{url_for('seasons')}}">Seasons</a></li>
             <li> | </li>
+            {% if session.user|lower == "admin"|lower %}
+            <li><a href="{{url_for('dashboard')}}">Admin Dashboard</a></li>
+            <li>|</li>
+            {% endif %}
             <li><a href="{{url_for('logout')}}">Logout</a></li>
              {% else %}
             <li><a href="{{url_for('login')}}">Log In</a></li>

@@ -31,3 +31,7 @@ hr {
   padding: .1em .25em;
   font-size: 150%;
 }
+
+.card-panel {
+  margin-top: 2vh !important;
+}

@@ -40,6 +40,10 @@ def constructors():
     constructors = list(mongo.db.constructors.find())
     return render_template("constructors.html", constructors=constructors)
 
+@app.route("/dashboard")
+def dashboard():
+    return render_template("dashboard.html")
+
 
 @app.route("/drivers")
 def drivers():

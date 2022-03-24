@@ -5,6 +5,7 @@
       <th>Constructor</th>
       <th>Nationality</th>
       <th>Wikipedia</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -13,6 +14,7 @@
       <td>{{ constructor.name }}</td>
       <td>{{ constructor.nationality }}</td>
       <td><a class="waves-effect waves-light btn" target="_blank" href="{{ constructor.url }}"><i class="fa-brands fa-wikipedia-w"></i>View Article</a></td>
+      <td><a href="{{ url_for('view_constructors', constructor_id=constructor._id) }}" class="btn green accent-4">Edit</a></td>
     </tr>
     {% endfor %}
   </tbody>

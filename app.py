@@ -95,6 +95,13 @@ def view_circuit(circuit_id):
     return render_template(
         "view_circuit.html", races=races, circuits=circuits)
 
+@app.route("/view_constructor/<constructor_id>")
+def view_constructor(constructor_id):
+    constructors = mongo.db.constructors.find_one({"_id": ObjectId(constructor_id)})
+    constructor_results = list(mongo.db.races.find({"constructorId": constructors["constructorId"]}))
+    return render_template(
+        "view_constructor.html", constructor_results=constructor_results, constructors=constructors)
+
 
 @app.route("/view_race/<race_id>")
 def view_race(race_id):

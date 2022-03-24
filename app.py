@@ -98,9 +98,10 @@ def view_circuit(circuit_id):
 @app.route("/view_constructor/<constructor_id>")
 def view_constructor(constructor_id):
     constructors = mongo.db.constructors.find_one({"_id": ObjectId(constructor_id)})
-    constructor_results = list(mongo.db.races.find({"constructorId": constructors["constructorId"]}))
+    constructor_results = list(mongo.db.constructor_results.find({"constructorId": constructors["constructorId"]}))
+    seasons = list(mongo.db.seasons.find({"constructorChampionId": constructors["constructorId"]})) 
     return render_template(
-        "view_constructor.html", constructor_results=constructor_results, constructors=constructors)
+        "view_constructor.html", constructor_results=constructor_results, constructors=constructors, seasons=seasons)
 
 
 @app.route("/view_race/<race_id>")
@@ -123,8 +124,12 @@ def view_race(race_id):
 def view_season(season_id):
     seasons = mongo.db.seasons.find_one({"_id": ObjectId(season_id)})
     races = list(mongo.db.races.find().sort("round", 1))
+    constructors = list(mongo.db.constructors.find({"constructorId": seasons["constructorChampionId"]}))
+    print(constructors)
+    drivers = list(mongo.db.drivers.find({"driverId": seasons["driverChampionId"]}))
+    print(drivers)
     return render_template(
-        "view_season.html", races=races, seasons=seasons)
+        "view_season.html", races=races, seasons=seasons, constructors=constructors, drivers=drivers)
 
 @app.route("/register", methods=["GET", "POST"])
 def register():

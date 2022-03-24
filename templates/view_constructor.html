@@ -1,7 +1,9 @@
 {% extends "base.html" %} {% block content %}
 <h3 class="light-blue-text text-darken-4 center-align">{{ constructors.name }}</h3>
 
-<h5>{{ constructor_standings | length }}</h5>
+<h5 class="light-blue-text text-darken-4 center-align">Number of Races: {{ constructor_results | length }}</h5>
+
+<h5 class="light-blue-text text-darken-4 center-align">Number of Constructor Titles: {{ seasons | length }}</h5>
 
       
 {% endblock %}

@@ -32,6 +32,15 @@ hr {
   font-size: 150%;
 }
 
+.indicator {
+  height: 5px !important;
+  background-color: #eb000a !important;
+}
+
+.inner_card {
+  margin-top: 2vh;
+}
+
 .card-panel {
-  margin-top: 2vh !important;
+  padding: 15px !important;
 }

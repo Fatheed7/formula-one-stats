@@ -45,53 +45,57 @@
 </div>
 </div>
 </div>
-          
-<ul class="collapsible">
-  <li>
-    <div class="collapsible-header"><i class="fa-solid fa-stopwatch"></i>Qualifying Results</div>
-    <div class="collapsible-body">
-      <table class="striped centered">
-        <thead>
-          <tr>
-            <th>Position</th>
-            <th>Driver</th>
-            <th>Constructor</th>
-            <th>Q1</th>
-            <th>Q2</th>
-            <th>Q3</th>
-          </tr>
-        </thead>
-        <tbody>
-        
-          {% for quali in qualifying | selectattr('raceId', 'equalto', races.raceId) %}
-          <tr>
-            <td>{{ quali.position }}</td>
-            <td>
-              {% for driver in drivers %}
-                {% if quali.driverId == driver.driverId %}
-                  {{driver.forename}} {{driver.surname}}
-                {% endif %} 
-              {% endfor %}
-            </td>
-            <td>
-              {% for constructor in constructors %}
-                {% if quali.constructorId == constructor.constructorId %}
-                  {{constructor.name}}
-                {% endif %} 
-              {% endfor %}
-            </td>
-            <td>{{ quali.q1 }}</td>
-            <td>{{ quali.q2 }}</td>
-            <td>{{ quali.q3 }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </li>
-  <li>
-    <div class="collapsible-header"><i class="fa-solid fa-flag-checkered"></i>Race Results</div>
-    <div class="collapsible-body"><table class="striped centered">
+
+<div class="row">
+  <div class="col s12">
+    <ul class="tabs">
+      <li class="tab col s3"><a class="active" href="#qualifying_results">Qualifying Results</a></li>
+      <li class="tab col s3"><a href="#race_results">Race Results</a></li>
+      <li class="tab col s3 disabled"><a href="#driver_standings">Driver Standings</a></li>
+      <li class="tab col s3"><a href="#constructor_standings">Constructor Standings</a></li>
+    </ul>
+  </div>
+  <div id="qualifying_results" class="col s12">
+    <table class="striped centered">
+      <thead>
+        <tr>
+          <th>Position</th>
+          <th>Driver</th>
+          <th>Constructor</th>
+          <th>Q1</th>
+          <th>Q2</th>
+          <th>Q3</th>
+        </tr>
+      </thead>
+      <tbody>
+      
+        {% for quali in qualifying | selectattr('raceId', 'equalto', races.raceId) %}
+        <tr>
+          <td>{{ quali.position }}</td>
+          <td>
+            {% for driver in drivers %}
+              {% if quali.driverId == driver.driverId %}
+                {{driver.forename}} {{driver.surname}}
+              {% endif %} 
+            {% endfor %}
+          </td>
+          <td>
+            {% for constructor in constructors %}
+              {% if quali.constructorId == constructor.constructorId %}
+                {{constructor.name}}
+              {% endif %} 
+            {% endfor %}
+          </td>
+          <td>{{ quali.q1 }}</td>
+          <td>{{ quali.q2 }}</td>
+          <td>{{ quali.q3 }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div id="race_results" class="col s12">
+    <table class="striped centered">
       <thead>
         <tr>
           <th>Position</th>
@@ -133,11 +137,10 @@
         </tr>
         {% endfor %}
       </tbody>
-    </table></div>
-  </li>
-  <li>
-    <div class="collapsible-header"><i class="fa-solid fa-ranking-star"></i>Driver Standings</div>
-    <div class="collapsible-body"><table class="striped centered">
+    </table>
+  </div>
+  <div id="driver_standings" class="col s12">
+    <table class="striped centered">
       <thead>
         <tr>
           <th>Position</th>
@@ -148,26 +151,24 @@
       </thead>
       <tbody>
 
-        {% for standing in driver_standings | selectattr('raceId', 'equalto', races.raceId) %}
-        <tr>
-          <td>{{ standing.position }}</td>
-          <td>
-            {% for driver in drivers %}
-              {% if standing.driverId == driver.driverId %}
-                {{driver.forename}} {{driver.surname}}
-              {% endif %} 
-            {% endfor %}
-          </td>
-          <td>{{ standing.wins }}</td>
-          <td>{{ standing.points }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table></div>
-  </li>
-  <li>
-    <div class="collapsible-header"><i class="fa-solid fa-people-group"></i>Constructor Standings</div>
-    <div class="collapsible-body"><table class="striped centered">
+      {% for standing in driver_standings | selectattr('raceId', 'equalto', races.raceId) %}
+      <tr>
+        <td>{{ standing.position }}</td>
+        <td>
+          {% for driver in drivers %}
+            {% if standing.driverId == driver.driverId %}
+              {{driver.forename}} {{driver.surname}}
+            {% endif %} 
+          {% endfor %}
+        </td>
+        <td>{{ standing.wins }}</td>
+        <td>{{ standing.points }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table></div>
+  <div id="constructor_standings" class="col s12">
+    <table class="striped centered">
       <thead>
         <tr>
           <th>Position</th>
@@ -193,8 +194,8 @@
         </tr>
         {% endfor %}
       </tbody>
-    </table></div>
-  </li>
-</ul>
+    </table>
+  </div>
+</div>
       
 {% endblock %}

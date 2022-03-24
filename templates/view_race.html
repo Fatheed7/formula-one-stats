@@ -56,6 +56,7 @@
     </ul>
   </div>
   <div id="qualifying_results" class="col s12">
+    {% if qualifying | length > 0 %}
     <table class="striped centered">
       <thead>
         <tr>
@@ -68,9 +69,7 @@
         </tr>
       </thead>
       <tbody>
-      
-        {% for quali in qualifying | selectattr('raceId', 'equalto', races.raceId) %}
-        <tr>
+            <tr>
           <td>{{ quali.position }}</td>
           <td>
             {% for driver in drivers %}
@@ -90,10 +89,19 @@
           <td>{{ quali.q2 }}</td>
           <td>{{ quali.q3 }}</td>
         </tr>
-        {% endfor %}
       </tbody>
     </table>
-  </div>
+        {% else %}
+        <div class="row">
+          <div class="col s6 offset-s3">
+            <div class="card-panel deep-orange darken-4">
+              <span class="white-text">Unfortunately, there is no data available for Qualifying for the {{ races.year}} {{ races.name }}.
+              </span>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+          </div>
   <div id="race_results" class="col s12">
     <table class="striped centered">
       <thead>
@@ -140,35 +148,46 @@
     </table>
   </div>
   <div id="driver_standings" class="col s12">
-    <table class="striped centered">
-      <thead>
-        <tr>
-          <th>Position</th>
-          <th>Driver</th>
-          <th>Wins</th>
-          <th>Points</th>
-        </tr>
-      </thead>
-      <tbody>
-
-      {% for standing in driver_standings | selectattr('raceId', 'equalto', races.raceId) %}
-        <tr>
-          <td>{{ standing.position }}</td>
-          <td>
+    {% if driver_standings | length > 0) %}
+      <table class="striped centered">
+        <thead>
+          <tr>
+            <th>Position</th>
+            <th>Driver</th>
+            <th>Wins</th>
+            <th>Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ standing.position }}</td>
+            <td>
             {% for driver in drivers %}
               {% if standing.driverId == driver.driverId %}
                 {{driver.forename}} {{driver.surname}}
               {% endif %} 
             {% endfor %}
-          </td>
-          <td>{{ standing.wins }}</td>
-          <td>{{ standing.points }}</td>
-        </tr>
+            </td>
+            <td>{{ standing.wins }}</td>
+            <td>{{ standing.points }}</td>
+          </tr>
         {% endfor %}
       </tbody>
     </table>
+    {% else %}
+    <div class="row">
+      <div class="col s6 offset-s3">
+        <div class="card-panel deep-orange darken-4">
+          <span class="white-text">Unfortunately, there is no data available for the Driver Standings after the {{ races.year}} {{ races.name }}.
+          </span>
+        </div>
+      </div>
+    </div>
+    {% endif %}
   </div>
+
   <div id="constructor_standings" class="col s12">
+    {% if constructor_standings | length > 0 %}
     <table class="striped centered">
       <thead>
         <tr>
@@ -180,7 +199,7 @@
       </thead>
       <tbody>
 
-        {% for standing in constructor_standings | selectattr('raceId', 'equalto', races.raceId) %}
+        
         <tr>
           <td>{{ standing.position }}</td>
           <td>
@@ -196,6 +215,15 @@
         {% endfor %}
       </tbody>
     </table>
+    {% else %}
+    <div class="row">
+      <div class="col s6 offset-s3">
+        <div class="card-panel deep-orange darken-4">
+          <span class="white-text">Unfortunately, there is no data available for the Constructor Standings after the {{ races.year}} {{ races.name }}.
+          </span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
       

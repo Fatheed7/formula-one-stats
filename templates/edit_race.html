@@ -1,0 +1,181 @@
+{% extends "base.html" %} {% block content %}
+<h3 class="light-blue-text text-darken-4 center-align">Editing {{ races.year}} {{ races.name }}</h3>
+<div class="row">
+  <div class="col s12 center-align">
+    <ul class="tabs ">
+        <li class="tab col s3 grey darken-1 z-depth-5 "><a href="#qualifying" class="white-text">Qualifying Results</a></li>
+        <li class="tab col s3 grey darken-1 z-depth-5"><a href="#race" class="white-text">Race Results</a></li>
+        <li class="tab col s3 grey darken-1 z-depth-5"><a href="#drivers" class="white-text">Driver Standings</a></li>
+      <li class="tab col s3 grey darken-1 z-depth-5"><a href="#constructors" class="white-text">Constructor Standings</a></li>
+      
+    </ul>
+  </div>
+
+   <div id="qualifying" class="col s12">
+    <table class="striped centered">
+      <thead>
+        <tr>
+          <th>Position</th>
+          <th>Driver</th>
+          <th>Constructor</th>
+          <th>Q1</th>
+          <th>Q2</th>
+          <th>Q3</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+      {% for n in range(20) %}
+        <td>
+          {{n + 1}}.
+        </td>
+        <td>
+          <input placeholder="Placeholder" id="first_name" type="text" class="validate">
+        </td>
+        <td>
+          <input placeholder="Placeholder" id="first_name" type="text" class="validate">
+        </td>
+        <td>
+          <input placeholder="Placeholder" id="first_name" type="text" class="validate">
+        </td>
+        <td>
+          <input placeholder="Placeholder" id="first_name" type="text" class="validate">
+        </td>
+        <td>
+          <input placeholder="Placeholder" id="first_name" type="text" class="validate">
+        </td>
+      </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+  </div>
+
+  <div id="race" class="col s12">
+    <table class="striped centered">
+      <thead>
+        <tr>
+          <th>Position</th>
+          <th>Driver</th>
+          <th>Constructor</th>
+          <th>Points</th>
+          <th>Laps</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+      
+        {% for result in results | selectattr('raceId', 'equalto', races.raceId) %}
+        <tr>
+          <td>{{ result.position }}</td>
+          <td>
+            {% for driver in drivers %}
+              {% if result.driverId == driver.driverId %}
+                {{driver.forename}} {{driver.surname}}
+              {% endif %} 
+            {% endfor %}
+          </td>
+          <td>
+            {% for constructor in constructors %}
+              {% if result.constructorId == constructor.constructorId %}
+                {{constructor.name}}
+              {% endif %} 
+            {% endfor %}
+          </td>
+          <td>{{ result.points }}</td>
+          <td>{{ result.laps }}</td>
+          <td>
+          {% for status in statuses %}
+            {% if result.statusId == status.statusId %}
+              {{status.status}}
+            {% endif %} 
+          {% endfor %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div id="drivers" class="col s12">
+    {% if driver_standings | length > 0 %}
+    <table class="striped centered">
+      <thead>
+        <tr>
+          <th>Position</th>
+          <th>Driver</th>
+          <th>Wins</th>
+          <th>Points</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for standing in driver_standings | selectattr('raceId', 'equalto', races.raceId) %}
+        <tr>
+          <td>{{ standing.position }}</td>
+          <td>
+            {% for driver in drivers %}
+              {% if standing.driverId == driver.driverId %}
+                {{driver.forename}} {{driver.surname}}
+              {% endif %} 
+            {% endfor %}
+          </td>
+          <td>{{ standing.wins }}</td>
+          <td>{{ standing.points }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="row center-align">
+      <div class="col s6 offset-s3">
+        <div class="card-panel s12 teal inner_card">
+          <span class="white-text">Unfortunately, there is no data available for Driver Standings from after the {{ races.year}} {{ races.name }} 
+          </span>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+  <div id="constructors" class="col s12">
+    {% if constructor_standings | length > 0 %}
+    <table class="striped centered">
+      <thead>
+        <tr>
+          <th>Position</th>
+          <th>Constructor</th>
+          <th>Wins</th>
+          <th>Points</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for standing in constructor_standings | selectattr('raceId', 'equalto', races.raceId) %}
+        <tr>
+          <td>{{ standing.position }}</td>
+          <td>
+            {% for constructor in constructors %}
+              {% if standing.constructorId == constructor.constructorId %}
+                {{constructor.name}}
+              {% endif %} 
+            {% endfor %}
+          </td>
+          <td>{{ standing.wins }}</td>
+          <td>{{ standing.points }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="row center-align">
+      <div class="col s6 offset-s3">
+        <div class="card-panel s12 teal inner_card">
+          <span class="white-text">Unfortunately, there is no data available for the Constructor Standings after the {{ races.year}} {{ races.name }} 
+          </span>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

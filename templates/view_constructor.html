@@ -1,6 +1,22 @@
 {% extends "base.html" %} {% block content %}
 <h3 class="light-blue-text text-darken-4 center-align">{{ constructors.name }}</h3>
 
+<div class="row">
+    <div class="col s6 offset-s3 center-align">
+        <div class="card z-depth-0">
+            <div class="card-image waves-effect waves-block waves-light">
+              <img class="activator" src="">
+            </div>
+            <div class="card-content">
+              <span class="activator grey-text text-darken-4">Click image for license information<i class="fa-solid fa-ellipsis-vertical right"></i></span>
+            </div>
+            <div class="card-reveal">
+              <span class="card-title grey-text text-darken-4">License Information<i class="fa-solid fa-xmark right"></i></span>
+              <p>Here is some more information about this product that is only revealed once clicked on.</p>
+            </div>
+          </div>
+    </div>
+</div>
 <h5 class="light-blue-text text-darken-4 center-align">Number of Races: {{ constructor_results | length }}</h5>
 
 <h5 class="light-blue-text text-darken-4 center-align">Number of Constructor Titles: {{ seasons | length }}</h5>

@@ -74,6 +74,22 @@ def edit_drivers(driver_id):
     countries = list(mongo.db.countries.find().sort("nationality", 1))
     return render_template("edit_drivers.html", countries=countries, drivers=drivers)
 
+@app.route("/edit_race/<race_id>", methods=["GET", "POST"])
+def edit_race(race_id):
+    races = mongo.db.races.find_one({"_id": ObjectId(race_id)})
+    statuses = list(mongo.db.status.find())
+    drivers = list(mongo.db.drivers.find())
+    seasons = list(mongo.db.seasons.find())
+    driver_standings = list(mongo.db.driver_standings.find({"raceId": races["raceId"]}).sort("position", 1))
+    circuits = list(mongo.db.circuits.find())
+    qualifying = list(mongo.db.qualifying.find({"raceId": races["raceId"]}).sort("position", 1))
+    constructors = list(mongo.db.constructors.find())
+    constructor_standings = list(mongo.db.constructor_standings.find({"raceId": races["raceId"]}).sort("position", 1))
+    results = list(mongo.db.results.find().sort("position", 1))
+    return render_template(
+        "edit_race.html", statuses=statuses, races=races, results=results, drivers=drivers, constructors=constructors, qualifying=qualifying, 
+        circuits=circuits, driver_standings=driver_standings, constructor_standings=constructor_standings, seasons=seasons)
+
 @app.route("/races")
 def races():
     races = list(mongo.db.races.find())
@@ -102,6 +118,23 @@ def view_constructor(constructor_id):
     seasons = list(mongo.db.seasons.find({"constructorChampionId": constructors["constructorId"]})) 
     return render_template(
         "view_constructor.html", constructor_results=constructor_results, constructors=constructors, seasons=seasons)
+
+
+@app.route("/view_driver/<driver_id>")
+def view_driver(driver_id):
+    drivers = mongo.db.drivers.find_one({"_id": ObjectId(driver_id)})
+    statuses = list(mongo.db.status.find())
+    races = list(mongo.db.races.find())
+    seasons = list(mongo.db.seasons.find())
+    driver_standings = list(mongo.db.driver_standings.find())
+    circuits = list(mongo.db.circuits.find())
+    qualifying = list(mongo.db.qualifying.find())
+    constructors = list(mongo.db.constructors.find())
+    constructor_standings = list(mongo.db.constructor_standings.find())
+    results = list(mongo.db.results.find().sort("position", 1))
+    return render_template(
+        "view_driver.html", statuses=statuses, races=races, results=results, drivers=drivers, constructors=constructors, qualifying=qualifying, 
+        circuits=circuits, driver_standings=driver_standings, constructor_standings=constructor_standings, seasons=seasons)
 
 
 @app.route("/view_race/<race_id>")

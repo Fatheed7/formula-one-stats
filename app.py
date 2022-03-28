@@ -75,7 +75,7 @@ def edit_driver(driver_id):
 def edit_race(race_id):
     races = mongo.db.races.find_one({"_id": ObjectId(race_id)})
     results = list(mongo.db.results.find({"raceId": races["raceId"]}).sort("positionOrder", 1))
-    statuses = list(mongo.db.status.find())
+    statuses = list(mongo.db.status.find().sort("status", 1))
     drivers = list(mongo.db.drivers.find())
     seasons = list(mongo.db.seasons.find())
     driver_standings = list(mongo.db.driver_standings.find({"raceId": races["raceId"]}).sort("position", 1))

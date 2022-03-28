@@ -1,196 +1,411 @@
 {% extends "base.html" %} {% block content %}
-<h3 class="light-blue-text text-darken-4 center-align">Editing {{ races.year}} {{ races.name }}</h3>
+<h3 class="light-blue-text text-darken-4 center-align">
+  Editing {{ races.year}} {{ races.name }}
+</h3>
 <div class="row">
   <div class="col s12 center-align">
-    <ul class="tabs ">
-        <li class="tab col s3 grey darken-1 z-depth-5 "><a href="#qualifying" class="white-text">Qualifying Results</a></li>
-        <li class="tab col s3 grey darken-1 z-depth-5"><a href="#race" class="white-text">Race Results</a></li>
-        <li class="tab col s3 grey darken-1 z-depth-5"><a href="#drivers" class="white-text">Driver Standings</a></li>
-      <li class="tab col s3 grey darken-1 z-depth-5"><a href="#constructors" class="white-text">Constructor Standings</a></li>
-      
+    <ul class="tabs">
+      <li class="tab col s3 grey darken-1 z-depth-5">
+        <a href="#qualifying" class="white-text">Qualifying Results</a>
+      </li>
+      <li class="tab col s3 grey darken-1 z-depth-5">
+        <a href="#race" class="white-text">Race Results</a>
+      </li>
+      <li class="tab col s3 grey darken-1 z-depth-5">
+        <a href="#drivers" class="white-text">Driver Standings</a>
+      </li>
+      <li class="tab col s3 grey darken-1 z-depth-5">
+        <a href="#constructors" class="white-text">Constructor Standings</a>
+      </li>
     </ul>
   </div>
 
-   <div id="qualifying" class="col s12">
-    <table class="striped centered">
-      <thead>
-        <tr>
-          <th>Position</th>
-          <th>Driver</th>
-          <th>Driver ID</th>
-          <th>Constructor</th>
-          <th>Constructor ID</th>
-          <th>Q1</th>
-          <th>Q2</th>
-          <th>Q3</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% if qualifying | length > 0 %}
-        <tr>
-          {% for quali in qualifying %}
+  <!--  -->
+  <!-- Start of Qualifying Results -->
+  <!--  -->
+
+  <div id="qualifying" class="col s12">
+    <form>
+      <table class="striped centered">
+        <thead>
+          <tr>
+            <th>Position</th>
+            <th>Driver</th>
+            <th>Driver ID</th>
+            <th>Constructor</th>
+            <th>Constructor ID</th>
+            <th>Q1</th>
+            <th>Q2</th>
+            <th>Q3</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% if qualifying | length > 0 %}
+
+          <tr>
+            {% for quali in qualifying %}
+            <td>{{quali.position}}.</td>
             <td>
-              {{quali.position}}.
+              {% for driver in drivers %} {% if quali.driverId ==
+              driver.driverId %}
+              <input
+                placeholder="Driver"
+                id="driver_pos_{{quali}}"
+                type="text"
+                value="{{driver.forename }} {{driver.surname }}"
+                class="center-align validate"
+              />
+              {% endif %} {% endfor %}
             </td>
             <td>
-              {% for driver in drivers %}
-                {% if quali.driverId == driver.driverId %}
-                  <input placeholder="Driver" id="driver_pos_{{quali}}" type="text" value="{{driver.forename }} {{driver.surname }}" class="center-align validate">  
-                {% endif %}
-              {% endfor %}
+              <input
+                placeholder="Driver ID"
+                id="driver_id_pos_{{quali}}"
+                type="text"
+                value="{{quali.driverId}}"
+                class="validate center-align"
+                disabled
+              />
             </td>
             <td>
-              <input placeholder="Driver ID" id="driver_id_pos_{{quali}}" type="text" value="{{quali.driverId}}" class="validate center-align" disabled>  
+              {% for constructor in constructors %} {% if quali.constructorId ==
+              constructor.constructorId %}
+              <input
+                placeholder="Constructor"
+                id="constructor_pos_{{quali}}"
+                value="{{constructor.name}}"
+                type="text"
+                class="center-align validate"
+              />
+              {% endif %} {% endfor %}
             </td>
             <td>
-              {% for constructor in constructors %}
-                {% if quali.constructorId == constructor.constructorId %}
-                  <input placeholder="Constructor" id="constructor_pos_{{quali}}" value="{{constructor.name}}" type="text" class="center-align validate">
-                {% endif %}
-              {% endfor %}
-            </td>
-            <td>
-              <input placeholder="Constructor ID" id="constructor_id_pos_{{quali}}" type="text" value="{{quali.constructorId}}" class="center-align validate" disabled>
+              <input
+                placeholder="Constructor ID"
+                id="constructor_id_pos_{{quali}}"
+                type="text"
+                value="{{quali.constructorId}}"
+                class="center-align validate"
+                disabled
+              />
             </td>
 
             <td>
-              <input placeholder="Q1 Time" id="q1_pos_{{quali}}" type="text" value="{{quali.q1}}" class="center-align validate">
+              <input
+                placeholder="Q1 Time"
+                id="q1_pos_{{quali}}"
+                type="text"
+                value="{{quali.q1}}"
+                class="center-align validate"
+              />
             </td>
             <td>
-              <input placeholder="Q2 Time" id="q2_pos_{{quali}}" type="text" value="{{quali.q2}}" class="center-align validate">
+              <input
+                placeholder="Q2 Time"
+                id="q2_pos_{{quali}}"
+                type="text"
+                value="{{quali.q2}}"
+                class="center-align validate"
+              />
             </td>
             <td>
-              <input placeholder="Q3 Time" id="q3_pos_{{quali}}" type="text" value="{{quali.q3}}"class="center-align validate">
+              <input
+                placeholder="Q3 Time"
+                id="q3_pos_{{quali}}"
+                type="text"
+                value="{{quali.q3}}"
+                class="center-align validate"
+              />
             </td>
           </tr>
-            {% endfor %}
-            {% else %}
-        <tr>
-      {% for n in range(10) %}
-        <td>
-          {{n + 1}}.
-        </td>
-        <td>
-          <input placeholder="Driver Name" id="autocomplete-input" type="text" class="center-align validate">
-        </td>
-        <td>
-          <input placeholder="Driver ID" id="driver_id_pos_{{n}}" type="text" class="center-align validate" disabled>
-        </td>
-        <td>
-          <input placeholder="Constructor" id="constructor_pos_{{n}}" type="text" class="center-align validate">
-        </td>
-        <td>
-          <input placeholder="Constructor ID" id="constructor_id_pos_{{n}}" type="text" class="center-align validate" disabled>
-        </td>
+          {% endfor %} {% else %}
+          <tr>
+            {% for n in range(10) %}
+            <td>{{n + 1}}.</td>
+            <td>
+              <input
+                placeholder="Driver Name"
+                id="autocomplete-input"
+                type="text"
+                class="center-align validate"
+              />
+            </td>
+            <td>
+              <input
+                placeholder="Driver ID"
+                id="driver_id_pos_{{n}}"
+                type="text"
+                class="center-align validate"
+                disabled
+              />
+            </td>
+            <td>
+              <input
+                placeholder="Constructor"
+                id="constructor_pos_{{n}}"
+                type="text"
+                class="center-align validate"
+              />
+            </td>
+            <td>
+              <input
+                placeholder="Constructor ID"
+                id="constructor_id_pos_{{n}}"
+                type="text"
+                class="center-align validate"
+                disabled
+              />
+            </td>
 
-        <td>
-          <input placeholder="Q1 Time" id="q1_pos_{{n}}" type="text" class="center-align validate">
-        </td>
-        <td>
-          <input placeholder="Q2 Time" id="q2_pos_{{n}}" type="text" class="center-align validate">
-        </td>
-        <td>
-          <input placeholder="Q3 Time" id="q3_pos_{{n}}" type="text" class="center-align validate">
-        </td>
-      </tr>
-        {% endfor %}
-        
-        {% for n in range(5) %}
-        <td>
-          {{(n + 10) + 1}}.
-        </td>
-        <td>
-          <input placeholder="Driver Name" id="autocomplete-input" type="text" class="center-align validate">
-        </td>
-        <td>
-          <input placeholder="Driver ID" id="driver_id_pos_{{n}}" type="text" class="center-align validate" disabled>
-        </td>
-        <td>
-          <input placeholder="Constructor" id="constructor_pos_{{n}}" type="text" class="center-align validate">
-        </td>
-        <td>
-          <input placeholder="Constructor ID" id="constructor_id_pos_{{n}}" type="text" class="center-align validate" disabled>
-        </td>
-        <td>
-          <input placeholder="Q1 Time" id="q1_pos_{{n+10}}" type="text" class="center-align validate">
-        </td>
-        <td>
-          <input placeholder="Q2 Time" id="q2_pos_{{n+10}}" type="text" class="center-align validate">
-        </td>
-      </tr>
-        {% endfor %}
-        {% for n in range(5) %}
-        <td>
-          {{(n + 15) + 1}}.
-        </td>
-        <td>
-          <input placeholder="Driver Name" id="autocomplete-input" type="text" class="center-align validate">
-        </td>
-        <td>
-          <input placeholder="Driver ID" id="driver_id_pos_{{n}}" type="text" class="center-align validate" disabled>
-        </td>
-        <td>
-          <input placeholder="Constructor" id="constructor_pos_{{n}}" type="text" class="center-align validate">
-        </td>
-        <td>
-          <input placeholder="Constructor ID" id="constructor_id_pos_{{n}}" type="text" class="center-align validate" disabled>
-        </td>
-        <td>
-          <input placeholder="Q1 Time" id="q1_pos_{{n+15}}" type="text" class="center-align validate">
-        </td>
-      </tr>
-        {% endfor %}
-        {% endif %}
-      </tbody>
-    </table>
+            <td>
+              <input
+                placeholder="Q1 Time"
+                id="q1_pos_{{n}}"
+                type="text"
+                class="center-align validate"
+              />
+            </td>
+            <td>
+              <input
+                placeholder="Q2 Time"
+                id="q2_pos_{{n}}"
+                type="text"
+                class="center-align validate"
+              />
+            </td>
+            <td>
+              <input
+                placeholder="Q3 Time"
+                id="q3_pos_{{n}}"
+                type="text"
+                class="center-align validate"
+              />
+            </td>
 
+            {% endfor %} {% for n in range(5) %}
+            <td>{{(n + 10) + 1}}.</td>
+            <td>
+              <input
+                placeholder="Driver Name"
+                id="autocomplete-input"
+                type="text"
+                class="center-align validate"
+              />
+            </td>
+            <td>
+              <input
+                placeholder="Driver ID"
+                id="driver_id_pos_{{n}}"
+                type="text"
+                class="center-align validate"
+                disabled
+              />
+            </td>
+            <td>
+              <input
+                placeholder="Constructor"
+                id="constructor_pos_{{n}}"
+                type="text"
+                class="center-align validate"
+              />
+            </td>
+            <td>
+              <input
+                placeholder="Constructor ID"
+                id="constructor_id_pos_{{n}}"
+                type="text"
+                class="center-align validate"
+                disabled
+              />
+            </td>
+            <td>
+              <input
+                placeholder="Q1 Time"
+                id="q1_pos_{{n+10}}"
+                type="text"
+                class="center-align validate"
+              />
+            </td>
+            <td>
+              <input
+                placeholder="Q2 Time"
+                id="q2_pos_{{n+10}}"
+                type="text"
+                class="center-align validate"
+              />
+            </td>
+            {% endfor %} {% for n in range(5) %}
+            <td>{{(n + 15) + 1}}.</td>
+            <td>
+              <input
+                placeholder="Driver Name"
+                id="autocomplete-input"
+                type="text"
+                class="center-align validate"
+              />
+            </td>
+            <td>
+              <input
+                placeholder="Driver ID"
+                id="driver_id_pos_{{n}}"
+                type="text"
+                class="center-align validate"
+                disabled
+              />
+            </td>
+            <td>
+              <input
+                placeholder="Constructor"
+                id="constructor_pos_{{n}}"
+                type="text"
+                class="center-align validate"
+              />
+            </td>
+            <td>
+              <input
+                placeholder="Constructor ID"
+                id="constructor_id_pos_{{n}}"
+                type="text"
+                class="center-align validate"
+                disabled
+              />
+            </td>
+            <td>
+              <input
+                placeholder="Q1 Time"
+                id="q1_pos_{{n+15}}"
+                type="text"
+                class="center-align validate"
+              />
+            </td>
+          </tr>
+          {% endfor %} {% endif %}
+        </tbody>
+      </table>
+      <div class="center-align">
+        <a href="" class="btn green accent-4 center-align">Submit Changes</a>
+      </div>
+    </form>
   </div>
+
+  <!--  -->
+  <!-- Start of Race Results -->
+  <!--  -->
 
   <div id="race" class="col s12">
-    <table class="striped centered">
-      <thead>
-        <tr>
-          <th>Position</th>
-          <th>Driver</th>
-          <th>Constructor</th>
-          <th>Points</th>
-          <th>Laps</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-      
-        {% for result in results | selectattr('raceId', 'equalto', races.raceId) %}
-        <tr>
-          <td>{{ result.position }}</td>
-          <td>
-            {% for driver in drivers %}
-              {% if result.driverId == driver.driverId %}
-                {{driver.forename}} {{driver.surname}}
-              {% endif %} 
-            {% endfor %}
-          </td>
-          <td>
-            {% for constructor in constructors %}
-              {% if result.constructorId == constructor.constructorId %}
-                {{constructor.name}}
-              {% endif %} 
-            {% endfor %}
-          </td>
-          <td>{{ result.points }}</td>
-          <td>{{ result.laps }}</td>
-          <td>
-          {% for status in statuses %}
-            {% if result.statusId == status.statusId %}
-              {{status.status}}
-            {% endif %} 
+    <form>
+      <table class="striped centered">
+        <thead>
+          <tr>
+            <th>Position</th>
+            <th>Driver</th>
+            <th>Driver ID</th>
+            <th>Constructor</th>
+            <th>Constructor ID</th>
+            <th>Points</th>
+            <th>Laps</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            {% for result in results %}
+            <td>{{result.position}}.</td>
+            <td>
+              {% for driver in drivers %} {% if result.driverId ==
+              driver.driverId %}
+              <input
+                placeholder="Driver"
+                id="driver_pos_{{result}}"
+                type="text"
+                value="{{driver.forename }} {{driver.surname }}"
+                class="center-align validate"
+              />
+              {% endif %} {% endfor %}
+            </td>
+            <td>
+              <input
+                placeholder="Driver ID"
+                id="driver_id_pos_{{result}}"
+                type="text"
+                value="{{result.driverId}}"
+                class="validate center-align"
+                disabled
+              />
+            </td>
+            <td>
+              {% for constructor in constructors %} {% if result.constructorId
+              == constructor.constructorId %}
+              <input
+                placeholder="Constructor"
+                id="constructor_pos_{{result}}"
+                value="{{constructor.name}}"
+                type="text"
+                class="center-align validate"
+              />
+              {% endif %} {% endfor %}
+            </td>
+            <td>
+              <input
+                placeholder="Constructor ID"
+                id="constructor_id_pos_{{result}}"
+                type="text"
+                value="{{result.constructorId}}"
+                class="center-align validate"
+                disabled
+              />
+            </td>
+
+            <td>
+              {% for driver in driver_standings %} {% if result.driverId ==
+              driver.driverId %}
+              <input
+                placeholder="Points"
+                id="points_pos_{{result}}"
+                type="text"
+                value="{{driver.points}}"
+                class="center-align validate"
+              />
+              {% endif %} {% endfor %}
+            </td>
+            <td>
+              {% for driver in driver_standings %} {% if result.driverId ==
+              driver.driverId %}
+              <input
+                placeholder="Laps"
+                id="laps_pos_{{result}}"
+                type="text"
+                value="{{result.laps}}"
+                class="center-align validate"
+              />
+              {% endif %} {% endfor %}
+            </td>
+            <td>
+              <select>
+                <option value="" disabled selected>Select Status</option>
+                {% for status in statuses %}
+                <option value="{{status.status}}" class="left">
+                  {{status.status}}
+                </option>
+                {% endfor %}
+              </select>
+            </td>
+          </tr>
           {% endfor %}
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+      <div class="center-align">
+        <a href="" class="btn green accent-4 center-align">Submit Changes</a>
+      </div>
+    </form>
   </div>
+
+  <!--  -->
+  <!-- Start of Driver Standings -->
+  <!--  -->
+
   <div id="drivers" class="col s12">
     {% if driver_standings | length > 0 %}
     <table class="striped centered">
@@ -203,16 +418,14 @@
         </tr>
       </thead>
       <tbody>
-
-        {% for standing in driver_standings | selectattr('raceId', 'equalto', races.raceId) %}
+        {% for standing in driver_standings | selectattr('raceId', 'equalto',
+        races.raceId) %}
         <tr>
           <td>{{ standing.position }}</td>
           <td>
-            {% for driver in drivers %}
-              {% if standing.driverId == driver.driverId %}
-                {{driver.forename}} {{driver.surname}}
-              {% endif %} 
-            {% endfor %}
+            {% for driver in drivers %} {% if standing.driverId ==
+            driver.driverId %} {{driver.forename}} {{driver.surname}} {% endif
+            %} {% endfor %}
           </td>
           <td>{{ standing.wins }}</td>
           <td>{{ standing.points }}</td>
@@ -224,13 +437,20 @@
     <div class="row center-align">
       <div class="col s6 offset-s3">
         <div class="card-panel s12 teal inner_card">
-          <span class="white-text">Unfortunately, there is no data available for Driver Standings from after the {{ races.year}} {{ races.name }} 
+          <span class="white-text"
+            >Unfortunately, there is no data available for Driver Standings from
+            after the {{ races.year}} {{ races.name }}
           </span>
         </div>
       </div>
     </div>
     {% endif %}
   </div>
+
+  <!--  -->
+  <!-- Start of Constructor Standings -->
+  <!--  -->
+
   <div id="constructors" class="col s12">
     {% if constructor_standings | length > 0 %}
     <table class="striped centered">
@@ -243,16 +463,14 @@
         </tr>
       </thead>
       <tbody>
-
-        {% for standing in constructor_standings | selectattr('raceId', 'equalto', races.raceId) %}
+        {% for standing in constructor_standings | selectattr('raceId',
+        'equalto', races.raceId) %}
         <tr>
           <td>{{ standing.position }}</td>
           <td>
-            {% for constructor in constructors %}
-              {% if standing.constructorId == constructor.constructorId %}
-                {{constructor.name}}
-              {% endif %} 
-            {% endfor %}
+            {% for constructor in constructors %} {% if standing.constructorId
+            == constructor.constructorId %} {{constructor.name}} {% endif %} {%
+            endfor %}
           </td>
           <td>{{ standing.wins }}</td>
           <td>{{ standing.points }}</td>
@@ -264,7 +482,9 @@
     <div class="row center-align">
       <div class="col s6 offset-s3">
         <div class="card-panel s12 teal inner_card">
-          <span class="white-text">Unfortunately, there is no data available for the Constructor Standings after the {{ races.year}} {{ races.name }} 
+          <span class="white-text"
+            >Unfortunately, there is no data available for the Constructor
+            Standings after the {{ races.year}} {{ races.name }}
           </span>
         </div>
       </div>

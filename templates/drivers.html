@@ -31,7 +31,7 @@
       <td><a class="waves-effect waves-light btn" target="_blank" href="{{ driver.url }}"><i class="fa-brands fa-wikipedia-w"></i>View Article</a></td>
       <td><a href="{{ url_for('view_driver', driver_id=driver._id) }}" class="btn green accent-4">View</a></td>
       {% if session.user|lower == "admin"|lower %}
-      <td><a href="{{ url_for('edit_drivers', driver_id=driver._id) }}" class="btn green accent-4">Edit</a></td>
+      <td><a href="{{ url_for('edit_driver', driver_id=driver._id) }}" class="btn green accent-4">Edit</a></td>
       {% endif %}
     </tr>
     {% endfor %}

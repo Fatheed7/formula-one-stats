@@ -44,3 +44,7 @@ hr {
 .card-panel {
   padding: 15px !important;
 }
+
+.fa-solid, .fa-regular, .fa-brands {
+  padding-right: 5px !important;
+}

@@ -127,7 +127,22 @@
       
         {% for result in results | selectattr('raceId', 'equalto', races.raceId) %}
         <tr>
-          <td>{{ result.position }}</td>
+          <td>
+            {% if result.positionText == "D" %}
+              <span class="tooltipped" data-position="left" data-tooltip="Disqualified">DSQ</span>
+            {% elif result.positionText == "E" %}
+              <span class="tooltipped" data-position="left" data-tooltip="Excluded">Excluded</span>
+            {% elif result.positionText == "F" %}
+              <span class="tooltipped" data-position="left" data-tooltip="Did Not Qualify">DNQ</span>
+            {% elif result.positionText == "N" %}
+              <span class="tooltipped" data-position="left" data-tooltip="Not Classified">NC</span>
+            {% elif result.positionText == "R" %}
+              <span class="tooltipped" data-position="left" data-tooltip="Retired">Ret</span>
+            {% elif result.positionText == "W" %}
+              <span class="tooltipped" data-position="left" data-tooltip="Did Not Start - Withdrew">DNS</span>
+            {% else %}
+            {{ result.position }}</td>
+            {% endif %}
           <td>
             {% for driver in drivers %}
               {% if result.driverId == driver.driverId %}

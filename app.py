@@ -1,11 +1,8 @@
-import base64
-from io import BytesIO
 import os
 
 from bson.objectid import ObjectId
 from flask import (Blueprint, Flask, flash, redirect, render_template, request,
                    session, url_for)
-from matplotlib.figure import Figure
 from flask_paginate import Pagination, get_page_parameter
 from flask_pymongo import PyMongo
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -54,8 +51,8 @@ def drivers():
     pagination = Pagination(page=page, per_page=per_page, offset=offset, total=len(drivers))
     return render_template("drivers.html", drivers=drivers, pagination = pagination)
 
-@app.route("/edit_drivers/<driver_id>", methods=["GET", "POST"])
-def edit_drivers(driver_id):
+@app.route("/edit_driver/<driver_id>", methods=["GET", "POST"])
+def edit_driver(driver_id):
     if request.method == "POST":
         submit = {
             "forename": request.form.get("forename"),
@@ -72,11 +69,12 @@ def edit_drivers(driver_id):
 
     drivers = mongo.db.drivers.find_one({"_id": ObjectId(driver_id)})
     countries = list(mongo.db.countries.find().sort("nationality", 1))
-    return render_template("edit_drivers.html", countries=countries, drivers=drivers)
+    return render_template("edit_driver.html", countries=countries, drivers=drivers)
 
 @app.route("/edit_race/<race_id>", methods=["GET", "POST"])
 def edit_race(race_id):
     races = mongo.db.races.find_one({"_id": ObjectId(race_id)})
+    results = list(mongo.db.results.find({"raceId": races["raceId"]}).sort("positionOrder", 1))
     statuses = list(mongo.db.status.find())
     drivers = list(mongo.db.drivers.find())
     seasons = list(mongo.db.seasons.find())
@@ -85,7 +83,6 @@ def edit_race(race_id):
     qualifying = list(mongo.db.qualifying.find({"raceId": races["raceId"]}).sort("position", 1))
     constructors = list(mongo.db.constructors.find())
     constructor_standings = list(mongo.db.constructor_standings.find({"raceId": races["raceId"]}).sort("position", 1))
-    results = list(mongo.db.results.find().sort("position", 1))
     return render_template(
         "edit_race.html", statuses=statuses, races=races, results=results, drivers=drivers, constructors=constructors, qualifying=qualifying, 
         circuits=circuits, driver_standings=driver_standings, constructor_standings=constructor_standings, seasons=seasons)
@@ -123,18 +120,10 @@ def view_constructor(constructor_id):
 @app.route("/view_driver/<driver_id>")
 def view_driver(driver_id):
     drivers = mongo.db.drivers.find_one({"_id": ObjectId(driver_id)})
-    statuses = list(mongo.db.status.find())
-    races = list(mongo.db.races.find())
-    seasons = list(mongo.db.seasons.find())
-    driver_standings = list(mongo.db.driver_standings.find())
-    circuits = list(mongo.db.circuits.find())
-    qualifying = list(mongo.db.qualifying.find())
-    constructors = list(mongo.db.constructors.find())
-    constructor_standings = list(mongo.db.constructor_standings.find())
-    results = list(mongo.db.results.find().sort("position", 1))
+    results = list(mongo.db.results.find({"driverId": drivers["driverId"]}))
+    wins = list(mongo.db.results.find({"driverId": drivers["driverId"], "position": 1}))
     return render_template(
-        "view_driver.html", statuses=statuses, races=races, results=results, drivers=drivers, constructors=constructors, qualifying=qualifying, 
-        circuits=circuits, driver_standings=driver_standings, constructor_standings=constructor_standings, seasons=seasons)
+        "view_driver.html", results=results, drivers=drivers, wins=wins)
 
 
 @app.route("/view_race/<race_id>")
@@ -148,7 +137,7 @@ def view_race(race_id):
     qualifying = list(mongo.db.qualifying.find({"raceId": races["raceId"]}).sort("position", 1))
     constructors = list(mongo.db.constructors.find())
     constructor_standings = list(mongo.db.constructor_standings.find({"raceId": races["raceId"]}).sort("position", 1))
-    results = list(mongo.db.results.find().sort("position", 1))
+    results = list(mongo.db.results.find().sort("positionOrder", 1))
     return render_template(
         "view_race.html", statuses=statuses, races=races, results=results, drivers=drivers, constructors=constructors, qualifying=qualifying, 
         circuits=circuits, driver_standings=driver_standings, constructor_standings=constructor_standings, seasons=seasons)

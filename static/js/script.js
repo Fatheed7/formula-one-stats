@@ -7,4 +7,5 @@ $(document).ready(function () {
     format: "dd/mm/yyyy"
   });
   $('.tabs').tabs();
+  $('.tooltipped').tooltip();
 });

@@ -1,45 +1,70 @@
 {% extends "base.html" %} {% block content %}
-<h3 class="light-blue-text text-darken-4 center-align">{{ seasons.year}} Formula One Season</h3>
-<h4 class="light-blue-text text-darken-4 center-align">Number of Races: {{ seasons.no_of_races}}</h4>
+<h3 class="light-blue-text text-darken-4 center-align">
+  {{ seasons.year}} Formula One Season
+</h3>
+<h4 class="light-blue-text text-darken-4 center-align">
+  Number of Races: {{ seasons.no_of_races}}
+</h4>
 {% if drivers | length > 0 %}
-<h4 class="light-blue-text text-darken-4 center-align">Driver's Championship Winner: {{ drivers[0].forename }} {{ drivers[0].surname }}</h4>
+<h4 class="light-blue-text text-darken-4 center-align">
+  Driver's Championship Winner: {{ drivers[0].forename }} {{ drivers[0].surname
+  }}
+</h4>
+{% endif %} {% if constructors | length > 0 %}
+<h4 class="light-blue-text text-darken-4 center-align">
+  Constructors' Championship Winner: {{ constructors[0].name}}
+</h4>
 {% endif %}
-{% if constructors | length > 0 %}
-<h4 class="light-blue-text text-darken-4 center-align">Constructors' Championship Winner: {{ constructors[0].name}}</h4>
-{% endif %}
-<table class="striped centered ">
-    <thead>
-      <tr>
-        <th>Round #</th>
-        <th>Circuit</th>
-        <th>Race Name</th>
-        <th>Date</th>
-        <th>Time</th>
-        <th>Wikipedia</th>
-        <th></th>
-        {% if session.user|lower == "admin"|lower %}
-        <th>Edit</th>
-        {% endif %}
-      </tr>
-    </thead>
-    <tbody>
-      {% for race in races %}
-        {% if seasons.year == race.year %}
-          <tr>
-            <td>{{ race.round }}</td>
-            <td>{{ race.circuitId }}</td>
-            <td>{{ race.name }}</td>
-            <td>{{ race.date }}</td>
-            <td>{{ race.time }}</td>
-            <td><a target="_blank" href="{{ race.url }}">{{ race.year }} {{ race.name }}</a></td>
-            <td><a href="{{ url_for('view_race', race_id=race._id) }}" class="btn green accent-4">View Race</a></td>
-            {% if session.user|lower == "admin"|lower %}
-            <td><a href="{{ url_for('edit_race', race_id=race._id) }}" class="btn green accent-4">Edit Race</a></td>
-            {% endif %}
-          </tr>
-        {% endif %} 
-      {% endfor %}
-    </tbody>
-  </table>
-      
+<table class="striped centered">
+  <thead>
+    <tr>
+      <th>Round #</th>
+      <th>Circuit</th>
+      <th>Race Name</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Wikipedia</th>
+      <th></th>
+      {% if session.user|lower == "admin"|lower %}
+      <th>Edit</th>
+      {% endif %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for race in races %} {% if seasons.year == race.year %}
+    <tr>
+      <td>{{ race.round }}</td>
+      <td>{{ race.circuitId }}</td>
+      <td>{{ race.name }}</td>
+      <td>{{ race.date }}</td>
+      <td>{{ race.time }}</td>
+      <td>
+        <a
+          class="waves-effect waves-light btn"
+          target="_blank"
+          href="{{ race.url }}"
+          ><i class="fa-brands fa-wikipedia-w"></i>View Article</a
+        >
+      </td>
+      <td>
+        <a
+          href="{{ url_for('view_race', race_id=race._id) }}"
+          class="btn green accent-4"
+          >View Race</a
+        >
+      </td>
+      {% if session.user|lower == "admin"|lower %}
+      <td>
+        <a
+          href="{{ url_for('edit_race', race_id=race._id) }}"
+          class="btn green accent-4"
+          >Edit Race</a
+        >
+      </td>
+      {% endif %}
+    </tr>
+    {% endif %} {% endfor %}
+  </tbody>
+</table>
+
 {% endblock %}

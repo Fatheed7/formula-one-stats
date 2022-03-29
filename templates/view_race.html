@@ -1,256 +1,293 @@
 {% extends "base.html" %} {% block content %}
 
 <div class="center-align">
-<h3 class="light-blue-text text-darken-4 ">{{ races.year}} {{ races.name }}</h3>
-<h4 class="light-blue-text text-darken-4 ">Round {{ races.round}} - {{ races.date }}</h4>
-{% for season in seasons %}
-  {% if season.year == races.year %}
-    <a href="{{ url_for('view_season', season_id=season._id) }}" class="btn green accent-4">View Season</a>
-  {% endif %}
-{% endfor %}
+  <h3 class="light-blue-text text-darken-4">
+    {{ races.year}} {{ races.name }}
+  </h3>
+  <h4 class="light-blue-text text-darken-4">
+    Round {{ races.round}} - {{ races.date }}
+  </h4>
+  <a
+    href="{{ url_for('edit_race', race_id=races._id) }}"
+    class="btn green accent-4"
+    >Edit Race</a
+  >
+  {% for season in seasons %} {% if season.year == races.year %}
+  <a
+    href="{{ url_for('view_season', season_id=season._id) }}"
+    class="btn green accent-4"
+    >View Season</a
+  >
+  {% endif %} {% endfor %}
 </div>
 <div class="row">
   <div class="row">
     <div class="col s4 m4">
       <div class="card-panel center-align orange lighten-3">
         <span>
-          {% for circuit in circuits %}
-            {% if circuit.circuitId == races.circuitId %}
-              <p><b>Circuit:</b></p>
-              <p>{{circuit.name}}</p>
-            {% endif %} 
-        {% endfor %}
-      </span>
+          {% for circuit in circuits %} {% if circuit.circuitId ==
+          races.circuitId %}
+          <p><b>Circuit:</b></p>
+          <p>{{circuit.name}}</p>
+          {% endif %} {% endfor %}
+        </span>
+      </div>
     </div>
-  </div>
-  <div class="col s4 m4">
-    <div class="card-panel center-align orange lighten-3">
-      <span>
-        {% for circuit in circuits %}
-        {% if circuit.circuitId == races.circuitId %}
+    <div class="col s4 m4">
+      <div class="card-panel center-align orange lighten-3">
+        <span>
+          {% for circuit in circuits %} {% if circuit.circuitId ==
+          races.circuitId %}
           <p><b>Location:</b></p>
           <p>{{circuit.location}}</p>
-        {% endif %} 
-      {% endfor %}
-    </span>
-  </div>
-</div>
-<div class="col s4 m4">
-  <div class="card-panel center-align orange lighten-3">
-    <span>
-      {% for circuit in circuits %}
-      {% if circuit.circuitId == races.circuitId %}
-      <p><b>Country:</b></p>
-      <p>{{circuit.country}}</p>
-      {% endif %} 
-    {% endfor %}
-  </span>
-</div>
-</div>
-</div>
-          
-<div class="row">
-  <div class="col s12 center-align">
-    <ul class="tabs ">
-        <li class="tab col s3 grey darken-1 z-depth-5 "><a href="#qualifying" class="white-text">Qualifying Results</a></li>
-        <li class="tab col s3 grey darken-1 z-depth-5"><a href="#race" class="white-text">Race Results</a></li>
-        <li class="tab col s3 grey darken-1 z-depth-5"><a href="#drivers" class="white-text">Driver Standings</a></li>
-      <li class="tab col s3 grey darken-1 z-depth-5"><a href="#constructors" class="white-text">Constructor Standings</a></li>
-      
-    </ul>
-  </div>
-
-   <div id="qualifying" class="col s12">
-    {% if qualifying | length > 0 %}
-    <table class="striped centered">
-      <thead>
-        <tr>
-          <th>Position</th>
-          <th>Driver</th>
-          <th>Constructor</th>
-          <th>Q1</th>
-          <th>Q2</th>
-          <th>Q3</th>
-        </tr>
-      </thead>
-      <tbody>
-      
-        {% for quali in qualifying | selectattr('raceId', 'equalto', races.raceId) %}
-        <tr>
-          <td>{{ quali.position }}</td>
-          <td>
-            {% for driver in drivers %}
-              {% if quali.driverId == driver.driverId %}
-                {{driver.forename}} {{driver.surname}}
-              {% endif %} 
-            {% endfor %}
-          </td>
-          <td>
-            {% for constructor in constructors %}
-              {% if quali.constructorId == constructor.constructorId %}
-                {{constructor.name}}
-              {% endif %} 
-            {% endfor %}
-          </td>
-          <td>{{ quali.q1 }}</td>
-          <td>{{ quali.q2 }}</td>
-          <td>{{ quali.q3 }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    {% else %}
-    <div class="row center-align">
-      <div class="col s6 offset-s3">
-        <div class="card-panel s12 teal inner_card">
-          <span class="white-text">Unfortunately, there is no data available for Qualifying at the {{ races.year}} {{ races.name }} 
-          </span>
-        </div>
+          {% endif %} {% endfor %}
+        </span>
       </div>
     </div>
-    {% endif %}
+    <div class="col s4 m4">
+      <div class="card-panel center-align orange lighten-3">
+        <span>
+          {% for circuit in circuits %} {% if circuit.circuitId ==
+          races.circuitId %}
+          <p><b>Country:</b></p>
+          <p>{{circuit.country}}</p>
+          {% endif %} {% endfor %}
+        </span>
+      </div>
+    </div>
   </div>
 
-  <div id="race" class="col s12">
-    <table class="striped centered">
-      <thead>
-        <tr>
-          <th>Position</th>
-          <th>Driver</th>
-          <th>Constructor</th>
-          <th>Points</th>
-          <th>Laps</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-      
-        {% for result in results | selectattr('raceId', 'equalto', races.raceId) %}
-        <tr>
-          <td>
-            {% if result.positionText == "D" %}
-              <span class="tooltipped" data-position="left" data-tooltip="Disqualified">DSQ</span>
-            {% elif result.positionText == "E" %}
-              <span class="tooltipped" data-position="left" data-tooltip="Excluded">Excluded</span>
-            {% elif result.positionText == "F" %}
-              <span class="tooltipped" data-position="left" data-tooltip="Did Not Qualify">DNQ</span>
-            {% elif result.positionText == "N" %}
-              <span class="tooltipped" data-position="left" data-tooltip="Not Classified">NC</span>
-            {% elif result.positionText == "R" %}
-              <span class="tooltipped" data-position="left" data-tooltip="Retired">Ret</span>
-            {% elif result.positionText == "W" %}
-              <span class="tooltipped" data-position="left" data-tooltip="Did Not Start - Withdrew">DNS</span>
-            {% else %}
-            {{ result.position }}</td>
-            {% endif %}
-          <td>
-            {% for driver in drivers %}
-              {% if result.driverId == driver.driverId %}
-                {{driver.forename}} {{driver.surname}}
-              {% endif %} 
-            {% endfor %}
-          </td>
-          <td>
-            {% for constructor in constructors %}
-              {% if result.constructorId == constructor.constructorId %}
-                {{constructor.name}}
-              {% endif %} 
-            {% endfor %}
-          </td>
-          <td>{{ result.points }}</td>
-          <td>{{ result.laps }}</td>
-          <td>
-          {% for status in statuses %}
-            {% if result.statusId == status.statusId %}
-              {{status.status}}
-            {% endif %} 
+  <div class="row">
+    <div class="col s12 center-align">
+      <ul class="tabs">
+        <li class="tab col s3 grey darken-1 z-depth-5">
+          <a href="#qualifying" class="white-text">Qualifying Results</a>
+        </li>
+        <li class="tab col s3 grey darken-1 z-depth-5">
+          <a href="#race" class="white-text">Race Results</a>
+        </li>
+        <li class="tab col s3 grey darken-1 z-depth-5">
+          <a href="#drivers" class="white-text">Driver Standings</a>
+        </li>
+        <li class="tab col s3 grey darken-1 z-depth-5">
+          <a href="#constructors" class="white-text">Constructor Standings</a>
+        </li>
+      </ul>
+    </div>
+
+    <div id="qualifying" class="col s12">
+      {% if qualifying | length > 0 %}
+      <table class="striped centered">
+        <thead>
+          <tr>
+            <th>Position</th>
+            <th>Driver</th>
+            <th>Constructor</th>
+            <th>Q1</th>
+            <th>Q2</th>
+            <th>Q3</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for quali in qualifying | selectattr('raceId', 'equalto',
+          races.raceId) %}
+          <tr>
+            <td>{{ quali.position }}</td>
+            <td>
+              {% for driver in drivers %} {% if quali.driverId ==
+              driver.driverId %} {{driver.forename}} {{driver.surname}} {% endif
+              %} {% endfor %}
+            </td>
+            <td>
+              {% for constructor in constructors %} {% if quali.constructorId ==
+              constructor.constructorId %} {{constructor.name}} {% endif %} {%
+              endfor %}
+            </td>
+            <td>{{ quali.q1 }}</td>
+            <td>{{ quali.q2 }}</td>
+            <td>{{ quali.q3 }}</td>
+          </tr>
           {% endfor %}
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
-  <div id="drivers" class="col s12">
-    {% if driver_standings | length > 0 %}
-    <table class="striped centered">
-      <thead>
-        <tr>
-          <th>Position</th>
-          <th>Driver</th>
-          <th>Wins</th>
-          <th>Points</th>
-        </tr>
-      </thead>
-      <tbody>
-
-        {% for standing in driver_standings | selectattr('raceId', 'equalto', races.raceId) %}
-        <tr>
-          <td>{{ standing.position }}</td>
-          <td>
-            {% for driver in drivers %}
-              {% if standing.driverId == driver.driverId %}
-                {{driver.forename}} {{driver.surname}}
-              {% endif %} 
-            {% endfor %}
-          </td>
-          <td>{{ standing.wins }}</td>
-          <td>{{ standing.points }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    {% else %}
-    <div class="row center-align">
-      <div class="col s6 offset-s3">
-        <div class="card-panel s12 teal inner_card">
-          <span class="white-text">Unfortunately, there is no data available for Driver Standings from after the {{ races.year}} {{ races.name }} 
-          </span>
+        </tbody>
+      </table>
+      {% else %}
+      <div class="row center-align">
+        <div class="col s6 offset-s3">
+          <div class="card-panel s12 teal inner_card">
+            <span class="white-text"
+              >Unfortunately, there is no data available for Qualifying at the
+              {{ races.year}} {{ races.name }}
+            </span>
+          </div>
         </div>
       </div>
+      {% endif %}
     </div>
-    {% endif %}
-  </div>
-  <div id="constructors" class="col s12">
-    {% if constructor_standings | length > 0 %}
-    <table class="striped centered">
-      <thead>
-        <tr>
-          <th>Position</th>
-          <th>Constructor</th>
-          <th>Wins</th>
-          <th>Points</th>
-        </tr>
-      </thead>
-      <tbody>
 
-        {% for standing in constructor_standings | selectattr('raceId', 'equalto', races.raceId) %}
-        <tr>
-          <td>{{ standing.position }}</td>
-          <td>
-            {% for constructor in constructors %}
-              {% if standing.constructorId == constructor.constructorId %}
-                {{constructor.name}}
-              {% endif %} 
-            {% endfor %}
-          </td>
-          <td>{{ standing.wins }}</td>
-          <td>{{ standing.points }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    {% else %}
-    <div class="row center-align">
-      <div class="col s6 offset-s3">
-        <div class="card-panel s12 teal inner_card">
-          <span class="white-text">Unfortunately, there is no data available for the Constructor Standings after the {{ races.year}} {{ races.name }} 
-          </span>
+    <div id="race" class="col s12">
+      <table class="striped centered">
+        <thead>
+          <tr>
+            <th>Position</th>
+            <th>Driver</th>
+            <th>Constructor</th>
+            <th>Points</th>
+            <th>Laps</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for result in results | selectattr('raceId', 'equalto',
+          races.raceId) %}
+          <tr>
+            <td>
+              {% if result.positionText == "D" %}
+              <span
+                class="tooltipped"
+                data-position="left"
+                data-tooltip="Disqualified"
+                >DSQ</span
+              >
+              {% elif result.positionText == "E" %}
+              <span
+                class="tooltipped"
+                data-position="left"
+                data-tooltip="Excluded"
+                >Excluded</span
+              >
+              {% elif result.positionText == "F" %}
+              <span
+                class="tooltipped"
+                data-position="left"
+                data-tooltip="Did Not Qualify"
+                >DNQ</span
+              >
+              {% elif result.positionText == "N" %}
+              <span
+                class="tooltipped"
+                data-position="left"
+                data-tooltip="Not Classified"
+                >NC</span
+              >
+              {% elif result.positionText == "R" %}
+              <span
+                class="tooltipped"
+                data-position="left"
+                data-tooltip="Retired"
+                >Ret</span
+              >
+              {% elif result.positionText == "W" %}
+              <span
+                class="tooltipped"
+                data-position="left"
+                data-tooltip="Did Not Start - Withdrew"
+                >DNS</span
+              >
+              {% else %} {{ result.position }}
+            </td>
+            {% endif %}
+            <td>
+              {% for driver in drivers %} {% if result.driverId ==
+              driver.driverId %} {{driver.forename}} {{driver.surname}} {% endif
+              %} {% endfor %}
+            </td>
+            <td>
+              {% for constructor in constructors %} {% if result.constructorId
+              == constructor.constructorId %} {{constructor.name}} {% endif %}
+              {% endfor %}
+            </td>
+            <td>{{ result.points }}</td>
+            <td>{{ result.laps }}</td>
+            <td>
+              {% for status in statuses %} {% if result.statusId ==
+              status.statusId %} {{status.status}} {% endif %} {% endfor %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div id="drivers" class="col s12">
+      {% if driver_standings | length > 0 %}
+      <table class="striped centered">
+        <thead>
+          <tr>
+            <th>Position</th>
+            <th>Driver</th>
+            <th>Wins</th>
+            <th>Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for standing in driver_standings | selectattr('raceId', 'equalto',
+          races.raceId) %}
+          <tr>
+            <td>{{ standing.position }}</td>
+            <td>
+              {% for driver in drivers %} {% if standing.driverId ==
+              driver.driverId %} {{driver.forename}} {{driver.surname}} {% endif
+              %} {% endfor %}
+            </td>
+            <td>{{ standing.wins }}</td>
+            <td>{{ standing.points }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <div class="row center-align">
+        <div class="col s6 offset-s3">
+          <div class="card-panel s12 teal inner_card">
+            <span class="white-text"
+              >Unfortunately, there is no data available for Driver Standings
+              from after the {{ races.year}} {{ races.name }}
+            </span>
+          </div>
         </div>
       </div>
+      {% endif %}
     </div>
-    {% endif %}
+    <div id="constructors" class="col s12">
+      {% if constructor_standings | length > 0 %}
+      <table class="striped centered">
+        <thead>
+          <tr>
+            <th>Position</th>
+            <th>Constructor</th>
+            <th>Wins</th>
+            <th>Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for standing in constructor_standings | selectattr('raceId',
+          'equalto', races.raceId) %}
+          <tr>
+            <td>{{ standing.position }}</td>
+            <td>
+              {% for constructor in constructors %} {% if standing.constructorId
+              == constructor.constructorId %} {{constructor.name}} {% endif %}
+              {% endfor %}
+            </td>
+            <td>{{ standing.wins }}</td>
+            <td>{{ standing.points }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <div class="row center-align">
+        <div class="col s6 offset-s3">
+          <div class="card-panel s12 teal inner_card">
+            <span class="white-text"
+              >Unfortunately, there is no data available for the Constructor
+              Standings after the {{ races.year}} {{ races.name }}
+            </span>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
   </div>
+
+  {% endblock %}
 </div>
-      
-{% endblock %}

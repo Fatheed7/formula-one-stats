@@ -1,21 +1,23 @@
 {% extends "base.html" %} {% block content %}
-<h3 class="light-blue-text text-darken-4 center-align">
-  Editing {{ races.year}} {{ races.name }}
-</h3>
+<div class="center-align">
+  <h3 class="light-blue-text text-darken-4 center-align">
+    Editing {{ races.year}} {{ races.name }}
+  </h3>
+  <a
+    href="{{ url_for('view_race', race_id=races._id) }}"
+    class="btn green accent-4"
+    >View Race</a
+  >
+</div>
+
 <div class="row">
   <div class="col s12 center-align">
     <ul class="tabs">
-      <li class="tab col s3 grey darken-1 z-depth-5">
+      <li class="tab col s6 grey darken-1 z-depth-5">
         <a href="#qualifying" class="white-text">Qualifying Results</a>
       </li>
-      <li class="tab col s3 grey darken-1 z-depth-5">
+      <li class="tab col s6 grey darken-1 z-depth-5">
         <a href="#race" class="white-text">Race Results</a>
-      </li>
-      <li class="tab col s3 grey darken-1 z-depth-5">
-        <a href="#drivers" class="white-text">Driver Standings</a>
-      </li>
-      <li class="tab col s3 grey darken-1 z-depth-5">
-        <a href="#constructors" class="white-text">Constructor Standings</a>
       </li>
     </ul>
   </div>
@@ -41,10 +43,8 @@
         </thead>
 
         <tbody>
-          {% if qualifying | length > 0 %}
-
+          {% if qualifying | length > 0 %} {% for quali in qualifying %}
           <tr>
-            {% for quali in qualifying %}
             <td>{{quali.position}}.</td>
             <td>
               {% for driver in drivers %} {% if quali.driverId ==
@@ -119,9 +119,8 @@
               />
             </td>
           </tr>
-          {% endfor %} {% else %}
+          {% endfor %} {% else %} {% for n in range(10) %}
           <tr>
-            {% for n in range(10) %}
             <td>{{n + 1}}.</td>
             <td>
               <input
@@ -182,13 +181,14 @@
                 class="center-align validate"
               />
             </td>
-
-            {% endfor %} {% for n in range(5) %}
+          </tr>
+          {% endfor %} {% for n in range(5) %}
+          <tr>
             <td>{{(n + 10) + 1}}.</td>
             <td>
               <input
                 placeholder="Driver Name"
-                id="autocomplete-input"
+                id="driver_name_pos_{{n}}"
                 type="text"
                 class="center-align validate"
               />
@@ -236,6 +236,9 @@
               />
             </td>
             {% endfor %} {% for n in range(5) %}
+          </tr>
+
+          <tr>
             <td>{{(n + 15) + 1}}.</td>
             <td>
               <input
@@ -310,6 +313,7 @@
         </thead>
 
         <tbody>
+          {% if results | length > 0 %}
           <tr>
             {% for result in results %}
             <td>{{result.position}}.</td>
@@ -393,103 +397,84 @@
               </select>
             </td>
           </tr>
-          {% endfor %}
+          {% endfor %} {% else %} {% for n in range(20) %}
+          <tr>
+            <td>{{n+1}}.</td>
+            <td>
+              <input
+                placeholder="Driver"
+                id="driver_pos_{{n}}"
+                type="text"
+                value=""
+                class="center-align validate"
+              />
+            </td>
+            <td>
+              <input
+                placeholder="Driver ID"
+                id="driver_id_pos_{{n}}"
+                type="text"
+                value=""
+                class="validate center-align"
+                disabled
+              />
+            </td>
+            <td>
+              <input
+                placeholder="Constructor"
+                id="constructor_pos_{{n}}"
+                value=""
+                type="text"
+                class="center-align validate"
+              />
+            </td>
+            <td>
+              <input
+                placeholder="Constructor ID"
+                id="constructor_id_pos_{{n}}"
+                type="text"
+                value=""
+                class="center-align validate"
+                disabled
+              />
+            </td>
+
+            <td>
+              <input
+                placeholder="Points"
+                id="points_pos_{{n}}"
+                type="text"
+                value=""
+                class="center-align validate"
+              />
+            </td>
+            <td>
+              <input
+                placeholder="Laps"
+                id="laps_pos_{{n}}"
+                type="text"
+                value=""
+                class="center-align validate"
+              />
+            </td>
+            <td>
+              <select>
+                <option value="" disabled selected>Select Status</option>
+                {% for status in statuses %}
+                <option value="{{status.status}}" class="left">
+                  {{status.status}}
+                </option>
+                {% endfor %}
+              </select>
+            </td>
+          </tr>
+          {% endfor %} {% endif %}
         </tbody>
       </table>
       <div class="center-align">
         <a href="" class="btn green accent-4 center-align">Submit Changes</a>
       </div>
     </form>
-  </div>
-
-  <!--  -->
-  <!-- Start of Driver Standings -->
-  <!--  -->
-
-  <div id="drivers" class="col s12">
-    {% if driver_standings | length > 0 %}
-    <table class="striped centered">
-      <thead>
-        <tr>
-          <th>Position</th>
-          <th>Driver</th>
-          <th>Wins</th>
-          <th>Points</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for standing in driver_standings | selectattr('raceId', 'equalto',
-        races.raceId) %}
-        <tr>
-          <td>{{ standing.position }}</td>
-          <td>
-            {% for driver in drivers %} {% if standing.driverId ==
-            driver.driverId %} {{driver.forename}} {{driver.surname}} {% endif
-            %} {% endfor %}
-          </td>
-          <td>{{ standing.wins }}</td>
-          <td>{{ standing.points }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    {% else %}
-    <div class="row center-align">
-      <div class="col s6 offset-s3">
-        <div class="card-panel s12 teal inner_card">
-          <span class="white-text"
-            >Unfortunately, there is no data available for Driver Standings from
-            after the {{ races.year}} {{ races.name }}
-          </span>
-        </div>
-      </div>
-    </div>
-    {% endif %}
-  </div>
-
-  <!--  -->
-  <!-- Start of Constructor Standings -->
-  <!--  -->
-
-  <div id="constructors" class="col s12">
-    {% if constructor_standings | length > 0 %}
-    <table class="striped centered">
-      <thead>
-        <tr>
-          <th>Position</th>
-          <th>Constructor</th>
-          <th>Wins</th>
-          <th>Points</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for standing in constructor_standings | selectattr('raceId',
-        'equalto', races.raceId) %}
-        <tr>
-          <td>{{ standing.position }}</td>
-          <td>
-            {% for constructor in constructors %} {% if standing.constructorId
-            == constructor.constructorId %} {{constructor.name}} {% endif %} {%
-            endfor %}
-          </td>
-          <td>{{ standing.wins }}</td>
-          <td>{{ standing.points }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    {% else %}
-    <div class="row center-align">
-      <div class="col s6 offset-s3">
-        <div class="card-panel s12 teal inner_card">
-          <span class="white-text"
-            >Unfortunately, there is no data available for the Constructor
-            Standings after the {{ races.year}} {{ races.name }}
-          </span>
-        </div>
-      </div>
-    </div>
-    {% endif %}
   </div>
 </div>
 

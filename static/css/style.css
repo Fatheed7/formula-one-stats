@@ -1,7 +1,7 @@
-
-
-@media only screen and (max-width : 992px) {
-  header, main, footer {
+@media only screen and (max-width: 992px) {
+  header,
+  main,
+  footer {
     padding-left: 0;
   }
 }
@@ -17,10 +17,10 @@ hr {
 }
 
 .pagination-page-info {
-  padding: .6em;
+  padding: 0.6em;
   padding-left: 0;
   width: 40em;
-  margin: .5em;
+  margin: 0.5em;
   margin-left: 0;
   font-size: 12px;
 }
@@ -28,7 +28,7 @@ hr {
   color: black;
   background: #6aa6ed;
   padding-left: 2px;
-  padding: .1em .25em;
+  padding: 0.1em 0.25em;
   font-size: 150%;
 }
 
@@ -45,8 +45,8 @@ hr {
   padding: 15px !important;
 }
 
-.fa-solid, .fa-regular, .fa-brands {
+.fa-solid,
+.fa-regular,
+.fa-brands {
   padding-right: 5px !important;
 }
-
-

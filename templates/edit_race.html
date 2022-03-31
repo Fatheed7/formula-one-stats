@@ -33,9 +33,9 @@
           <tr>
             <th>Position</th>
             <th>Driver</th>
-            <th>Driver ID</th>
+            <th>Select Driver</th>
             <th>Constructor</th>
-            <th>Constructor ID</th>
+            <th>Select Constructor</th>
             <th>Q1</th>
             <th>Q2</th>
             <th>Q3</th>
@@ -131,13 +131,11 @@
               />
             </td>
             <td>
-              <input
-                placeholder="Driver ID"
-                id="driver_id_pos_{{n}}"
-                type="text"
-                class="center-align validate"
-                disabled
-              />
+              <a
+                class="waves-effect waves-light btn modal-trigger"
+                href="#modal1"
+                >Modal</a
+              >
             </td>
             <td>
               <input
@@ -292,190 +290,191 @@
     </form>
   </div>
 
-  <!--  -->
-  <!-- Start of Race Results -->
-  <!--  -->
+    <!--  -->
+    <!-- Start of Race Results -->
+    <!--  -->
 
-  <div id="race" class="col s12">
-    <form>
-      <table class="striped centered">
-        <thead>
-          <tr>
-            <th>Position</th>
-            <th>Driver</th>
-            <th>Driver ID</th>
-            <th>Constructor</th>
-            <th>Constructor ID</th>
-            <th>Points</th>
-            <th>Laps</th>
-            <th>Status</th>
-          </tr>
-        </thead>
+    <div id="race" class="col s12">
+      <form>
+        <table class="striped centered">
+          <thead>
+            <tr>
+              <th>Position</th>
+              <th>Driver</th>
+              <th>Driver ID</th>
+              <th>Constructor</th>
+              <th>Constructor ID</th>
+              <th>Points</th>
+              <th>Laps</th>
+              <th>Status</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          {% if results | length > 0 %}
-          <tr>
-            {% for result in results %}
-            <td>{{result.position}}.</td>
-            <td>
-              {% for driver in drivers %} {% if result.driverId ==
-              driver.driverId %}
-              <input
-                placeholder="Driver"
-                id="driver_pos_{{result}}"
-                type="text"
-                value="{{driver.forename }} {{driver.surname }}"
-                class="center-align validate"
-              />
-              {% endif %} {% endfor %}
-            </td>
-            <td>
-              <input
-                placeholder="Driver ID"
-                id="driver_id_pos_{{result}}"
-                type="text"
-                value="{{result.driverId}}"
-                class="validate center-align"
-                disabled
-              />
-            </td>
-            <td>
-              {% for constructor in constructors %} {% if result.constructorId
-              == constructor.constructorId %}
-              <input
-                placeholder="Constructor"
-                id="constructor_pos_{{result}}"
-                value="{{constructor.name}}"
-                type="text"
-                class="center-align validate"
-              />
-              {% endif %} {% endfor %}
-            </td>
-            <td>
-              <input
-                placeholder="Constructor ID"
-                id="constructor_id_pos_{{result}}"
-                type="text"
-                value="{{result.constructorId}}"
-                class="center-align validate"
-                disabled
-              />
-            </td>
+          <tbody>
+            {% if results | length > 0 %}
+            <tr>
+              {% for result in results %}
+              <td>{{result.position}}.</td>
+              <td>
+                {% for driver in drivers %} {% if result.driverId ==
+                driver.driverId %}
+                <input
+                  placeholder="Driver"
+                  id="driver_pos_{{result}}"
+                  type="text"
+                  value="{{driver.forename }} {{driver.surname }}"
+                  class="center-align validate"
+                />
+                {% endif %} {% endfor %}
+              </td>
+              <td>
+                <input
+                  placeholder="Driver ID"
+                  id="driver_id_pos_{{result}}"
+                  type="text"
+                  value="{{result.driverId}}"
+                  class="validate center-align"
+                  disabled
+                />
+              </td>
+              <td>
+                {% for constructor in constructors %} {% if result.constructorId
+                == constructor.constructorId %}
+                <input
+                  placeholder="Constructor"
+                  id="constructor_pos_{{result}}"
+                  value="{{constructor.name}}"
+                  type="text"
+                  class="center-align validate"
+                />
+                {% endif %} {% endfor %}
+              </td>
+              <td>
+                <input
+                  placeholder="Constructor ID"
+                  id="constructor_id_pos_{{result}}"
+                  type="text"
+                  value="{{result.constructorId}}"
+                  class="center-align validate"
+                  disabled
+                />
+              </td>
 
-            <td>
-              {% for driver in driver_standings %} {% if result.driverId ==
-              driver.driverId %}
-              <input
-                placeholder="Points"
-                id="points_pos_{{result}}"
-                type="text"
-                value="{{driver.points}}"
-                class="center-align validate"
-              />
-              {% endif %} {% endfor %}
-            </td>
-            <td>
-              {% for driver in driver_standings %} {% if result.driverId ==
-              driver.driverId %}
-              <input
-                placeholder="Laps"
-                id="laps_pos_{{result}}"
-                type="text"
-                value="{{result.laps}}"
-                class="center-align validate"
-              />
-              {% endif %} {% endfor %}
-            </td>
-            <td>
-              <select>
-                <option value="" disabled selected>Select Status</option>
-                {% for status in statuses %}
-                <option value="{{status.status}}" class="left">
-                  {{status.status}}
-                </option>
-                {% endfor %}
-              </select>
-            </td>
-          </tr>
-          {% endfor %} {% else %} {% for n in range(20) %}
-          <tr>
-            <td>{{n+1}}.</td>
-            <td>
-              <input
-                placeholder="Driver"
-                id="driver_pos_{{n}}"
-                type="text"
-                value=""
-                class="center-align validate"
-              />
-            </td>
-            <td>
-              <input
-                placeholder="Driver ID"
-                id="driver_id_pos_{{n}}"
-                type="text"
-                value=""
-                class="validate center-align"
-                disabled
-              />
-            </td>
-            <td>
-              <input
-                placeholder="Constructor"
-                id="constructor_pos_{{n}}"
-                value=""
-                type="text"
-                class="center-align validate"
-              />
-            </td>
-            <td>
-              <input
-                placeholder="Constructor ID"
-                id="constructor_id_pos_{{n}}"
-                type="text"
-                value=""
-                class="center-align validate"
-                disabled
-              />
-            </td>
+              <td>
+                {% for driver in driver_standings %} {% if result.driverId ==
+                driver.driverId %}
+                <input
+                  placeholder="Points"
+                  id="points_pos_{{result}}"
+                  type="text"
+                  value="{{driver.points}}"
+                  class="center-align validate"
+                />
+                {% endif %} {% endfor %}
+              </td>
+              <td>
+                {% for driver in driver_standings %} {% if result.driverId ==
+                driver.driverId %}
+                <input
+                  placeholder="Laps"
+                  id="laps_pos_{{result}}"
+                  type="text"
+                  value="{{result.laps}}"
+                  class="center-align validate"
+                />
+                {% endif %} {% endfor %}
+              </td>
+              <td>
+                <select>
+                  <option value="" disabled selected>Select Status</option>
+                  {% for status in statuses %}
+                  <option value="{{status.status}}" class="left">
+                    {{status.status}}
+                  </option>
+                  {% endfor %}
+                </select>
+              </td>
+            </tr>
+            {% endfor %} {% else %} {% for n in range(20) %}
+            <tr>
+              <td>{{n+1}}.</td>
+              <td>
+                <input
+                  placeholder="Driver"
+                  id="driver_pos_{{n}}"
+                  type="text"
+                  value=""
+                  class="center-align validate"
+                />
+              </td>
+              <td>
+                <input
+                  placeholder="Driver ID"
+                  id="driver_id_pos_{{n}}"
+                  type="text"
+                  value=""
+                  class="validate center-align"
+                  disabled
+                />
+              </td>
+              <td>
+                <input
+                  placeholder="Constructor"
+                  id="constructor_pos_{{n}}"
+                  value=""
+                  type="text"
+                  class="center-align validate"
+                />
+              </td>
+              <td>
+                <input
+                  placeholder="Constructor ID"
+                  id="constructor_id_pos_{{n}}"
+                  type="text"
+                  value=""
+                  class="center-align validate"
+                  disabled
+                />
+              </td>
 
-            <td>
-              <input
-                placeholder="Points"
-                id="points_pos_{{n}}"
-                type="text"
-                value=""
-                class="center-align validate"
-              />
-            </td>
-            <td>
-              <input
-                placeholder="Laps"
-                id="laps_pos_{{n}}"
-                type="text"
-                value=""
-                class="center-align validate"
-              />
-            </td>
-            <td>
-              <select>
-                <option value="" disabled selected>Select Status</option>
-                {% for status in statuses %}
-                <option value="{{status.status}}" class="left">
-                  {{status.status}}
-                </option>
-                {% endfor %}
-              </select>
-            </td>
-          </tr>
-          {% endfor %} {% endif %}
-        </tbody>
-      </table>
-      <div class="center-align">
-        <a href="" class="btn green accent-4 center-align">Submit Changes</a>
-      </div>
-    </form>
+              <td>
+                <input
+                  placeholder="Points"
+                  id="points_pos_{{n}}"
+                  type="text"
+                  value=""
+                  class="center-align validate"
+                />
+              </td>
+              <td>
+                <input
+                  placeholder="Laps"
+                  id="laps_pos_{{n}}"
+                  type="text"
+                  value=""
+                  class="center-align validate"
+                />
+              </td>
+              <td>
+                <select>
+                  <option value="" disabled selected>Select Status</option>
+                  {% for status in statuses %}
+                  <option value="{{status.status}}" class="left">
+                    {{status.status}}
+                  </option>
+                  {% endfor %}
+                </select>
+              </td>
+            </tr>
+            {% endfor %} {% endif %}
+          </tbody>
+        </table>
+        <div class="center-align">
+          <a href="" class="btn green accent-4 center-align">Submit Changes</a>
+        </div>
+      </form>
+    </div>
   </div>
-</div>
 
-{% endblock %}
+  {% endblock %}
+</div>

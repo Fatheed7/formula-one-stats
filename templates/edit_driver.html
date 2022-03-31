@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block content %}
   <div class="row">
-    <form class="col s12" method="POST" action="{{ url_for('edit_drivers', driver_id=drivers._id) }}">
+    <form class="col s12" method="POST" action="{{ url_for('edit_driver', driver_id=drivers._id) }}">
       <div class="row">
         <div class="input-field col s6">
           <input id="forename" name="forename" type="text" value="{{drivers.forename}}" class="validate" required>
@@ -13,17 +13,17 @@
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <input id="driverId" name="driverId" type="text" value="{{drivers.driverId}}" class="validate" disabled>
-          <label for="driverId">Driver ID</label>
+          <input id="driverId" name="driverId" type="text" value="{{drivers.driverId}}" class="validate" readonly>
+          <label for="driverId">Driver ID (This field is Read Only)</label>
         </div>
         <div class="input-field col s6">
-          <input id="driverRef" name="driverRef" type="text" value="{{drivers.driverRef}}" class="validate" disabled>
-          <label for="driverRef">Driver Ref</label>
+          <input id="driverRef" name="driverRef" type="text" value="{{drivers.driverRef}}" class="validate" readonly>
+          <label for="driverRef">Driver Ref (This field is Read Only)</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s4">
-          <input id="numer" name="numer" type="text" maxlength="2" value="{{drivers.number}}">
+          <input id="number" name="number" type="text" maxlength="2" value="{{drivers.number}}">
             <label for="number">Number</label>
         </div>
         <div class="input-field col s4">

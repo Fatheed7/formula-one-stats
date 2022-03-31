@@ -1,10 +1,10 @@
 import os
 
 from bson.objectid import ObjectId
-from flask import (Blueprint, Flask, flash, redirect, render_template, request,
+from flask import (Flask, flash, redirect, render_template, request,
                    session, url_for)
-from flask_paginate import Pagination, get_page_parameter
 from flask_pymongo import PyMongo
+from flask_paginate import Pagination, get_page_parameter
 from werkzeug.security import generate_password_hash, check_password_hash
 
 if os.path.exists("env.py"):
@@ -44,12 +44,12 @@ def dashboard():
 
 @app.route("/drivers")
 def drivers():
-    page = request.args.get(get_page_parameter(), type=int, default=1)
+    search = False
     drivers = list(mongo.db.drivers.find())
-    per_page = 20
-    offset = (page - 1) * per_page
-    pagination = Pagination(page=page, per_page=per_page, offset=offset, total=len(drivers))
-    return render_template("drivers.html", drivers=drivers, pagination = pagination)
+    print(len(drivers))
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    pagination = Pagination(page=page, total=len(drivers), search=search, record_name='drivers', per_page=10)
+    return render_template("drivers.html", drivers=drivers, pagination=pagination)
 
 @app.route("/edit_driver/<driver_id>", methods=["GET", "POST"])
 def edit_driver(driver_id):
@@ -65,7 +65,7 @@ def edit_driver(driver_id):
             "driverId": request.form.get("driverId"),
             "driverRef": request.form.get("driverRef"),
         }
-        mongo.db.drivers.update({"_id": ObjectId(driver_id)}, submit)
+        mongo.db.drivers.replace_one({"_id": ObjectId(driver_id)}, submit)
 
     drivers = mongo.db.drivers.find_one({"_id": ObjectId(driver_id)})
     countries = list(mongo.db.countries.find().sort("nationality", 1))
@@ -179,7 +179,7 @@ def register():
         flash("Registration Successful!")
         return redirect(url_for("profile", username=session["user"]))
 
-    return render_template("register.html")
+    return render_template("auth/register.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -208,7 +208,7 @@ def login():
             flash("Incorrect Username and/or Password")
             return redirect(url_for("login"))
 
-    return render_template("login.html")
+    return render_template("auth/login.html")
 
 
 @app.route("/logout")

@@ -1,7 +1,8 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} {% block content %} {{ pagination.links }}
 <table class="striped centered">
   <thead>
     <tr>
+      <th>#</th>
       <th>Constructor</th>
       <th>Nationality</th>
       <th>Wikipedia</th>
@@ -11,10 +12,24 @@
   <tbody>
     {% for constructor in constructors %}
     <tr>
+      <td>{{ loop.index + pagination.skip }}</td>
       <td>{{ constructor.name }}</td>
       <td>{{ constructor.nationality }}</td>
-      <td><a class="waves-effect waves-light btn" target="_blank" href="{{ constructor.url }}"><i class="fa-brands fa-wikipedia-w"></i>View Article</a></td>
-      <td><a href="{{ url_for('view_constructor', constructor_id=constructor._id) }}" class="btn green accent-4">View Constructor</a></td>
+      <td>
+        <a
+          class="waves-effect waves-light btn"
+          target="_blank"
+          href="{{ constructor.url }}"
+          ><i class="fa-brands fa-wikipedia-w"></i>View Article</a
+        >
+      </td>
+      <td>
+        <a
+          href="{{ url_for('view_constructor', constructor_id=constructor._id) }}"
+          class="btn green accent-4"
+          >View Constructor</a
+        >
+      </td>
     </tr>
     {% endfor %}
   </tbody>

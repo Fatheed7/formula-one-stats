@@ -1,7 +1,8 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} {% block content %} {{pagination.links}}
 <table class="striped centered">
   <thead>
     <tr>
+      <th>#</th>
       <th>Race Name</th>
       <th>Date</th>
       <th>Circuit</th>
@@ -13,17 +14,29 @@
   <tbody>
     {% for race in races %}
     <tr>
+      <td>{{ loop.index + pagination.skip }}</td>
       <td>{{ race.name }}</td>
       <td>{{ race.date }}</td>
       <td>
-      {% for circuit in circuits %}
-        {% if race.circuitId == circuit.circuitId %}
-        {{circuit.name}} {% endif %} {% endfor %}
+        {% for circuit in circuits %} {% if race.circuitId == circuit.circuitId
+        %} {{circuit.name}} {% endif %} {% endfor %}
+      </td>
+      <td>{{race.year}}</td>
+      <td>
+        <a
+          class="waves-effect waves-light btn"
+          target="_blank"
+          href="{{ race.url }}"
+          ><i class="fa-brands fa-wikipedia-w"></i>View Article</a
+        >
       </td>
       <td>
-        {{race.year}} </td>
-        <td><a class="waves-effect waves-light btn" target="_blank" href="{{ race.url }}"><i class="fa-brands fa-wikipedia-w"></i>View Article</a></td>
-      <td><a href="{{ url_for('view_race', race_id=race._id) }}" class="btn green accent-4">View Race</a></td>
+        <a
+          href="{{ url_for('view_race', race_id=race._id) }}"
+          class="btn green accent-4"
+          >View Race</a
+        >
+      </td>
     </tr>
     {% endfor %}
   </tbody>

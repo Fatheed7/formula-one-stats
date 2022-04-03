@@ -19,7 +19,11 @@
       <td>{{ race.date }}</td>
       <td>
         {% for circuit in circuits %} {% if race.circuitId == circuit.circuitId
-        %} {{circuit.name}} {% endif %} {% endfor %}
+        %}
+        <a href="{{ url_for('view_circuit', circuit_id=circuit._id) }}"
+          >{{circuit.name}}</a
+        >
+        {% endif %} {% endfor %}
       </td>
       <td>{{race.year}}</td>
       <td>

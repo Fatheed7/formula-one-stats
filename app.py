@@ -28,7 +28,7 @@ def get_pagination_data(offset=0, per_page=20, type = "all"):
     elif type == "constructors":
         return mongo.db.constructors.find().sort("constructorId", 1).skip(offset).limit(per_page)
     elif type == "races":
-        return mongo.db.races.find().sort("raceId", 1).skip(offset).limit(per_page)
+        return mongo.db.races.find().sort([['year', 1], ['round', 1]]).skip(offset).limit(per_page)
     elif type == "seasons":
         return mongo.db.seasons.find().sort("year", 1).skip(offset).limit(per_page)
 
@@ -142,7 +142,7 @@ def races():
                                            per_page_parameter='per_page')
     per_page=20
     offset = ((page - 1) * per_page)
-    races = list(mongo.db.races.find())
+    races = list(mongo.db.races.find().sort("year", 1))
     seasons = list(mongo.db.seasons.find())
     circuits = list(mongo.db.circuits.find())
     total = len(races)

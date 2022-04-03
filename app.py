@@ -1,3 +1,4 @@
+from calendar import c
 import os
 
 from bson.objectid import ObjectId
@@ -131,7 +132,6 @@ def edit_race(race_id):
     constructors = list(mongo.db.constructors.find())
     constructor_standings = list(mongo.db.constructor_standings.find({"raceId": races["raceId"]}).sort("position", 1))
     previous_race = list(mongo.db.races.find({"year": races["year"], "round": races["round"] - 1}))
-    print(previous_race)
     return render_template(
         "edit_race.html", statuses=statuses, races=races, results=results, drivers=drivers, constructors=constructors, qualifying=qualifying, 
         circuits=circuits, driver_standings=driver_standings, constructor_standings=constructor_standings, seasons=seasons, previous_race=previous_race)
@@ -224,11 +224,10 @@ def view_season(season_id):
     seasons = mongo.db.seasons.find_one({"_id": ObjectId(season_id)})
     races = list(mongo.db.races.find().sort("round", 1))
     constructors = list(mongo.db.constructors.find({"constructorId": seasons["constructorChampionId"]}))
-    print(constructors)
+    circuits = list(mongo.db.circuits.find())
     drivers = list(mongo.db.drivers.find({"driverId": seasons["driverChampionId"]}))
-    print(drivers)
     return render_template(
-        "view_season.html", races=races, seasons=seasons, constructors=constructors, drivers=drivers)
+        "view_season.html", races=races, seasons=seasons, constructors=constructors, drivers=drivers, circuits=circuits)
 
 @app.route("/register", methods=["GET", "POST"])
 def register():

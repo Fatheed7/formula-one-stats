@@ -1,3 +1,6 @@
+let value = 0;
+let page = "quali";
+
 $(document).ready(function () {
   $(".sidenav").sidenav();
   $(".collapsible").collapsible();
@@ -9,4 +12,86 @@ $(document).ready(function () {
   $(".tabs").tabs();
   $(".tooltipped").tooltip();
   $(".modal").modal({});
+});
+
+$("#driverSearch").keyup(function () {
+  $(".list")
+    .find("tr")
+    .each(function () {
+      if (
+        $(this)
+          .text()
+          .toLowerCase()
+          .includes($("#driverSearch").val().toLowerCase())
+      ) {
+        $(this).show();
+      } else {
+        $(this).hide();
+      }
+    });
+});
+
+$("#constructorSearch").keyup(function () {
+  $(".list")
+    .find("tr")
+    .each(function () {
+      if (
+        $(this)
+          .text()
+          .toLowerCase()
+          .includes($("#constructorSearch").val().toLowerCase())
+      ) {
+        $(this).show();
+      } else {
+        $(this).hide();
+      }
+    });
+});
+
+$(".quali").click(function () {
+  page = "quali";
+  console.log(page);
+});
+
+$(".race").click(function () {
+  page = "race";
+  console.log(page);
+});
+
+$(".select").click(function () {
+  value = $(this).closest("tr").children("td:first").text().slice(0, -1) - 1;
+});
+
+$(".driverSelect").click(function () {
+  if (page == "quali") {
+    $("#driver_forename_pos_quali_" + value).val(
+      $(this).closest("tr").children("td:first").text()
+    );
+    $("#driver_surname_pos_quali_" + value).val(
+      $(this).closest("tr").children("td:eq(1)").text()
+    );
+  } else if (page == "race") {
+    $("#driver_forename_pos_race_" + value).val(
+      $(this).closest("tr").children("td:first").text()
+    );
+    $("#driver_surname_pos_race_" + value).val(
+      $(this).closest("tr").children("td:eq(1)").text()
+    );
+  }
+});
+
+$(".constructorSelect").click(function () {
+  if (page == "quali") {
+    $("#constructor_quali_pos_" + value).val(
+      $(this).closest("tr").children("td:first").text()
+    );
+  } else if (page == "race") {
+    $("#constructor_race_pos_" + value).val(
+      $(this).closest("tr").children("td:first").text()
+    );
+  }
+});
+
+$('input[type="checkbox"]').on("change", function () {
+  $('input[type="checkbox"]').not(this).prop("checked", false);
 });

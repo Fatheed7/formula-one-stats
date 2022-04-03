@@ -1,5 +1,36 @@
 {% extends "base.html" %} {% block content %}
 <h3 class="light-blue-text text-darken-4 center-align">{{ circuits.name }}</h3>
+<div class="row">
+  <div class="col s4 m4">
+    <div class="card-panel center-align orange lighten-3">
+      <span>
+        <p><b>Location:</b></p>
+        <p>{{circuits.location}}</p>
+      </span>
+    </div>
+  </div>
+  <div class="col s4 m4">
+    <div class="card-panel center-align orange lighten-3">
+      <span>
+        <p><b>Country:</b></p>
+        <p>{{circuits.country}}</p>
+      </span>
+    </div>
+  </div>
+  <div class="col s4 m4">
+    <div class="card-panel center-align orange lighten-3">
+      <span>
+        <p><b>View On Map:</b></p>
+        <a
+          target="_blank"
+          class="waves-effect waves-light btn"
+          href="https://www.google.com/maps/search/{{ circuits.lat }},{{ circuits.lng }}"
+          >Open on Google Maps</a
+        >
+      </span>
+    </div>
+  </div>
+</div>
 <table class="striped centered">
   <thead>
     <tr>

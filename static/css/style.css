@@ -59,3 +59,8 @@ hr {
 .nav {
   background-color: #b71c1c !important;
 }
+
+.container {
+  max-width: 90% !important;
+  width: 90% !important;
+}

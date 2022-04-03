@@ -1,17 +1,5 @@
 {% extends "base.html" %} {% block content %}
-<h3 class="light-blue-text text-darken-4 center-align">Test</h3>
-
-<div class="row">
-  <div class="col s6 offset-s3 center-align">
-    <div class="card z-depth-0">
-      <div class="card-image waves-effect waves-block waves-light">
-        <img class="activator" src="" />
-      </div>
-    </div>
-  </div>
-</div>
-<h5 class="light-blue-text text-darken-4 center-align">Number of Races: 0</h5>
-
-<h5 class="light-blue-text text-darken-4 center-align">Number of Wins: 0</h5>
+<p id="page-not-found">Error 404<br />Page Not Found</p>
+<img class="bg" src="{{ url_for('static', filename='img/404.jpg') }}" alt="" />
 
 {% endblock %}

@@ -56,11 +56,49 @@ hr {
   justify-content: center;
 }
 
-.nav {
+main nav {
   background-color: #b71c1c !important;
+  -webkit-box-shadow: inset 0px 15px 5px -5px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow: inset 0px 15px 5px -5px rgba(50, 50, 50, 0.75);
+  box-shadow: inset 0px 15px 5px -5px rgba(50, 50, 50, 0.75);
+  z-index: 2;
 }
 
 .container {
   max-width: 90% !important;
   width: 90% !important;
+}
+
+.pagination li.active {
+  background-color: #b71c1c !important;
+  -webkit-box-shadow: inset 0px 15px 5px -5px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow: inset 0px 15px 5px -5px rgba(50, 50, 50, 0.75);
+  box-shadow: inset 0px 15px 5px -5px rgba(50, 50, 50, 0.75);
+  border-bottom: 3px solid #fff !important;
+  padding-bottom: 45px;
+}
+
+.pagination li a {
+  color: #fff !important;
+}
+
+.bg {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: inherit;
+  margin-top: -0.5rem;
+  z-index: -1;
+  position: relative;
+}
+
+nav {
+  z-index: 1;
+}
+
+#page-not-found {
+  position: absolute;
+  top: 108px;
+  left: 50px;
+  font-size: 50px;
 }

@@ -14,6 +14,24 @@ $(document).ready(function () {
   $(".modal").modal({});
 });
 
+$("#driverModal").click(function () {
+  $("#driverSearch").val("");
+  $(".list")
+    .find("tr")
+    .each(function () {
+      $(this).show();
+    });
+});
+
+$("#constructorModal").click(function () {
+  $("#constructorSearch").val("");
+  $(".list")
+    .find("tr")
+    .each(function () {
+      $(this).show();
+    });
+});
+
 $("#driverSearch").keyup(function () {
   $(".list")
     .find("tr")
@@ -63,6 +81,8 @@ $(".select").click(function () {
 });
 
 $(".driverSelect").click(function () {
+  console.log(value);
+  console.log(page);
   if (page == "quali") {
     $("#driver_forename_pos_quali_" + value).val(
       $(this).closest("tr").children("td:first").text()

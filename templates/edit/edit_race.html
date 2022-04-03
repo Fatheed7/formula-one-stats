@@ -52,16 +52,16 @@
               driver.driverId %}
               <input
                 placeholder="Driver"
-                id="driver_pos_forename_quali_{{quali}}"
+                id="driver_forename_pos_quali_{{quali.position | int - 1}}"
                 type="text"
-                value="{{driver.forename }} {{driver.surname }}"
+                value="{{driver.forename }}"
                 class="center-align validate"
               />
             </td>
             <td>
               <input
                 placeholder="Driver"
-                id="driver_pos_surname_quali_{{quali}}"
+                id="driver_surname_pos_quali_{{quali.position | int - 1}}"
                 type="text"
                 value="{{driver.surname }}"
                 class="center-align validate"
@@ -69,21 +69,19 @@
               {% endif %} {% endfor %}
             </td>
             <td>
-              <input
-                placeholder="Driver ID"
-                id="driver_id_pos_quali_{{quali}}"
-                type="text"
-                value="{{quali.driverId}}"
-                class="validate center-align"
-                disabled
-              />
+              <a
+                class="waves-effect waves-light btn modal-trigger select"
+                id="driver_select_pos_quali_{{quali.position | int - 1}}"
+                href="#driverModal"
+                >Select</a
+              >
             </td>
             <td>
               {% for constructor in constructors %} {% if quali.constructorId ==
               constructor.constructorId %}
               <input
                 placeholder="Constructor"
-                id="constructor_pos_quali_{{quali}}"
+                id="constructor_quali_pos_{{quali.position | int - 1}}"
                 value="{{constructor.name}}"
                 type="text"
                 class="center-align validate"
@@ -91,20 +89,18 @@
               {% endif %} {% endfor %}
             </td>
             <td>
-              <input
-                placeholder="Constructor ID"
-                id="constructor_id_pos_quali_{{quali}}"
-                type="text"
-                value="{{quali.constructorId}}"
-                class="center-align validate"
-                disabled
-              />
+              <a
+                class="waves-effect waves-light btn modal-trigger select"
+                id="constructor_select_pos_quali_{{quali.position | int - 1}}"
+                href="#constructorModal"
+                >Select</a
+              >
             </td>
 
             <td>
               <input
                 placeholder="Q1 Time"
-                id="q1_pos_{{quali}}"
+                id="q1_pos_{{quali.position | int - 1}}"
                 type="text"
                 value="{{quali.q1}}"
                 class="center-align validate"
@@ -113,7 +109,7 @@
             <td>
               <input
                 placeholder="Q2 Time"
-                id="q2_pos_{{quali}}"
+                id="q2_pos_{{quali.position | int - 1}}"
                 type="text"
                 value="{{quali.q2}}"
                 class="center-align validate"
@@ -122,7 +118,7 @@
             <td>
               <input
                 placeholder="Q3 Time"
-                id="q3_pos_{{quali}}"
+                id="q3_pos_{{quali.position | int - 1}}"
                 type="text"
                 value="{{quali.q3}}"
                 class="center-align validate"
@@ -361,10 +357,11 @@
               driver.driverId %}
               <input
                 placeholder="Driver"
-                id="driver_forename_pos_race_{{result}}"
+                id="driver_forename_pos_race_{{result.position| int -1}}"
                 type="text"
                 value="{{driver.forename }}"
                 class="center-align validate"
+                readonly
               />
               {% endif %} {% endfor %}
             </td>
@@ -373,17 +370,18 @@
               driver.driverId %}
               <input
                 placeholder="Driver"
-                id="driver_surname_pos_race_{{result}}"
+                id="driver_surname_pos_race_{{result.position| int -1}}"
                 type="text"
                 value=" {{driver.surname }}"
                 class="center-align validate"
+                readonly
               />
               {% endif %} {% endfor %}
             </td>
             <td>
               <a
                 class="waves-effect waves-light btn modal-trigger select"
-                id="driver_select_pos_{{n}}"
+                id="driver_select_pos_{{result.position| int -1}}"
                 href="#driverModal"
                 >Select</a
               >
@@ -393,17 +391,18 @@
               == constructor.constructorId %}
               <input
                 placeholder="Constructor"
-                id="constructor_race_pos_{{result}}"
+                id="constructor_race_pos_{{result.position| int -1}}"
                 value="{{constructor.name}}"
                 type="text"
                 class="center-align validate"
+                readonly
               />
               {% endif %} {% endfor %}
             </td>
             <td>
               <a
                 class="waves-effect waves-light btn modal-trigger select"
-                id="driver_select_pos_race_{{n}}"
+                id="driver_select_pos_race_{{result.position| int -1}}"
                 href="#constructorModal"
                 >Select</a
               >
@@ -414,7 +413,7 @@
               driver.driverId %}
               <input
                 placeholder="Points"
-                id="points_pos_race_{{result}}"
+                id="points_pos_race_{{result.position| int -1}}"
                 type="text"
                 value="{{driver.points}}"
                 class="center-align validate"
@@ -426,7 +425,7 @@
               driver.driverId %}
               <input
                 placeholder="Laps"
-                id="laps_pos_race_{{result}}"
+                id="laps_pos_race_{{result.position| int -1}}"
                 type="text"
                 value="{{result.laps}}"
                 class="center-align validate"

@@ -1,17 +1,36 @@
 {% extends "base.html" %} {% block content %}
-<h3 class="light-blue-text text-darken-4 center-align">{{ drivers.forename }} {{ drivers.surname }}</h3>
+<h3 class="light-blue-text text-darken-4 center-align">
+  {{ drivers.forename }} {{ drivers.surname }}
+</h3>
 
 <div class="row">
-    <div class="col s6 offset-s3 center-align">
-        <div class="card z-depth-0">
-            <div class="card-image waves-effect waves-block waves-light">
-              <img class="activator" src="">
-            </div>
-          </div>
+  <div class="col s6 offset-s3 center-align">
+    <div class="card z-depth-0">
+      <div class="card-image waves-effect waves-block waves-light">
+        <img class="activator" src="" />
+      </div>
     </div>
+  </div>
 </div>
-<h5 class="light-blue-text text-darken-4 center-align">Number of Races: {{ results | length }}</h5>
+<h5 class="light-blue-text text-darken-4 center-align">
+  Number of Races: {{ results | length }}
+</h5>
 
-<h5 class="light-blue-text text-darken-4 center-align">Number of Wins: {{ wins | length }}</h5>
-    
+<h5 class="light-blue-text text-darken-4 center-align">
+  Number of Wins: {{ wins | length }}
+</h5>
+
+<h5 class="light-blue-text text-darken-4 center-align">
+  Number of Podiums: {{ wins | length + second | length + third | length }}
+</h5>
+
+<h5 class="light-blue-text text-darken-4 center-align">
+  Percentage of Wins: {{ ((wins | length / results | length) * 100)|round(2) }}%
+</h5>
+
+<h5 class="light-blue-text text-darken-4 center-align">
+  Percentage of Podiums: {{ (((wins | length + second | length + third | length)
+  / results | length) * 100)|round(2) }}%
+</h5>
+
 {% endblock %}

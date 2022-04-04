@@ -199,8 +199,10 @@ def view_driver(driver_id):
     drivers = mongo.db.drivers.find_one({"_id": ObjectId(driver_id)})
     results = list(mongo.db.results.find({"driverId": drivers["driverId"]}))
     wins = list(mongo.db.results.find({"driverId": drivers["driverId"], "position": 1}))
+    second = list(mongo.db.results.find({"driverId": drivers["driverId"], "position": 2}))
+    third = list(mongo.db.results.find({"driverId": drivers["driverId"], "position": 3}))
     return render_template(
-        "view/view_driver.html", results=results, drivers=drivers, wins=wins)
+        "view/view_driver.html", results=results, drivers=drivers, wins=wins, second=second, third=third)
 
 
 @app.route("/view_race/<race_id>")

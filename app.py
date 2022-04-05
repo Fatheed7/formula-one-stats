@@ -35,15 +35,24 @@ def get_pagination_data(offset=0, per_page=20, type = "all"):
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template("home.html")
+    if session.get("username"):
+        username = mongo.db.users.find_one(
+            {"username": session["user"]})["username"]
+        return render_template("home.html", username=username)
+    else:
+        return render_template("home.html")
 
 @app.errorhandler(404)
 def invalid_route(e):
-    return render_template("error/404.html")
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    return render_template("error/404.html", username=username)
 
 
 @app.route("/circuits")
 def circuits():
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
     page, per_page, offset = get_page_args(page_parameter='page',
                                            per_page_parameter='per_page')
     per_page=20
@@ -57,11 +66,14 @@ def circuits():
                            page=page,
                            per_page=per_page,
                            pagination=pagination,
+                           username=username
                            )
 
 
 @app.route("/constructors")
 def constructors():
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
     page, per_page, offset = get_page_args(page_parameter='page',
                                            per_page_parameter='per_page')
     per_page=20
@@ -75,6 +87,7 @@ def constructors():
                            page=page,
                            per_page=per_page,
                            pagination=pagination,
+                           username=username
                            )
 
 @app.route("/dashboard")
@@ -84,6 +97,8 @@ def dashboard():
 
 @app.route("/drivers")
 def drivers():
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
     page, per_page, offset = get_page_args(page_parameter='page',
                                            per_page_parameter='per_page')
     per_page=20
@@ -97,10 +112,13 @@ def drivers():
                            page=page,
                            per_page=per_page,
                            pagination=pagination,
+                           username=username
                            )
 
 @app.route("/edit_driver/<driver_id>", methods=["GET", "POST"])
 def edit_driver(driver_id):
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
     if request.method == "POST":
         submit = {
             "forename": request.form.get("forename"),
@@ -117,10 +135,12 @@ def edit_driver(driver_id):
 
     drivers = mongo.db.drivers.find_one({"_id": ObjectId(driver_id)})
     countries = list(mongo.db.countries.find().sort("nationality", 1))
-    return render_template("edit/edit_driver.html", countries=countries, drivers=drivers)
+    return render_template("edit/edit_driver.html", countries=countries, drivers=drivers, username=username)
 
 @app.route("/edit_race/<race_id>", methods=["GET", "POST"])
 def edit_race(race_id):
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
     races = mongo.db.races.find_one({"_id": ObjectId(race_id)})
     results = list(mongo.db.results.find({"raceId": races["raceId"]}).sort("positionOrder", 1))
     statuses = list(mongo.db.status.find().sort("status", 1))
@@ -134,10 +154,13 @@ def edit_race(race_id):
     previous_race = list(mongo.db.races.find({"year": races["year"], "round": races["round"] - 1}))
     return render_template(
         "edit/edit_race.html", statuses=statuses, races=races, results=results, drivers=drivers, constructors=constructors, qualifying=qualifying, 
-        circuits=circuits, driver_standings=driver_standings, constructor_standings=constructor_standings, seasons=seasons, previous_race=previous_race)
+        circuits=circuits, driver_standings=driver_standings, constructor_standings=constructor_standings, seasons=seasons, previous_race=previous_race,
+        username=username)
 
 @app.route("/races")
 def races():
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
     page, per_page, offset = get_page_args(page_parameter='page',
                                            per_page_parameter='per_page')
     per_page=20
@@ -155,11 +178,14 @@ def races():
                            page=page,
                            per_page=per_page,
                            pagination=pagination,
+                           username=username
                            )
 
 
 @app.route("/seasons")
 def seasons():
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
     page, per_page, offset = get_page_args(page_parameter='page',
                                            per_page_parameter='per_page')
     per_page=20
@@ -173,40 +199,49 @@ def seasons():
                            page=page,
                            per_page=per_page,
                            pagination=pagination,
+                           username=username
                            )
 
 
 @app.route("/view_circuit/<circuit_id>")
 def view_circuit(circuit_id):
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
     circuits = mongo.db.circuits.find_one({"_id": ObjectId(circuit_id)})
     races = list(mongo.db.races.find().sort("year", 1))
     seasons = list(mongo.db.seasons.find().sort("year", 1))
     print(seasons)
     return render_template(
-        "view/view_circuit.html", races=races, circuits=circuits, seasons=seasons)
+        "view/view_circuit.html", races=races, circuits=circuits, seasons=seasons, username=username)
 
 @app.route("/view_constructor/<constructor_id>")
 def view_constructor(constructor_id):
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
     constructors = mongo.db.constructors.find_one({"_id": ObjectId(constructor_id)})
     constructor_results = list(mongo.db.constructor_results.find({"constructorId": constructors["constructorId"]}))
     seasons = list(mongo.db.seasons.find({"constructorChampionId": constructors["constructorId"]})) 
     return render_template(
-        "view/view_constructor.html", constructor_results=constructor_results, constructors=constructors, seasons=seasons)
+        "view/view_constructor.html", constructor_results=constructor_results, constructors=constructors, seasons=seasons, username=username)
 
 
 @app.route("/view_driver/<driver_id>")
 def view_driver(driver_id):
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
     drivers = mongo.db.drivers.find_one({"_id": ObjectId(driver_id)})
     results = list(mongo.db.results.find({"driverId": drivers["driverId"]}))
     wins = list(mongo.db.results.find({"driverId": drivers["driverId"], "position": 1}))
     second = list(mongo.db.results.find({"driverId": drivers["driverId"], "position": 2}))
     third = list(mongo.db.results.find({"driverId": drivers["driverId"], "position": 3}))
     return render_template(
-        "view/view_driver.html", results=results, drivers=drivers, wins=wins, second=second, third=third)
+        "view/view_driver.html", results=results, drivers=drivers, wins=wins, second=second, third=third, username=username)
 
 
 @app.route("/view_race/<race_id>")
 def view_race(race_id):
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
     races = mongo.db.races.find_one({"_id": ObjectId(race_id)})
     statuses = list(mongo.db.status.find())
     drivers = list(mongo.db.drivers.find())
@@ -219,17 +254,19 @@ def view_race(race_id):
     results = list(mongo.db.results.find().sort("positionOrder", 1))
     return render_template(
         "view/view_race.html", statuses=statuses, races=races, results=results, drivers=drivers, constructors=constructors, qualifying=qualifying, 
-        circuits=circuits, driver_standings=driver_standings, constructor_standings=constructor_standings, seasons=seasons)
+        circuits=circuits, driver_standings=driver_standings, constructor_standings=constructor_standings, seasons=seasons, username=username)
 
 @app.route("/view_season/<season_id>")
 def view_season(season_id):
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
     seasons = mongo.db.seasons.find_one({"_id": ObjectId(season_id)})
     races = list(mongo.db.races.find().sort("round", 1))
     constructors = list(mongo.db.constructors.find({"constructorId": seasons["constructorChampionId"]}))
     circuits = list(mongo.db.circuits.find())
     drivers = list(mongo.db.drivers.find({"driverId": seasons["driverChampionId"]}))
     return render_template(
-        "view/view_season.html", races=races, seasons=seasons, constructors=constructors, drivers=drivers, circuits=circuits)
+        "view/view_season.html", races=races, seasons=seasons, constructors=constructors, drivers=drivers, circuits=circuits, username=username)
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -244,6 +281,7 @@ def register():
 
         register = {
             "username": request.form.get("username").lower(),
+            "display_name": request.form.get("username"),
             "password": generate_password_hash(request.form.get("password"))
         }
         mongo.db.users.insert_one(register)
@@ -297,9 +335,11 @@ def profile(username):
     # grab the session user's username from db
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
+    display_name = mongo.db.users.find_one(
+        {"username": session["user"]})["display_name"]
 
     if session["user"]:
-        return render_template("profile.html", username=username)
+        return render_template("profile.html", username=username, display_name=display_name)
 
     return redirect(url_for("login"))
 

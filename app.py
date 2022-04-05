@@ -35,7 +35,7 @@ def get_pagination_data(offset=0, per_page=20, type = "all"):
 @app.route("/")
 @app.route("/home")
 def home():
-    if session.get("username"):
+    if not session.get("user") is None:
         username = mongo.db.users.find_one(
             {"username": session["user"]})["username"]
         return render_template("home.html", username=username)

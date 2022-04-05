@@ -1,0 +1,76 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="row">
+  <div class="col s12 m8 offset-m2">
+    <div class="card-panel">
+      <h3 class="center-align light-blue-text text-darken-4">
+        {{ display_name }}'s Profile
+      </h3>
+    </div>
+    <div class="input-field col s6 offset-s3">
+      <i class="fa-solid fa-user-tag prefix light-blue-text text-darken-4"></i>
+      <input
+        id="displayName"
+        name="displayName"
+        type="text"
+        minlength="5"
+        maxlength="15"
+        pattern="^[a-zA-Z0-9]{5,15}$"
+        class="validate"
+        value="{{display_name}}"
+        required
+      />
+      <label for="displayName">Display Name</label>
+    </div>
+    <div class="input-field col s6 offset-s3">
+      <i class="fa-solid fa-envelope prefix light-blue-text text-darken-4"></i>
+      <input
+        id="displayName"
+        name="displayName"
+        type="text"
+        minlength="5"
+        maxlength="15"
+        pattern="^[a-zA-Z0-9]{5,15}$"
+        class="validate"
+        required
+      />
+      <label for="displayName">Email</label>
+    </div>
+    <div class="row">
+      <div class="col s12">
+        <p class="center-align">
+          <a
+            href=""
+            class="col s6 offset-s3 btn light-blue darken-4 text-shadow"
+            >Save Changes</a
+          >
+        </p>
+      </div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col s12">
+        <p class="center-align">
+          <a
+            href="{{url_for('change_password')}}"
+            class="col s6 offset-s3 btn green darken-3 text-shadow"
+            >Change Password</a
+          >
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12">
+        <p class="center-align">
+          <a
+            href="{{url_for('delete_account')}}"
+            class="col s6 offset-s3 btn grey darken-2 text-shadow"
+            >Delete Account</a
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -90,12 +90,18 @@ $(".driverSelect").click(function () {
     $("#driver_surname_pos_quali_" + value).val(
       $(this).closest("tr").children("td:eq(1)").text()
     );
+    $("#driver_id_pos_quali_" + value).val(
+      $(this).closest("tr").children("td:eq(2)").text()
+    );
   } else if (page == "race") {
     $("#driver_forename_pos_race_" + value).val(
       $(this).closest("tr").children("td:first").text()
     );
     $("#driver_surname_pos_race_" + value).val(
       $(this).closest("tr").children("td:eq(1)").text()
+    );
+    $("#driver_id_pos_race_" + value).val(
+      $(this).closest("tr").children("td:eq(2)").text()
     );
   }
 });
@@ -105,9 +111,15 @@ $(".constructorSelect").click(function () {
     $("#constructor_quali_pos_" + value).val(
       $(this).closest("tr").children("td:first").text()
     );
+    $("#constructor_id_quali_pos_" + value).val(
+      $(this).closest("tr").children("td:eq(2)").text()
+    );
   } else if (page == "race") {
     $("#constructor_race_pos_" + value).val(
       $(this).closest("tr").children("td:first").text()
+    );
+    $("#constructor_id_race_pos_" + value).val(
+      $(this).closest("tr").children("td:eq(2)").text()
     );
   }
 });

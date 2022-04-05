@@ -152,6 +152,20 @@ def edit_race(race_id):
     constructors = list(mongo.db.constructors.find())
     constructor_standings = list(mongo.db.constructor_standings.find({"raceId": races["raceId"]}).sort("position", 1))
     previous_race = list(mongo.db.races.find({"year": races["year"], "round": races["round"] - 1}))
+    
+    if request.method == "POST":
+        print(races)
+        for n in range(20):
+            qualifying = {
+                "raceId": races["raceId"],
+                "driverId": request.form.get("driver_id_pos_quali_" + str(n)),
+                "constructorId": request.form.get("constructor_id_quali_pos_" + str(n)),
+                "position": n+1,
+                "q1": request.form.get("q1_pos_" + str(n)),
+                "q2": request.form.get("q2_pos_" + str(n)),
+                "q3": request.form.get("q3_pos_" + str(n)),
+            }
+            mongo.db.test.insert_one(qualifying)
     return render_template(
         "edit/edit_race.html", statuses=statuses, races=races, results=results, drivers=drivers, constructors=constructors, qualifying=qualifying, 
         circuits=circuits, driver_standings=driver_standings, constructor_standings=constructor_standings, seasons=seasons, previous_race=previous_race,
@@ -268,6 +282,9 @@ def view_season(season_id):
     return render_template(
         "view/view_season.html", races=races, seasons=seasons, constructors=constructors, drivers=drivers, circuits=circuits, username=username)
 
+
+## AUTH ROUTES
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -330,6 +347,8 @@ def logout():
     session.pop("user")
     return redirect(url_for("login"))
 
+## PROFILE ROUTES
+
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
     # grab the session user's username from db
@@ -339,9 +358,17 @@ def profile(username):
         {"username": session["user"]})["display_name"]
 
     if session["user"]:
-        return render_template("profile.html", username=username, display_name=display_name)
+        return render_template("profile/profile.html", username=username, display_name=display_name)
 
     return redirect(url_for("login"))
+
+@app.route("/changepassword", methods=["GET", "POST"])
+def change_password():
+    return render_template("profile/change_password.html")
+
+@app.route("/deleteaccount", methods=["GET", "POST"])
+def delete_account():
+    return render_template("profile/delete_account.html")
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),

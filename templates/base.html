@@ -80,7 +80,12 @@
       </div>
       {% endfor %} {% endif %} {% endwith %}
     </section>
-        <main class="container">{% block content %} {% endblock %}</main>
+    {%- if request.path == "/" or request.path == "/home" %}
+        <main class="container home">
+    {% else %}
+        <main class="container">
+    {%- endif %}
+    {% block content %} {% endblock %}</main>
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="

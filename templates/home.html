@@ -1,7 +1,21 @@
-{% extends "base.html" %}
-    {% block content %}
-    <div class="center-align">
-         <p>This is just some Placeholder Text</p>
-         <p>As this site is part of a project, you'll need to register/login in the top right</p>
-    </div>
-    {% endblock %}
+{% extends "base.html" %} {% block content %}
+<style type="text/css">
+  html,
+  body {
+    overflow: hidden;
+  }
+</style>
+<video autoplay muted loop id="video-background">
+  <source
+    src="{{ url_for('static', filename='mp4/bg.mp4') }}"
+    type="video/mp4"
+  />
+</video>
+<div class="content center-align">
+  <p>This is just some Placeholder Text</p>
+  <p>
+    As this site is part of a project, you'll need to register/login in the top
+    right
+  </p>
+</div>
+{% endblock %}

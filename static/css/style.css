@@ -102,3 +102,28 @@ nav {
   left: 50px;
   font-size: 50px;
 }
+
+/* Style the video: 100% width and height to cover the entire window */
+#video-background {
+  position: fixed;
+  right: 0;
+  top: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -1;
+}
+
+/* Add some content at the bottom of the video/page */
+.content {
+  position: relative;
+  top: 0;
+  background: rgba(0, 0, 0, 0.8);
+  color: #f1f1f1;
+  width: 100vw;
+  height: 100vh;
+  padding: 20px;
+}
+
+.home {
+  margin: 0 !important;
+}

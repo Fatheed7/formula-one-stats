@@ -1,10 +1,5 @@
 {% extends "base.html" %} {% block content %}
-<style type="text/css">
-  html,
-  body {
-    overflow: hidden;
-  }
-</style>
+<style type="text/css"></style>
 <video autoplay muted loop id="video-background">
   <source
     src="{{ url_for('static', filename='mp4/bg.mp4') }}"
@@ -12,10 +7,53 @@
   />
 </video>
 <div class="content center-align">
-  <p>This is just some Placeholder Text</p>
-  <p>
-    As this site is part of a project, you'll need to register/login in the top
-    right
-  </p>
+  <div class="container" id="title">
+    <h1 class="header center">Welcome to Formula One Statistics</h1>
+    <div class="slogan row center">
+      <h5 class="slogan col s12 light">
+        Slogan goes here - Note to self: Think of something clever.
+      </h5>
+    </div>
+    <br /><br />
+  </div>
+
+  <div class="row">
+    <div class="col s12 m4">
+      <div class="icon-block">
+        <h2 class="center icon light-blue-text">
+          <i class="fa-solid fa-database"></i>
+        </h2>
+        <h5 class="center">Placeholder</h5>
+
+        <p class="light">Placeholder</p>
+      </div>
+    </div>
+
+    <div class="col s12 m4">
+      <div class="icon-block">
+        <h2 class="center icon light-blue-text">
+          <i class="fa-solid fa-heart"></i>
+        </h2>
+        <h5 class="center">Placeholder</h5>
+
+        <p class="light">Placeholder</p>
+      </div>
+    </div>
+
+    <div class="col s12 m4">
+      <div class="icon-block">
+        <h2 class="center icon light-blue-text">
+          <i class="fa-solid fa-flag-checkered"></i>
+        </h2>
+        <h5 class="center">Placeholder</h5>
+
+        <p class="light">Placeholder</p>
+      </div>
+    </div>
+    <br /><br />
+  </div>
 </div>
+
+<!--   Icon Section   -->
+
 {% endblock %}

@@ -127,3 +127,39 @@ nav {
 .home {
   margin: 0 !important;
 }
+
+#title {
+  background: rgba(97, 97, 97, 0.712);
+  padding-top: 1px;
+  border-radius: 50px;
+}
+
+.icon-block {
+  margin-top: 30px;
+  padding: 15px;
+  background: rgba(97, 97, 97, 0.712);
+  border-radius: 50px;
+}
+
+.header,
+.icon {
+  font-size: clamp(2.25rem, 0.0625rem + 7vw, 4rem);
+}
+
+.slogan {
+  font-size: clamp(1.5rem, 0.5625rem + 3vw, 2.25rem);
+  margin-bottom: 0 !important;
+}
+
+@media (min-width: 768px) {
+  html,
+  body {
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 600px) {
+  .content {
+    height: 100%;
+  }
+}

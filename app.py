@@ -35,12 +35,14 @@ def get_pagination_data(offset=0, per_page=20, type = "all"):
 @app.route("/")
 @app.route("/home")
 def home():
-    if not session.get("user") is None:
-        username = mongo.db.users.find_one(
-            {"username": session["user"]})["username"]
-        return render_template("home.html", username=username)
-    else:
+    print(session.get("user"))
+    if session.get("user") is None:
         return render_template("home.html")
+    else:
+        username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+        return render_template("home.html", username=username)
+        
 
 @app.errorhandler(404)
 def invalid_route(e):
@@ -92,7 +94,12 @@ def constructors():
 
 @app.route("/dashboard")
 def dashboard():
-    return render_template("dashboard.html")
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    if username == "admin":
+        return render_template("dashboard.html", username=username)
+    else: 
+         return redirect(url_for("login"))
 
 
 @app.route("/drivers")
@@ -336,6 +343,7 @@ def login():
             # username doesn't exist
             flash("Incorrect Username and/or Password")
             return redirect(url_for("login"))
+
 
     return render_template("auth/login.html")
 

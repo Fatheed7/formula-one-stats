@@ -5,7 +5,6 @@ from bson.objectid import ObjectId
 from flask import (Flask, flash, redirect, render_template, request,
                    session, url_for)
 from flask_pymongo import PyMongo
-from flask_paginate import Pagination, get_page_args
 from werkzeug.security import generate_password_hash, check_password_hash
 
 if os.path.exists("env.py"):
@@ -19,18 +18,6 @@ app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
-
-def get_pagination_data(offset=0, per_page=20, type = "all"):
-    if type == "drivers":
-        return mongo.db.drivers.find().sort("driverId", 1).skip(offset).limit(per_page)
-    elif type == "circuits":
-        return mongo.db.circuits.find().sort("circuitId", 1).skip(offset).limit(per_page)
-    elif type == "constructors":
-        return mongo.db.constructors.find().sort("constructorId", 1).skip(offset).limit(per_page)
-    elif type == "races":
-        return mongo.db.races.find().sort([['year', 1], ['round', 1]]).skip(offset).limit(per_page)
-    elif type == "seasons":
-        return mongo.db.seasons.find().sort("year", 1).skip(offset).limit(per_page)
 
 @app.route("/")
 @app.route("/home")
@@ -55,19 +42,9 @@ def invalid_route(e):
 def circuits():
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
-    page, per_page, offset = get_page_args(page_parameter='page',
-                                           per_page_parameter='per_page')
-    per_page=20
-    offset = ((page - 1) * per_page)
     circuits = list(mongo.db.circuits.find())
-    total = len(circuits)
-    pagination_circuits = get_pagination_data(offset=offset, per_page=per_page, type="circuits")
-    pagination = Pagination(page=page, per_page=per_page, total=total)
     return render_template('circuits.html',
-                           circuits=pagination_circuits,
-                           page=page,
-                           per_page=per_page,
-                           pagination=pagination,
+                           circuits=circuits,
                            username=username
                            )
 
@@ -76,19 +53,9 @@ def circuits():
 def constructors():
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
-    page, per_page, offset = get_page_args(page_parameter='page',
-                                           per_page_parameter='per_page')
-    per_page=20
-    offset = ((page - 1) * per_page)
     constructors = list(mongo.db.constructors.find())
-    total = len(constructors)
-    pagination_constructors = get_pagination_data(offset=offset, per_page=per_page, type="constructors")
-    pagination = Pagination(page=page, per_page=per_page, total=total)
     return render_template('constructors.html',
-                           constructors=pagination_constructors,
-                           page=page,
-                           per_page=per_page,
-                           pagination=pagination,
+                           constructors=constructors,
                            username=username
                            )
 
@@ -106,19 +73,9 @@ def dashboard():
 def drivers():
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
-    page, per_page, offset = get_page_args(page_parameter='page',
-                                           per_page_parameter='per_page')
-    per_page=20
-    offset = ((page - 1) * per_page)
     drivers = list(mongo.db.drivers.find())
-    total = len(drivers)
-    pagination_drivers = get_pagination_data(offset=offset, per_page=per_page, type="drivers")
-    pagination = Pagination(page=page, per_page=per_page, total=total)
     return render_template('drivers.html',
-                           drivers=pagination_drivers,
-                           page=page,
-                           per_page=per_page,
-                           pagination=pagination,
+                           drivers=drivers,
                            username=username
                            )
 
@@ -182,23 +139,13 @@ def edit_race(race_id):
 def races():
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
-    page, per_page, offset = get_page_args(page_parameter='page',
-                                           per_page_parameter='per_page')
-    per_page=20
-    offset = ((page - 1) * per_page)
     races = list(mongo.db.races.find().sort("year", 1))
     seasons = list(mongo.db.seasons.find())
     circuits = list(mongo.db.circuits.find())
-    total = len(races)
-    pagination_races = get_pagination_data(offset=offset, per_page=per_page, type="races")
-    pagination = Pagination(page=page, per_page=per_page, total=total)
     return render_template('races.html',
-                           races=pagination_races,
+                           races=races,
                            seasons=seasons,
                            circuits=circuits,
-                           page=page,
-                           per_page=per_page,
-                           pagination=pagination,
                            username=username
                            )
 
@@ -207,19 +154,9 @@ def races():
 def seasons():
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
-    page, per_page, offset = get_page_args(page_parameter='page',
-                                           per_page_parameter='per_page')
-    per_page=20
-    offset = ((page - 1) * per_page)
     seasons = list(mongo.db.seasons.find())
-    total = len(seasons)
-    pagination_seasons = get_pagination_data(offset=offset, per_page=per_page, type="seasons")
-    pagination = Pagination(page=page, per_page=per_page, total=total)
     return render_template('seasons.html',
-                           seasons=pagination_seasons,
-                           page=page,
-                           per_page=per_page,
-                           pagination=pagination,
+                           seasons=seasons,
                            username=username
                            )
 

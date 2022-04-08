@@ -1,8 +1,7 @@
-{% extends "base.html" %} {% block content %} {{ pagination.links }}
-<table class="striped centered">
+{% extends "base.html" %} {% block content %}
+<table class="striped centered display" id="contentTable">
   <thead>
     <tr>
-      <td>#</td>
       <th>Forename</th>
       <th>Surname</th>
       <th>Code</th>
@@ -19,7 +18,6 @@
   <tbody>
     {% for driver in drivers %}
     <tr>
-      <td>{{ loop.index + pagination.skip }}</td>
       <td>{{ driver.forename }}</td>
       <td>{{ driver.surname }}</td>
       <td>{{ driver.code }}</td>

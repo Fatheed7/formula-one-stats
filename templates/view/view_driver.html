@@ -5,72 +5,69 @@
     {{ drivers.forename }} {{ drivers.surname }}
   </h4>
 </div>
-<div class="container">
-  <div class="row valign-wrapper">
-    <div class="col s4 center-align">
-      <p>
-        <img
-          src="{{ url_for('static', filename='img/no_image_available.svg') }}"
-        />
-      </p>
-    </div>
-    <div class="col s8 center-align">
-      <h3 class="light-blue-text text-darken-4 center-align">
-        Information about {{ drivers.forename }} {{ drivers.surname }}
-      </h3>
-      <table>
-        <tbody>
-          <tr>
-            <td>Forename</td>
-            <td>{{ drivers.forename }}</td>
-          </tr>
-          <tr>
-            <td>Surname</td>
-            <td>{{ drivers.surname }}</td>
-          </tr>
-          <tr>
-            <td>Nationality</td>
-            <td>{{ drivers.nationality }}</td>
-          </tr>
-          <tr>
-            <td>Date of Birth</td>
-            <td>{{ drivers.dob }}</td>
-          </tr>
-          <tr>
-            <td>Drivers Code</td>
-            <td>{{ drivers.code }}</td>
-          </tr>
-        </tbody>
-      </table>
-      <h3 class="light-blue-text text-darken-4 center-align">
-        Race Statistics for {{ drivers.forename }} {{ drivers.surname }}
-      </h3>
-      <table>
-        <tbody>
-          <tr>
-            <td>Number of Races</td>
-            <td>{{ results | length }}</td>
-          </tr>
-          <tr>
-            <td>Number of Wins</td>
-            <td>{{ wins | length }}</td>
-          </tr>
-          <tr>
-            <td>Number of Podiums</td>
-            <td>{{ wins | length + second | length + third | length }}</td>
-          </tr>
-          <tr>
-            <td>Percentage of Podiums</td>
-            <td>{{ wins | length + second | length + third | length }}</td>
-          </tr>
-          <tr>
-            <td>Percentage of Wins</td>
-            <td>{{ ((wins | length / results | length) * 100)|round(2) }}%</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+<div class="row remove-bottom-margin valign-wrapper">
+  <div class="col s4 center-align">
+    <p>
+      <img
+        src="{{ url_for('static', filename='img/no_image_available.svg') }}"
+      />
+    </p>
+  </div>
+  <div class="col s8 center-align">
+    <h3 class="light-blue-text text-darken-4 center-align">
+      Information about {{ drivers.forename }} {{ drivers.surname }}
+    </h3>
+    <table id="#myTable">
+      <tbody>
+        <tr>
+          <td>Forename</td>
+          <td>{{ drivers.forename }}</td>
+        </tr>
+        <tr>
+          <td>Surname</td>
+          <td>{{ drivers.surname }}</td>
+        </tr>
+        <tr>
+          <td>Nationality</td>
+          <td>{{ drivers.nationality }}</td>
+        </tr>
+        <tr>
+          <td>Date of Birth</td>
+          <td>{{ drivers.dob }}</td>
+        </tr>
+        <tr>
+          <td>Drivers Code</td>
+          <td>{{ drivers.code }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3 class="light-blue-text text-darken-4 center-align">
+      Race Statistics for {{ drivers.forename }} {{ drivers.surname }}
+    </h3>
+    <table>
+      <tbody>
+        <tr>
+          <td>Number of Races</td>
+          <td>{{ results | length }}</td>
+        </tr>
+        <tr>
+          <td>Number of Wins</td>
+          <td>{{ wins | length }}</td>
+        </tr>
+        <tr>
+          <td>Number of Podiums</td>
+          <td>{{ wins | length + second | length + third | length }}</td>
+        </tr>
+        <tr>
+          <td>Percentage of Podiums</td>
+          <td>{{ wins | length + second | length + third | length }}</td>
+        </tr>
+        <tr>
+          <td>Percentage of Wins</td>
+          <td>{{ ((wins | length / results | length) * 100)|round(2) }}%</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
-
 {% endblock %}

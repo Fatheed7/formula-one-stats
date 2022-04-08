@@ -1,8 +1,7 @@
-{% extends "base.html" %} {% block content %} {{pagination.links}}
-<table class="striped centered">
+{% extends "base.html" %} {% block content %}
+<table class="striped centered display" id="contentTable">
   <thead>
     <tr>
-      <th>#</th>
       <th>Race Name</th>
       <th>Date</th>
       <th>Circuit</th>
@@ -14,7 +13,6 @@
   <tbody>
     {% for race in races %}
     <tr>
-      <td>{{ loop.index + pagination.skip }}</td>
       <td>{{ race.name }}</td>
       <td>{{ race.date }}</td>
       <td>

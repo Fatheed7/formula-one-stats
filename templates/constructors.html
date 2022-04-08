@@ -1,8 +1,7 @@
-{% extends "base.html" %} {% block content %} {{ pagination.links }}
-<table class="striped centered">
+{% extends "base.html" %} {% block content %}
+<table class="striped centered display" id="contentTable">
   <thead>
     <tr>
-      <th>#</th>
       <th>Constructor</th>
       <th>Nationality</th>
       <th>Wikipedia</th>
@@ -12,7 +11,6 @@
   <tbody>
     {% for constructor in constructors %}
     <tr>
-      <td>{{ loop.index + pagination.skip }}</td>
       <td>{{ constructor.name }}</td>
       <td>{{ constructor.nationality }}</td>
       <td>

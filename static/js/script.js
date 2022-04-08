@@ -12,6 +12,7 @@ $(document).ready(function () {
   $(".tabs").tabs();
   $(".tooltipped").tooltip();
   $(".modal").modal({});
+  $("#contentTable").DataTable();
 });
 
 $("#driverModal").click(function () {

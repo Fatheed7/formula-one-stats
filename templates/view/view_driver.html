@@ -1,36 +1,76 @@
 {% extends "base.html" %} {% block content %}
-<h3 class="light-blue-text text-darken-4 center-align">
-  {{ drivers.forename }} {{ drivers.surname }}
-</h3>
 
-<div class="row">
-  <div class="col s6 offset-s3 center-align">
-    <div class="card z-depth-0">
-      <div class="card-image waves-effect waves-block waves-light">
-        <img class="activator" src="" />
-      </div>
+<div class="pageHeader">
+  <h4 class="center-align displayName white-text text-shadow">
+    {{ drivers.forename }} {{ drivers.surname }}
+  </h4>
+</div>
+<div class="container">
+  <div class="row valign-wrapper">
+    <div class="col s4 center-align">
+      <p>
+        <img
+          src="{{ url_for('static', filename='img/no_image_available.svg') }}"
+        />
+      </p>
+    </div>
+    <div class="col s8 center-align">
+      <h3 class="light-blue-text text-darken-4 center-align">
+        Information about {{ drivers.forename }} {{ drivers.surname }}
+      </h3>
+      <table>
+        <tbody>
+          <tr>
+            <td>Forename</td>
+            <td>{{ drivers.forename }}</td>
+          </tr>
+          <tr>
+            <td>Surname</td>
+            <td>{{ drivers.surname }}</td>
+          </tr>
+          <tr>
+            <td>Nationality</td>
+            <td>{{ drivers.nationality }}</td>
+          </tr>
+          <tr>
+            <td>Date of Birth</td>
+            <td>{{ drivers.dob }}</td>
+          </tr>
+          <tr>
+            <td>Drivers Code</td>
+            <td>{{ drivers.code }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 class="light-blue-text text-darken-4 center-align">
+        Race Statistics for {{ drivers.forename }} {{ drivers.surname }}
+      </h3>
+      <table>
+        <tbody>
+          <tr>
+            <td>Number of Races</td>
+            <td>{{ results | length }}</td>
+          </tr>
+          <tr>
+            <td>Number of Wins</td>
+            <td>{{ wins | length }}</td>
+          </tr>
+          <tr>
+            <td>Number of Podiums</td>
+            <td>{{ wins | length + second | length + third | length }}</td>
+          </tr>
+          <tr>
+            <td>Percentage of Podiums</td>
+            <td>{{ wins | length + second | length + third | length }}</td>
+          </tr>
+          <tr>
+            <td>Percentage of Wins</td>
+            <td>{{ ((wins | length / results | length) * 100)|round(2) }}%</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
-<h5 class="light-blue-text text-darken-4 center-align">
-  Number of Races: {{ results | length }}
-</h5>
-
-<h5 class="light-blue-text text-darken-4 center-align">
-  Number of Wins: {{ wins | length }}
-</h5>
-
-<h5 class="light-blue-text text-darken-4 center-align">
-  Number of Podiums: {{ wins | length + second | length + third | length }}
-</h5>
-
-<h5 class="light-blue-text text-darken-4 center-align">
-  Percentage of Wins: {{ ((wins | length / results | length) * 100)|round(2) }}%
-</h5>
-
-<h5 class="light-blue-text text-darken-4 center-align">
-  Percentage of Podiums: {{ (((wins | length + second | length + third | length)
-  / results | length) * 100)|round(2) }}%
-</h5>
 
 {% endblock %}

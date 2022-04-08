@@ -1,5 +1,12 @@
 {% extends "base.html" %} {% block content %}
-<style type="text/css"></style>
+<style type="text/css">
+  @media (min-width: 768px) {
+    html,
+    body {
+      overflow: hidden;
+    }
+  }
+</style>
 <video autoplay muted loop id="video-background">
   <source
     src="{{ url_for('static', filename='mp4/bg.mp4') }}"
@@ -21,7 +28,10 @@
     <div class="col s12 m4">
       <div class="icon-block">
         <h2 class="center icon light-blue-text">
-          <i class="fa-solid fa-database"></i>
+          <i
+            class="fa-solid fa-database fa-flip"
+            style="--fa-animation-duration: 3s"
+          ></i>
         </h2>
         <h5 class="center">Placeholder</h5>
 
@@ -32,7 +42,7 @@
     <div class="col s12 m4">
       <div class="icon-block">
         <h2 class="center icon light-blue-text">
-          <i class="fa-solid fa-heart"></i>
+          <i class="fa-solid fa-heart fa-beat"></i>
         </h2>
         <h5 class="center">Placeholder</h5>
 
@@ -43,7 +53,10 @@
     <div class="col s12 m4">
       <div class="icon-block">
         <h2 class="center icon light-blue-text">
-          <i class="fa-solid fa-flag-checkered"></i>
+          <i
+            class="fa-solid fa-flag-checkered fa-fade"
+            style="--fa-animation-duration: 2s; --fa-fade-opacity: 0.6"
+          ></i>
         </h2>
         <h5 class="center">Placeholder</h5>
 

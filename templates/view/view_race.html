@@ -1,9 +1,11 @@
 {% extends "base.html" %} {% block content %}
 
-<div class="center-align">
-  <h3 class="light-blue-text text-darken-4">
+<div class="pageHeader">
+  <h4 class="center-align displayName white-text text-shadow">
     {{ races.year}} {{ races.name }}
-  </h3>
+  </h4>
+</div>
+<div class="center-align">
   <h4 class="light-blue-text text-darken-4">
     Round {{ races.round}} - {{ races.date }}
   </h4>

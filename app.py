@@ -372,11 +372,15 @@ def profile(username):
 
 @app.route("/changepassword", methods=["GET", "POST"])
 def change_password():
-    return render_template("profile/change_password.html")
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    return render_template("profile/change_password.html", username=username)
 
 @app.route("/deleteaccount", methods=["GET", "POST"])
 def delete_account():
-    return render_template("profile/delete_account.html")
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    return render_template("profile/delete_account.html", username=username)
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),

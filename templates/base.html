@@ -84,21 +84,53 @@
             {% endif %}
       </ul>
     </header>
-        <section>
+       
+    {%- if request.path == "/" or request.path == "/home" %}
+        <main class="container home">
+         <section>
       <!-- flash messages -->
       {% with messages = get_flashed_messages() %} {% if messages %} {% for
       message in messages %}
-      <div class="row flashes">
+      <div class="flashes">
         <h4 class="light-blue lighten-4 center-align">{{ message }}</h4>
       </div>
       {% endfor %} {% endif %} {% endwith %}
     </section>
-    {%- if request.path == "/" or request.path == "/home" %}
-        <main class="container home">
     {% else %}
         <main class="container">
+          <div class="wrapper">
+           <section>
+      <!-- flash messages -->
+      {% with messages = get_flashed_messages() %} {% if messages %} {% for
+      message in messages %}
+      <div class="flashes">
+        <h4 class="light-blue lighten-4 center-align">{{ message }}</h4>
+      </div>
+      {% endfor %} {% endif %} {% endwith %}
+    </section>
     {%- endif %}
-    {% block content %} {% endblock %}</main>
+    {% block content %} {% endblock %}
+      </div>
+    </main>
+    <div class="container"> 
+      <footer class="page-footer red darken-4">
+          <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text">Footer Content</h5>
+                <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+              </div>
+
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container">
+            © 2014 Copyright Text
+            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+            </div>
+          </div>
+        </footer>
+        </div>
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="

@@ -22,7 +22,6 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/home")
 def home():
-    print(session.get("user"))
     if session.get("user") is None:
         return render_template("home.html")
     else:
@@ -318,6 +317,14 @@ def delete_account():
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     return render_template("profile/delete_account.html", username=username)
+
+@app.route("/favourites", methods=["GET", "POST"])
+def favourites():
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    display_name = mongo.db.users.find_one(
+        {"username": session["user"]})["display_name"]
+    return render_template("profile/favourites.html", username=username,display_name=display_name)
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),

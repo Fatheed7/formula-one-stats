@@ -196,3 +196,23 @@ footer {
 .remove-bottom-margin {
   margin-bottom: 0px !important;
 }
+
+.dataTables_filter,
+#contentTable_length,
+#contentTable_paginate,
+#contentTable_info {
+  padding: 10px !important;
+}
+
+.dataTables_filter input {
+  height: 20px !important;
+}
+
+.contentTable {
+  height: 20px !important;
+}
+
+#contentTable_info,
+.dataTables_filter {
+  margin-top: 10px !important;
+}

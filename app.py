@@ -301,6 +301,15 @@ def profile(username):
     display_name = mongo.db.users.find_one(
         {"username": session["user"]})["display_name"]
 
+    if request.method == "POST":
+        # update display name
+        mongo.db.users.update_one(
+            {"username": session["user"]},
+            {"$set": {"display_name": request.form.get("display_name")}}
+        )
+        flash("Display name updated")
+        return redirect(url_for("profile", username=session["user"]))
+
     if session["user"]:
         return render_template("profile/profile.html", username=username, display_name=display_name)
 
@@ -309,7 +318,21 @@ def profile(username):
 @app.route("/changepassword", methods=["GET", "POST"])
 def change_password():
     username = mongo.db.users.find_one(
-        {"username": session["user"]})["username"]
+        {"username": session["user"]})
+    if request.method == "POST":
+        if check_password_hash(
+            username["password"], request.form.get("currentPassword")):
+            mongo.db.users.update_one(
+            {"username": session["user"]},
+            {"$set": {"password": generate_password_hash(request.form.get("newPassword"))}}
+        )
+            flash("Password has been updated successfully.")
+            return redirect(url_for("profile", username=session["user"]))
+
+        else:
+            flash("Incorrect Password")
+            return redirect(url_for("change_password", username=session["user"]))
+
     return render_template("profile/change_password.html", username=username)
 
 @app.route("/deleteaccount", methods=["GET", "POST"])

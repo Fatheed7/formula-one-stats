@@ -18,35 +18,52 @@
     <h1>Warning: This action is NOT reversable.</h1>
   </div>
   <div class="col s12 m8 offset-m2 center-align">
-    <h2>If you wish to proceed with this action type your name into the box below and click submit.
+    <h2>If you wish to proceed with this action please check the box below then enter your username, before clicking submit.
   </div>
+  <div class="col s12 m8 offset-m2 center-align">
+  <hr>
+  </div>
+
+ 
   
+  <form  class="col s12 m8 offset-m2"
+  method="POST"
+  action="{{ url_for('delete_account')}}">
+  <div class="input-field col s6 offset-s3">
+  <p class="center-align">
+    <label>
+      <input type="checkbox" class="filled-in" required/>
+      <span class="black-text">I understand this action will delete my account and is not reversable</span>
+    </label>
+  </p>
+</div>
   <div class="input-field col s6 offset-s3">
     <i class="fa-solid fa-user-tag prefix light-blue-text text-darken-4"></i>
     <input
-      id="username"
-      name="username"
-      type="text"
-      minlength="5"
-      maxlength="15"
-      pattern="^[a-zA-Z0-9]{5,15}$"
-      class="validate"
-      value="{{display_name}}"
-      required
-    />
+    id="username"
+    name="username"
+    type="text"
+    minlength="5"
+    maxlength="15"
+    pattern="^[a-zA-Z0-9]{5,15}$"
+    class="validate"
+    required
+  />
     <label for="username">Confirm your username before deletion.</label>
   </div>
   <div class="row">
     <div class="col s12">
       <p class="center-align">
-        <a
+        <button
+        id = "deleteAccount"
+        type="submit"
           href="{{url_for('delete_account')}}"
-          class="col s6 offset-s3 btn grey darken-2 text-shadow"
-          >Delete Account</a
-        >
+          class="col s6 offset-s3 btn grey darken-2 text-shadow">
+          Delete Account</button>
       </p>
     </div>
   </div>
+</form>
 </div>
 
 {% endblock %}

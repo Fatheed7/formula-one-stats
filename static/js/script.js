@@ -13,6 +13,8 @@ $(document).ready(function () {
   $(".tooltipped").tooltip();
   $(".modal").modal({});
   $("#contentTable").DataTable();
+  $("#year").html(new Date().getFullYear());
+  $("#loading").fadeOut(1500);
 });
 
 $("#driverModal").click(function () {

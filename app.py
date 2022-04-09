@@ -314,8 +314,26 @@ def change_password():
 
 @app.route("/deleteaccount", methods=["GET", "POST"])
 def delete_account():
+
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
+
+    if request.method == "POST":
+        # check if username matches
+        user_to_be_deleted = mongo.db.users.find_one(
+            {"username": request.form.get("username").lower()})
+
+        if user_to_be_deleted["username"] == username.lower():
+            mongo.db.users.delete_one({"username": username})
+            flash("Account has been deleted.")
+            session.pop("user")
+            return redirect(url_for("login"))
+
+        else:
+            # invalid password match
+            flash("Username does not match.")
+            return redirect(url_for("delete_account"))
+
     return render_template("profile/delete_account.html", username=username)
 
 @app.route("/favourites", methods=["GET", "POST"])

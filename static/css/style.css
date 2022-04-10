@@ -1,8 +1,21 @@
 @media only screen and (max-width: 992px) {
+
   header,
   main,
   footer {
     padding-left: 0;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+
+  .icon {
+    margin: 0 !important;
+  }
+
+  .icon-block {
+    margin-top: 20px;
+    padding: 10px;
   }
 }
 
@@ -34,6 +47,7 @@ hr {
   margin-left: 0;
   font-size: 12px;
 }
+
 .pagination-page-info b {
   color: black;
   background: #6aa6ed;
@@ -53,12 +67,6 @@ hr {
 
 .card-panel {
   padding: 15px !important;
-}
-
-.fa-solid,
-.fa-regular,
-.fa-brands {
-  padding-right: 5px !important;
 }
 
 .pagination {
@@ -233,4 +241,26 @@ footer {
 
 .preloader-wrapper {
   margin: auto;
+}
+
+.google-maps {
+  width: 25px;
+  height: 3vh;
+  vertical-align: middle;
+}
+
+/* https://webaim.org/techniques/css/invisiblecontent/ */
+.sr-only {
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+}
+
+label {
+  color: #000000;
 }

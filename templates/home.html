@@ -6,16 +6,14 @@
       overflow: hidden;
     }
   }
+  footer {
+    display: none;
+  }
 </style>
-<video autoplay muted loop id="video-background">
-  <source
-    src="{{ url_for('static', filename='mp4/bg.mp4') }}"
-    type="video/mp4"
-  />
-</video>
+
 <div class="content center-align">
   <div class="container" id="title">
-    <h1 class="header center">Welcome to Formula One Statistics</h1>
+    <h1 class="header center">Welcome to F1 Statistics</h1>
     <div class="slogan row center">
       <h5 class="slogan col s12 light">
         Slogan goes here - Note to self: Think of something clever.
@@ -27,12 +25,12 @@
   <div class="row">
     <div class="col s12 m4">
       <div class="icon-block">
-        <h2 class="center icon light-blue-text">
+        <p class="center icon light-blue-text">
           <i
             class="fa-solid fa-database fa-flip"
             style="--fa-animation-duration: 3s"
           ></i>
-        </h2>
+        </p>
         <h5 class="center">Placeholder</h5>
 
         <p class="light">Placeholder</p>
@@ -41,9 +39,9 @@
 
     <div class="col s12 m4">
       <div class="icon-block">
-        <h2 class="center icon light-blue-text">
+        <p class="center icon light-blue-text">
           <i class="fa-solid fa-heart fa-beat"></i>
-        </h2>
+        </p>
         <h5 class="center">Placeholder</h5>
 
         <p class="light">Placeholder</p>
@@ -52,12 +50,12 @@
 
     <div class="col s12 m4">
       <div class="icon-block">
-        <h2 class="center icon light-blue-text">
+        <p class="center icon light-blue-text">
           <i
             class="fa-solid fa-flag-checkered fa-fade"
             style="--fa-animation-duration: 2s; --fa-fade-opacity: 0.6"
           ></i>
-        </h2>
+        </p>
         <h5 class="center">Placeholder</h5>
 
         <p class="light">Placeholder</p>

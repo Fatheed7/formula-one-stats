@@ -6,9 +6,9 @@
       <th>Circuit Name</th>
       <th>Location</th>
       <th>Country</th>
-      <th>Google Maps</th>
-      <th>Wikipedia</th>
-      <th></th>
+      <th>Google Maps<br />(Opens in a new tab)</th>
+      <th>Wikipedia<br />(Opens in a new tab)</th>
+      <th>Races At This Circuit</th>
     </tr>
   </thead>
   <tbody>
@@ -20,13 +20,36 @@
       <td>
         <a
           target="_blank"
-          class="waves-effect waves-light btn"
+          type="button"
+          class="grey lighten-3 btn z-depth-2 black-text"
           href="https://www.google.com/maps/search/{{ circuit.lat }},{{ circuit.lng }}"
-          ><i class="fa-solid fa-map-location-dot"></i>View on Map</a></a
+        >
+          <img
+            src="{{ url_for('static', filename='svg/Google_Maps_icon.svg') }}"
+            alt="Google Maps link for {{ circuit.name }}"
+            class="google-maps"
+          />
+        </a>
+      </td>
+      <td>
+        <a
+          target="_blank"
+          type="button"
+          class="grey lighten-3 btn z-depth-2 black-text"
+          href="{{ circuit.url }}"
+        >
+          <i class="fa-brands fa-wikipedia-w"
+            ><span class="sr-only">Wikipedia link for {{circuit.name}}</span></i
+          >
+        </a>
+      </td>
+      <td>
+        <a
+          href="{{ url_for('view_circuit', circuit_id=circuit._id) }}"
+          class="btn red darken-4"
+          >View</a
         >
       </td>
-      <td><a class="waves-effect waves-light btn" target="_blank" href="{{ circuit.url }}"><i class="fa-brands fa-wikipedia-w"></i>View Article</a></td>
-      <td><a href="{{ url_for('view_circuit', circuit_id=circuit._id) }}" class="btn green accent-4">Races at this Circuit</a></td>
     </tr>
     {% endfor %}
   </tbody>

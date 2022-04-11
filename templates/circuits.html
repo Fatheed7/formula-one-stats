@@ -27,7 +27,7 @@
         <a
           target="_blank"
           type="button"
-          class="grey lighten-3 btn z-depth-2 black-text"
+          class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
           href="https://www.google.com/maps/search/{{ circuit.lat }},{{ circuit.lng }}"
         >
           <img
@@ -41,7 +41,7 @@
         <a
           target="_blank"
           type="button"
-          class="grey lighten-3 btn z-depth-2 black-text"
+          class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
           href="{{ circuit.url }}"
         >
           <i class="fa-brands fa-wikipedia-w"
@@ -52,7 +52,7 @@
       <td>
         <a
           href="{{ url_for('view_circuit', circuit_id=circuit._id) }}"
-          class="btn red darken-4"
+          class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
           >View</a
         >
       </td>

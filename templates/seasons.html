@@ -4,7 +4,7 @@
     <tr>
       <th>Year</th>
       <th>No of Races</th>
-      <th>Wikipedia</th>
+      <th class="table-links">Wikipedia Article<br /> (Opens in a new tab)</th>
       <th>View Seasons</th>
     </tr>
   </thead>
@@ -15,11 +15,14 @@
       <td>{{ season.no_of_races }}</td>
       <td>
         <a
-          class="waves-effect waves-light btn"
           target="_blank"
+          type="button"
+          class="grey lighten-3 btn z-depth-2 black-text"
           href="{{ season.url }}"
-          ><i class="fa-brands fa-wikipedia-w"></i>View Article</a
         >
+          <i class="fa-brands fa-wikipedia-w"
+            ><span class="sr-only">Wikipedia link for {{ season.year }} Formula One Season</span></i
+          >
       </td>
       <td>
         <a

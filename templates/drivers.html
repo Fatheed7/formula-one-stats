@@ -8,7 +8,7 @@
       <th>Number</th>
       <th>Date of Birth</th>
       <th>Nationality</th>
-      <th>Wikipedia</th>
+      <th class="table-links">Wikipedia Article<br /> (Opens in a new tab)</th>
       <th></th>
       {% if session.user|lower == "admin"|lower %}
       <th>Edit</th>
@@ -26,11 +26,14 @@
       <td>{{ driver.nationality }}</td>
       <td>
         <a
-          class="waves-effect waves-light btn"
           target="_blank"
+          type="button"
+          class="grey lighten-3 btn z-depth-2 black-text"
           href="{{ driver.url }}"
-          ><i class="fa-brands fa-wikipedia-w"></i>View Article</a
         >
+          <i class="fa-brands fa-wikipedia-w"
+            ><span class="sr-only">Wikipedia link for {{driver.forename}} {{driver.surname}}</span></i
+          >
       </td>
       <td>
         <a

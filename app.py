@@ -5,6 +5,8 @@ from bson.objectid import ObjectId
 from flask import (Flask, flash, redirect, render_template, request,
                    session, url_for)
 from flask_pymongo import PyMongo
+import json
+import requests
 from werkzeug.security import generate_password_hash, check_password_hash
 
 if os.path.exists("env.py"):
@@ -184,6 +186,8 @@ def view_constructor(constructor_id):
 
 @app.route("/view_driver/<driver_id>")
 def view_driver(driver_id):
+    response = requests.get("https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&piprop=original&titles=Adolf_Brudes")
+    print(response)
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     drivers = mongo.db.drivers.find_one({"_id": ObjectId(driver_id)})
@@ -191,8 +195,27 @@ def view_driver(driver_id):
     wins = list(mongo.db.results.find({"driverId": drivers["driverId"], "position": 1}))
     second = list(mongo.db.results.find({"driverId": drivers["driverId"], "position": 2}))
     third = list(mongo.db.results.find({"driverId": drivers["driverId"], "position": 3}))
+    
+    ## https://stackoverflow.com/questions/59801085/finding-the-main-picture-of-the-wikipedia-page-with-python
+    def get_wiki_main_image(title):
+        url = 'https://en.wikipedia.org/w/api.php'
+        data = {
+            'action' :'query',
+            'format' : 'json',
+            'formatversion' : 2,
+            'prop' : 'pageimages|pageterms',
+            'piprop' : 'original',
+            'titles' : title
+        }
+        response = requests.get(url, data)
+        json_data = json.loads(response.text)
+        return json_data['query']['pages'][0]['original']['source'] if len(json_data['query']['pages']) >0 else 'Not found'
+    try: 
+        image = get_wiki_main_image(drivers["forename"] + " " + drivers["surname"])
+    except KeyError:
+        image = "../static/img/no_image_available.svg"
     return render_template(
-        "view/view_driver.html", results=results, drivers=drivers, wins=wins, second=second, third=third, username=username)
+        "view/view_driver.html", results=results, drivers=drivers, wins=wins, second=second, third=third, username=username, image=image)
 
 
 @app.route("/view_race/<race_id>")

@@ -264,3 +264,11 @@ footer {
 label {
   color: #000000;
 }
+
+.table-links {
+  width: 150px;
+}
+
+#driver_image {
+  width: 75%;
+}

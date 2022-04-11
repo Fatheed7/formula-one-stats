@@ -4,7 +4,7 @@
     <tr>
       <th>Constructor</th>
       <th>Nationality</th>
-      <th>Wikipedia</th>
+      <th class="table-links">Wikipedia Article<br /> (Opens in a new tab)</th>
       <th></th>
     </tr>
   </thead>
@@ -15,11 +15,14 @@
       <td>{{ constructor.nationality }}</td>
       <td>
         <a
-          class="waves-effect waves-light btn"
           target="_blank"
+          type="button"
+          class="grey lighten-3 btn z-depth-2 black-text"
           href="{{ constructor.url }}"
-          ><i class="fa-brands fa-wikipedia-w"></i>View Article</a
         >
+          <i class="fa-brands fa-wikipedia-w"
+            ><span class="sr-only">Wikipedia link for {{constructor.name}}</span></i
+          >
       </td>
       <td>
         <a

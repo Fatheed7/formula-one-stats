@@ -42,9 +42,9 @@
             <th>Constructor</th>
             <th class="hide">Constructor ID</th>
             <th>Select Constructor</th>
-            <th>Q1</th>
-            <th>Q2</th>
-            <th>Q3</th>
+            <th>Q1<br><sub>Format: MM:SS.S</sub></th>
+            <th>Q2<br><sub>Format: MM:SS.S</sub></th>
+            <th>Q3<br><sub>Format: MM:SS.S</sub></th>
           </tr>
         </thead>
 
@@ -58,6 +58,7 @@
               <input
                 placeholder="Driver"
                 id="driver_forename_pos_quali_{{quali.position | int - 1}}"
+                name="driver_forename_pos_quali_{{quali.position | int - 1}}"
                 type="text"
                 value="{{driver.forename }}"
                 class="center-align validate"
@@ -67,6 +68,7 @@
               <input
                 placeholder="Driver"
                 id="driver_surname_pos_quali_{{quali.position | int - 1}}"
+                name="driver_surname_pos_quali_{{quali.position | int - 1}}"
                 type="text"
                 value="{{driver.surname }}"
                 class="center-align validate"
@@ -76,26 +78,29 @@
               <input
                 placeholder="Driver ID"
                 id="driver_id_pos_quali_{{quali.position | int - 1}}"
+                name="driver_id_pos_quali_{{quali.position | int - 1}}"
                 type="text"
                 value="{{driver.driverId }}"
                 class="center-align validate"
               />
             </td>
-            {% endif %} {% endfor %}
             <td>
               <a
                 class="waves-effect waves-light btn modal-trigger select"
                 id="driver_select_pos_quali_{{quali.position | int - 1}}"
+                name="driver_select_pos_quali_{{quali.position | int - 1}}"
                 href="#driverModal"
                 >Select</a
               >
             </td>
+            {% endif %} {% endfor %}
             <td>
               {% for constructor in constructors %} {% if quali.constructorId ==
               constructor.constructorId %}
               <input
                 placeholder="Constructor"
                 id="constructor_pos_quali_{{quali.position | int - 1}}"
+                name="constructor_pos_quali_{{quali.position | int - 1}}"
                 value="{{constructor.name}}"
                 type="text"
                 class="center-align validate"
@@ -106,25 +111,27 @@
               <input
                 placeholder="Constructor ID"
                 id="constructor_id_quali_pos_{{quali.position | int - 1}}"
+                name="constructor_id_quali_pos_{{quali.position | int - 1}}"
                 type="text"
                 value="{{constructor.constructorId }}"
                 class="center-align validate"
               />
             </td>
-            {% endif %} {% endfor %}
             <td>
               <a
                 class="waves-effect waves-light btn modal-trigger select"
                 id="constructor_select_pos_quali_{{quali.position | int - 1}}"
+                name="constructor_select_pos_quali_{{quali.position | int - 1}}"
                 href="#constructorModal"
                 >Select</a
               >
             </td>
-
+              {% endif %} {% endfor %}
             <td>
               <input
                 placeholder="Q1 Time"
                 id="q1_pos_{{quali.position | int - 1}}"
+                name="q1_pos_{{quali.position | int - 1}}"
                 type="text"
                 value="{{quali.q1}}"
                 class="center-align validate"
@@ -134,6 +141,7 @@
               <input
                 placeholder="Q2 Time"
                 id="q2_pos_{{quali.position | int - 1}}"
+                name="q2_pos_{{quali.position | int - 1}}"
                 type="text"
                 value="{{quali.q2}}"
                 class="center-align validate"
@@ -143,6 +151,7 @@
               <input
                 placeholder="Q3 Time"
                 id="q3_pos_{{quali.position | int - 1}}"
+                name="q3_pos_{{quali.position | int - 1}}"
                 type="text"
                 value="{{quali.q3}}"
                 class="center-align validate"
@@ -156,6 +165,7 @@
               <input
                 placeholder="Driver Forename"
                 id="driver_forename_pos_quali_{{n}}"
+                name="driver_forename_pos_quali_{{n}}"
                 type="text"
                 class="center-align validate"
                 readonly
@@ -165,6 +175,7 @@
               <input
                 placeholder="Driver Surname"
                 id="driver_surname_pos_quali_{{n}}"
+                name="driver_surname_pos_quali_{{n}}"
                 type="text"
                 class="center-align validate"
                 readonly
@@ -174,6 +185,7 @@
               <input
                 placeholder="Driver ID"
                 id="driver_id_pos_quali_{{n}}"
+                name="driver_id_pos_quali_{{n}}"
                 type="text"
                 class="center-align validate"
               />
@@ -182,6 +194,7 @@
               <a
                 class="waves-effect waves-light btn modal-trigger select"
                 id="driver_select_pos_quali_{{n}}"
+                name="driver_select_pos_quali_{{n}}"
                 href="#driverModal"
                 >Select</a
               >
@@ -190,6 +203,7 @@
               <input
                 placeholder="Constructor"
                 id="constructor_quali_pos_{{n}}"
+                name="constructor_quali_pos_{{n}}"
                 type="text"
                 class="center-align validate"
                 readonly
@@ -199,6 +213,7 @@
               <input
                 placeholder="Constructor ID"
                 id="constructor_id_quali_pos_{{n}}"
+                name="constructor_id_quali_pos_{{n}}"
                 type="text"
                 class="center-align validate"
               />
@@ -207,6 +222,7 @@
               <a
                 class="waves-effect waves-light btn modal-trigger select"
                 id="constructor_select_pos_quali_{{n}}"
+                name="constructor_select_pos_quali_{{n}}"
                 href="#constructorModal"
                 >Select</a
               >
@@ -214,8 +230,10 @@
 
             <td>
               <input
-                placeholder="Q1 Time"
+                placeholder="--:--.-"
+                pattern="^([0-9]{2}:[0-5][0-9].[0-9]{1,3})$"
                 id="q1_pos_{{n}}"
+                name="q1_pos_{{n}}"
                 type="text"
                 class="center-align validate"
               />
@@ -224,8 +242,10 @@
             {% else %}
             <td>
               <input
-                placeholder="Q2 Time"
+                placeholder="--:--.-"
+                pattern="^([0-9]{2}:[0-5][0-9].[0-9]{1,3})$"
                 id="q2_pos_{{n}}"
+                name="q2_pos_{{n}}"
                 type="text"
                 class="center-align validate"
               />
@@ -235,8 +255,10 @@
             {% else %}
             <td>
               <input
-                placeholder="Q3 Time"
+                placeholder="--:--.-"
+                pattern="^([0-9]{2}:[0-5][0-9].[0-9]{1,3})$"
                 id="q3_pos_{{n}}"
+                name="q3_pos_{{n}}"
                 type="text"
                 class="center-align validate"
               />
@@ -249,6 +271,8 @@
       <div class="center-align">
         <button
         type="submit"
+        name="action"
+        value="qualifying"
         class="col s12 btn-large red darken-4 text-shadow"
       >
         Submit Changes

@@ -27,7 +27,7 @@
         <p><b>View On Map:</b></p>
         <a
           target="_blank"
-          class="waves-effect waves-light btn"
+          class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
           href="https://www.google.com/maps/search/{{ circuits.lat }},{{ circuits.lng }}"
           >Open on Google Maps</a
         >
@@ -35,31 +35,37 @@
     </div>
   </div>
 </div>
-<table class="striped centered">
+<table class="striped centered display" id="contentTable">
   <thead>
     <tr>
-      <th>Year</th>
-      <th>Wikipedia</th>
-      <th></th>
-      <th></th>
+      <th>Race Name</th>
+      <th>
+        Wikipedia Article<br />
+        (Opens in a new tab)
+      </th>
+      <th>Link to Race</th>
+      <th>Link to Season</th>
     </tr>
   </thead>
   <tbody>
     {% for race in races %} {% if race.circuitId == circuits.circuitId %}
     <tr>
-      <td>{{ race.year }}</td>
+      <td>{{ race.year }} {{race.name }}</td>
       <td>
         <a
-          class="waves-effect waves-light btn"
+          class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
           target="_blank"
           href="{{ race.url }}"
-          ><i class="fa-brands fa-wikipedia-w"></i>View Article</a
+          ><i class="fa-brands fa-wikipedia-w"></i
+          ><span class="sr-only"
+            >Wikipedia link for {{ race.year }} {{race.name }}</span
+          ></a
         >
       </td>
       <td>
         <a
           href="{{ url_for('view_race', race_id=race._id) }}"
-          class="btn green accent-4"
+          class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
           >View Race</a
         >
       </td>
@@ -67,7 +73,7 @@
         {% for season in seasons %} {% if season.year == race.year %}
         <a
           href="{{ url_for('view_season', season_id=season._id) }}"
-          class="btn green accent-4"
+          class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
           >View Season</a
         >
         {% endif %} {% endfor %}

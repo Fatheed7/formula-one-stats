@@ -93,7 +93,7 @@ def edit_driver(driver_id):
             "nationality": request.form.get("nationality"),
             "dob": request.form.get("dob"),
             "url": request.form.get("url"),
-            "driverId": request.form.get("driverId"),
+            "driverId": int(request.form.get("driverId")),
             "driverRef": request.form.get("driverRef"),
         }
         mongo.db.drivers.replace_one({"_id": ObjectId(driver_id)}, submit)
@@ -117,20 +117,26 @@ def edit_race(race_id):
     constructors = list(mongo.db.constructors.find())
     constructor_standings = list(mongo.db.constructor_standings.find({"raceId": races["raceId"]}).sort("position", 1))
     previous_race = list(mongo.db.races.find({"year": races["year"], "round": races["round"] - 1}))
+
+    
     
     if request.method == "POST":
-        print(races)
-        for n in range(20):
-            qualifying = {
-                "raceId": races["raceId"],
-                "driverId": request.form.get("driver_id_pos_quali_" + str(n)),
-                "constructorId": request.form.get("constructor_id_quali_pos_" + str(n)),
-                "position": n+1,
-                "q1": request.form.get("q1_pos_" + str(n)),
-                "q2": request.form.get("q2_pos_" + str(n)),
-                "q3": request.form.get("q3_pos_" + str(n)),
-            }
-            mongo.db.test.insert_one(qualifying)
+        if request.form["action"] == "qualifying":
+            for n in range(20):
+                qualifying = {
+                    "raceId": races["raceId"],
+                    "driverId": int(request.form.get("driver_id_pos_quali_" + str(n))),
+                    "constructorId": int(request.form.get("constructor_id_quali_pos_" + str(n))),
+                    "position": n+1,
+                    "q1": request.form.get("q1_pos_" + str(n)),
+                    "q2": request.form.get("q2_pos_" + str(n)),
+                    "q3": request.form.get("q3_pos_" + str(n)),
+                }
+                mongo.db.qualifying.insert_one(qualifying)
+            return redirect(url_for("view_race", race_id=races["_id"]))
+        else:
+            return redirect(url_for("home"))
+        
     return render_template(
         "edit/edit_race.html", statuses=statuses, races=races, results=results, drivers=drivers, constructors=constructors, qualifying=qualifying, 
         circuits=circuits, driver_standings=driver_standings, constructor_standings=constructor_standings, seasons=seasons, previous_race=previous_race,
@@ -169,7 +175,6 @@ def view_circuit(circuit_id):
     circuits = mongo.db.circuits.find_one({"_id": ObjectId(circuit_id)})
     races = list(mongo.db.races.find().sort("year", 1))
     seasons = list(mongo.db.seasons.find().sort("year", 1))
-    print(seasons)
     return render_template(
         "view/view_circuit.html", races=races, circuits=circuits, seasons=seasons, username=username)
 
@@ -203,7 +208,7 @@ def view_driver(driver_id):
             'action' :'query',
             'format' : 'json',
             'formatversion' : 2,
-            'prop' : 'pageimages|pageterms',
+            'prop' : 'pageimages|pageterms--',
             'piprop' : 'original',
             'titles' : title
         }

@@ -115,14 +115,14 @@ $(".constructorSelect").click(function () {
       $(this).closest("tr").children("td:first").text()
     );
     $("#constructor_id_quali_pos_" + value).val(
-      $(this).closest("tr").children("td:eq(2)").text()
+      $(this).closest("tr").children("td:eq(1)").text()
     );
   } else if (page == "race") {
     $("#constructor_race_pos_" + value).val(
       $(this).closest("tr").children("td:first").text()
     );
     $("#constructor_id_race_pos_" + value).val(
-      $(this).closest("tr").children("td:eq(2)").text()
+      $(this).closest("tr").children("td:eq(1)").text()
     );
   }
 });

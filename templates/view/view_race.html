@@ -12,13 +12,13 @@
   {% if session.user|lower == "admin"|lower %}
   <a
     href="{{ url_for('edit_race', race_id=races._id) }}"
-    class="btn green accent-4"
+    class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
     >Edit Race</a
   >
   {% endif %} {% for season in seasons %} {% if season.year == races.year %}
   <a
     href="{{ url_for('view_season', season_id=season._id) }}"
-    class="btn green accent-4"
+    class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
     >View Season</a
   >
   {% endif %} {% endfor %}
@@ -95,7 +95,7 @@
           {% for quali in qualifying | selectattr('raceId', 'equalto',
           races.raceId) %}
           <tr>
-            <td>{{ quali.position }}</td>
+            <td>{{ quali.position }}.</td>
             <td>
               {% for driver in drivers %} {% if quali.driverId ==
               driver.driverId %}
@@ -113,9 +113,9 @@
               >
               {% endif %} {% endfor %}
             </td>
-            <td>{{ quali.q1 }}</td>
-            <td>{{ quali.q2 }}</td>
-            <td>{{ quali.q3 }}</td>
+            <td>{{ quali.q1 if quali.q1 }}</td>
+            <td>{{ quali.q2 if quali.q2}}</td>
+            <td>{{ quali.q3 if quali.q3 }}</td>
           </tr>
           {% endfor %}
         </tbody>

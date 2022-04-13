@@ -80,7 +80,12 @@ $(".race").click(function () {
 });
 
 $(".select").click(function () {
-  value = $(this).closest("tr").children("td:first").text().slice(0, -1) - 1;
+  if (page == "quali") {
+    value = $(this).closest("tr").children("td:first").text().slice(0, -1) - 1;
+    console.log("Test 1");
+  } else if (page == "race") {
+    value = $(this).closest("tr").children("td:first").text();
+  }
 });
 
 $(".driverSelect").click(function () {
@@ -111,7 +116,7 @@ $(".driverSelect").click(function () {
 
 $(".constructorSelect").click(function () {
   if (page == "quali") {
-    $("#constructor_quali_pos_" + value).val(
+    $("#constructor_pos_quali_" + value).val(
       $(this).closest("tr").children("td:first").text()
     );
     $("#constructor_id_quali_pos_" + value).val(

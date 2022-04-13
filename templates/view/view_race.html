@@ -31,7 +31,11 @@
           {% for circuit in circuits %} {% if circuit.circuitId ==
           races.circuitId %}
           <p><b>Circuit:</b></p>
-          <p>{{circuit.name}}</p>
+          <p>
+            <a href="{{ url_for('view_circuit', circuit_id=circuit._id) }}"
+              >{{circuit.name}}</a
+            >
+          </p>
           {% endif %} {% endfor %}
         </span>
       </div>
@@ -99,18 +103,23 @@
             <td>
               {% for driver in drivers %} {% if quali.driverId ==
               driver.driverId %}
-              <a href="{{ url_for('view_driver', driver_id=driver._id) }}"
-                >{{driver.forename}} {{driver.surname}}</a
-              >
+              <a
+                class="driverLink"
+                href="{{ url_for('view_driver', driver_id=driver._id) }}"
+                >{{driver.forename}} {{driver.surname}}
+                <i class="fa-solid fa-link"></i
+              ></a>
               {% endif %} {% endfor %}
             </td>
             <td>
               {% for constructor in constructors %} {% if quali.constructorId ==
               constructor.constructorId %}
               <a
+                class="constructorLink"
                 href="{{ url_for('view_constructor', constructor_id=constructor._id) }}"
-                >{{constructor.name}}</a
-              >
+                >{{constructor.name}}
+                <i class="fa-solid fa-arrow-right-to-bracket"></i
+              ></a>
               {% endif %} {% endfor %}
             </td>
             <td>{{ quali.q1 if quali.q1 }}</td>
@@ -199,18 +208,22 @@
             <td>
               {% for driver in drivers %} {% if result.driverId ==
               driver.driverId %}
-              <a href="{{ url_for('view_driver', driver_id=driver._id) }}"
-                >{{driver.forename}} {{driver.surname}}</a
-              >
+              <a
+                class="driverLink"
+                href="{{ url_for('view_driver', driver_id=driver._id) }}"
+                >{{driver.forename}} {{driver.surname}}
+                <i class="fa-solid fa-eye"></i
+              ></a>
               {% endif %} {% endfor %}
             </td>
             <td>
               {% for constructor in constructors %} {% if result.constructorId
               == constructor.constructorId %}
               <a
+                class="constructorLink"
                 href="{{ url_for('view_constructor', constructor_id=constructor._id) }}"
-                >{{constructor.name}}</a
-              >
+                >{{constructor.name}} <i class="fa-solid fa-angle-right"></i
+              ></a>
               {% endif %} {% endfor %}
             </td>
             <td>{{ result.points }}</td>
@@ -243,7 +256,9 @@
             <td>
               {% for driver in drivers %} {% if standing.driverId ==
               driver.driverId %}
-              <a href="{{ url_for('view_driver', driver_id=driver._id) }}"
+              <a
+                class="driverLink"
+                href="{{ url_for('view_driver', driver_id=driver._id) }}"
                 >{{driver.forename}} {{driver.surname}}</a
               >
               {% endif %} {% endfor %}
@@ -287,6 +302,7 @@
               {% for constructor in constructors %} {% if standing.constructorId
               == constructor.constructorId %}
               <a
+                class="constructorLink"
                 href="{{ url_for('view_constructor', constructor_id=constructor._id) }}"
                 >{{constructor.name}}</a
               >

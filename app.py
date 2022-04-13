@@ -60,16 +60,6 @@ def constructors():
                            username=username
                            )
 
-@app.route("/dashboard")
-def dashboard():
-    username = mongo.db.users.find_one(
-        {"username": session["user"]})["username"]
-    if username == "admin":
-        return render_template("dashboard.html", username=username)
-    else: 
-         return redirect(url_for("login"))
-
-
 @app.route("/drivers")
 def drivers():
     username = mongo.db.users.find_one(
@@ -133,6 +123,20 @@ def edit_race(race_id):
                     "q3": request.form.get("q3_pos_" + str(n)),
                 }
                 mongo.db.qualifying.insert_one(qualifying)
+        elif request.form["action"] == "race":
+            for n in range(20):
+                race = {
+                    "raceId": races["raceId"],
+                    "driverId": int(request.form.get("driver_id_pos_race_" + str(n))),
+                    "constructorId": int(request.form.get("constructor_id_race_pos_" + str(n))),
+                    "position": int(request.form.get("position_pos_" + str(n))),
+                    "positionText": request.form.get("position_text_pos_" + str(n)),
+                    "positionOrder": n+1,
+                    "points": int(request.form.get("points_pos_" + str(n))),
+                    "laps": int(request.form.get("laps_pos_" + str(n))),
+                    "statusId": int(request.form.get("status_id_pos_" + str(n))),
+                }
+                mongo.db.test.insert_one(race)
             return redirect(url_for("view_race", race_id=races["_id"]))
         else:
             return redirect(url_for("home"))
@@ -392,6 +396,62 @@ def favourites():
     display_name = mongo.db.users.find_one(
         {"username": session["user"]})["display_name"]
     return render_template("profile/favourites.html", username=username,display_name=display_name)
+
+## Admin Routes
+
+@app.route("/dashboard")
+def dashboard():
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    if username == "admin":
+        return render_template("admin/dashboard.html", username=username)
+    else: 
+         return redirect(url_for("login"))
+
+@app.route("/add_circuit")
+def add_circuit():
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    if username == "admin":
+        return render_template("admin/add_circuit.html", username=username)
+    else: 
+         return redirect(url_for("login"))
+
+@app.route("/add_constructor")
+def add_constructor():
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    if username == "admin":
+        return render_template("admin/add_constructor.html", username=username)
+    else: 
+         return redirect(url_for("login"))
+
+@app.route("/add_driver")
+def add_driver():
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    if username == "admin":
+        return render_template("admin/add_driver.html", username=username)
+    else: 
+         return redirect(url_for("login"))
+
+@app.route("/add_race")
+def add_race():
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    if username == "admin":
+        return render_template("admin/add_race.html", username=username)
+    else: 
+         return redirect(url_for("login"))
+
+@app.route("/add_season")
+def add_season():
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    if username == "admin":
+        return render_template("admin/add_season.html", username=username)
+    else: 
+         return redirect(url_for("login"))
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),

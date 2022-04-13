@@ -5,6 +5,13 @@
     {{ drivers.forename }} {{ drivers.surname }}
   </h4>
 </div>
+<div class="center-align">
+  <a
+    href="{{ url_for('drivers') }}"
+    class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
+    >Back to Drivers</a
+  >
+</div>
 <div class="row remove-bottom-margin valign-wrapper">
   <div class="col s4 center-align">
     <p>
@@ -35,7 +42,7 @@
         </tr>
         <tr>
           <td>Drivers Code</td>
-          <td>{{ drivers.code }}</td>
+          <td>{{ drivers.code if drivers.code else "No information" }}</td>
         </tr>
       </tbody>
     </table>

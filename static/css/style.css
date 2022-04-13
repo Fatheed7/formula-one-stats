@@ -61,7 +61,8 @@ hr {
   background-color: #eb000a !important;
 }
 
-.inner_card {
+.inner_card,
+.edit_driver_row {
   margin-top: 2vh;
 }
 
@@ -104,10 +105,8 @@ main nav {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  width: inherit;
-  margin-top: -0.5rem;
+  width: 100%;
   z-index: -1;
-  position: relative;
 }
 
 nav {
@@ -116,8 +115,8 @@ nav {
 
 #page-not-found {
   position: absolute;
-  top: 108px;
-  left: 50px;
+  top: 10%;
+  left: 10%;
   font-size: 50px;
 }
 
@@ -349,4 +348,35 @@ https://codepen.io/kocsten/pen/rggjXp
   100% {
     background-position: 0 0;
   }
+}
+
+.circuitLink,
+.winner,
+.driverLink,
+.constructorLink,
+.f1Link {
+  color: #000;
+  text-decoration: underline blue 2px;
+  text-underline-offset: 5px;
+}
+
+.circuitLink:hover,
+.winner:hover,
+.driverLink:hover,
+.constructorLink:hover,
+.f1Link:hover {
+  text-decoration: underline orange 2px;
+}
+
+.f1Link {
+  color: #fff !important
+}
+
+table.striped>tbody>tr:nth-child(odd) {
+  background-color: #b7b7b7 !important;
+}
+
+.btn,
+.btn-large {
+  border: black 1px solid
 }

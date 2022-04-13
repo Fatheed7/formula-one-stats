@@ -24,13 +24,19 @@
   <div class="col s4 m4">
     <div class="card-panel center-align orange lighten-3">
       <span>
-        <p><b>View On Map:</b></p>
+        <p><b>View On Google Maps:</b></p>
         <a
           target="_blank"
+          type="button"
           class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
           href="https://www.google.com/maps/search/{{ circuits.lat }},{{ circuits.lng }}"
-          >Open on Google Maps</a
         >
+          <img
+            src="{{ url_for('static', filename='svg/Google_Maps_icon.svg') }}"
+            alt="Google Maps link for {{ circuits.name }}"
+            class="google-maps"
+          />
+        </a>
       </span>
     </div>
   </div>

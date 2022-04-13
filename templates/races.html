@@ -1,4 +1,9 @@
 {% extends "base.html" %} {% block content %}
+<div class="pageHeader">
+  <h4 class="center-align displayName white-text text-shadow">
+    Races
+  </h4>
+</div>
 <table class="striped centered display" id="contentTable">
   <thead>
     <tr>
@@ -7,7 +12,7 @@
       <th>Circuit</th>
       <th>Season</th>
       <th class="table-links">Wikipedia Article<br /> (Opens in a new tab)</th>
-      <th></th>
+      <th>View Race</th>
     </tr>
   </thead>
   <tbody>
@@ -18,7 +23,7 @@
       <td>
         {% for circuit in circuits %} {% if race.circuitId == circuit.circuitId
         %}
-        <a href="{{ url_for('view_circuit', circuit_id=circuit._id) }}"
+        <a class="circuitLink" href="{{ url_for('view_circuit', circuit_id=circuit._id) }}"
           >{{circuit.name}}</a
         >
         {% endif %} {% endfor %}
@@ -27,7 +32,6 @@
       <td>
         <a
           target="_blank"
-          type="button"
           class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
           href="{{ race.url }}"
         >
@@ -39,7 +43,7 @@
         <a
           href="{{ url_for('view_race', race_id=race._id) }}"
           class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-          >View Race</a
+          >View</a
         >
       </td>
     </tr>

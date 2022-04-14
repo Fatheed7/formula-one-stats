@@ -1,1 +1,190 @@
-{% extends "base.html" %} {% block content %} Add Race {% endblock %}
+{% extends "base.html" %}{% block title %}F1 Statistics | Add Race{% endblock %}
+{% block content %}
+<div class="pageHeader">
+  <h4 class="center-align displayName white-text text-shadow">Add Race</h4>
+</div>
+<div class="center-align">
+  <a
+    href="{{ url_for('dashboard') }}"
+    class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
+    >Back to Dashboard</a
+  >
+</div>
+<div class="row remove-bottom-margin">
+  <form class="col s12" method="POST" action="{{ url_for('add_race') }}">
+    <div class="row top_row_spacer">
+      <div class="input-field col col s2 offset-s5">
+        <input
+          id="raceId"
+          name="raceId"
+          type="text"
+          value="{{races.raceId + 1}}"
+          class="validate"
+          required
+          readonly
+        />
+        <label for="raceId">Race ID (This Field Is Read Only)</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col col s2 offset-s4">
+        <input
+          id="year"
+          name="year"
+          type="text"
+          class="validate"
+          pattern="^[0-9]{4}$"
+          maxlength="4"
+          required
+        />
+        <label for="year">Year</label>
+      </div>
+      <div class="input-field col col s2">
+        <input
+          id="round"
+          name="round"
+          type="text"
+          value=""
+          class="validate"
+          pattern="^[0-9]{1,2}$"
+          maxlength="2"
+          required
+        />
+        <label for="round">Round</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col col s2 offset-s4">
+        <input
+          id="date"
+          name="date"
+          type="text"
+          value=""
+          class="datepicker"
+          required
+          readonly
+        />
+        <label for="date">Date</label>
+      </div>
+      <div class="input-field col col s2">
+        <input
+          id="time"
+          name="time"
+          type="text"
+          value=""
+          class="timepicker"
+          required
+          readonly
+        />
+        <label for="time">Time</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s2 offset-s4">
+        <input
+          id="name"
+          name="name"
+          type="text"
+          value=""
+          class="materialize-textarea"
+          required
+        />
+        <label for="name">Race Name</label>
+      </div>
+      <div class="input-field col col s2">
+        <input
+          id="circuit"
+          name="circuit"
+          type="text"
+          value=" "
+          class="validate"
+          required
+        />
+        <label for="circuit">Circuit</label>
+      </div>
+      <div class="input-field col col s2 hide">
+        <input
+          id="circuitId"
+          name="circuitId"
+          type="text"
+          value=" "
+          class="validate"
+          required
+        />
+        <label for="circuitId">Circuit ID</label>
+      </div>
+      <div class="input-field col col s1">
+        <a
+          href="#circuitModal"
+          class="grey lighten-3 btn z-depth-2 black-text glow-on-hover modal-trigger select"
+        >
+          Select
+        </a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s4 offset-s4">
+        <input
+          id="url"
+          name="url"
+          type="text"
+          value=""
+          class="materialize-textarea"
+        />
+        <label for="url">Wikipedia Link</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12 center-align">
+        <a
+          href="{{url_for('dashboard')}}"
+          class="grey lighten-3 btn-large z-depth-2 black-text glow-on-hover"
+        >
+          Cancel <i class="fas fa-times-circle right"></i>
+        </a>
+        <button
+          type="submit"
+          class="grey lighten-3 btn-large z-depth-2 black-text glow-on-hover"
+        >
+          Submit Changes <i class="fas fa-edit right"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div id="circuitModal" class="modal modal-fixed-footer">
+  <nav>
+    <div class="nav-wrapper">
+      <form>
+        <div class="input-field">
+          <input id="circuitSearch" type="search" required />
+          <label class="label-icon" for="circuitSearch"
+            ><i class="fa-solid fa-magnifying-glass"></i
+          ></label>
+          <i class="fa-solid fa-xmark">close</i>
+        </div>
+      </form>
+    </div>
+  </nav>
+  <div class="modal-content">
+    <table class="striped centered list">
+      <tbody>
+        {% for circuit in circuits | sort(attribute="circuitId") %}
+        <tr>
+          <td>{{ circuit.name }}</td>
+          <td>{{ circuit.circuitId }}</td>
+          <td>
+            <a
+              class="grey lighten-3 btn z-depth-2 black-text glow-on-hover circuitSelect modal-close"
+              >Select</a
+            >
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

@@ -9,6 +9,9 @@ $(document).ready(function () {
   $(".datepicker").datepicker({
     format: "dd/mm/yyyy",
   });
+  $(".timepicker").timepicker({
+    twelveHour: false,
+  });
   $(".tabs").tabs();
   $(".tooltipped").tooltip();
   $(".modal").modal({});
@@ -87,6 +90,23 @@ $("#statusSearch").keyup(function () {
           .text()
           .toLowerCase()
           .includes($("#statusSearch").val().toLowerCase())
+      ) {
+        $(this).show();
+      } else {
+        $(this).hide();
+      }
+    });
+});
+
+$("#circuitSearch").keyup(function () {
+  $(".list")
+    .find("tr")
+    .each(function () {
+      if (
+        $(this)
+          .text()
+          .toLowerCase()
+          .includes($("#circuitSearch").val().toLowerCase())
       ) {
         $(this).show();
       } else {
@@ -210,4 +230,14 @@ $(".seasonConstructorSelect").click(function () {
   $("#constructorChampionId").val(
     $(this).closest("tr").children("td:eq(1)").text()
   );
+});
+
+$(".circuitSelect").click(function () {
+  $("#circuit").val($(this).closest("tr").children("td:first").text());
+  $("#circuitId").val($(this).closest("tr").children("td:eq(1)").text());
+});
+
+$(".timepicker").on("change", function () {
+  let receivedVal = $(this).val();
+  $(this).val(receivedVal + ":00");
 });

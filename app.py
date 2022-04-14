@@ -580,15 +580,32 @@ def add_driver():
     else: 
          return redirect(url_for("login"))
 
-@app.route("/add_race")
+@app.route("/add_race",methods=["GET", "POST"])
 def add_race():
     if session.get("user") is None:
         return redirect(url_for("home"))
     else:
         username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
+
+    if request.method == "POST":
+            race = {
+                "raceId": int(request.form.get("raceId")),
+                "year": int(request.form.get("year")),
+                "round": int(request.form.get("round")),
+                "circuitId": int(request.form.get("circuitId")),
+                "name": request.form.get("name"),
+                "date": request.form.get("date"),
+                "time": request.form.get("time"),
+                "url": request.form.get("url"),
+                }
+            mongo.db.races.insert_one(race)
+            flash("Race has been added.")
+            return redirect(url_for("dashboard"))
     if username == "admin":
-        return render_template("admin/add_race.html", username=username)
+        races = mongo.db.races.find_one(sort=[("raceId", -1)])
+        circuits = list(mongo.db.circuits.find())
+        return render_template("admin/add_race.html", username=username, races=races, circuits=circuits)
     else: 
          return redirect(url_for("login"))
 

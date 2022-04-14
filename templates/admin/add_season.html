@@ -16,11 +16,11 @@
     <form class="col s12" method="POST" action="{{ url_for('add_season') }}">
       <div class="row top_row_spacer">
         <div class="input-field col col s2 offset-s4">
-          <input id="year" name="year" type="text" class="validate" pattern="^[0-9\]{4}$" maxlength="4" required>
+          <input id="year" name="year" type="text" class="validate" pattern="^[0-9]{4}$" maxlength="4" required>
           <label for="year">Year</label>
         </div>
         <div class="input-field col col s2">
-            <input id="no_of_races" name="no_of_races" type="text" value="" pattern="^[0-9\]{1,2}$" maxlength="2" class="validate" required>
+            <input id="no_of_races" name="no_of_races" type="text" value="" pattern="^[0-9]{1,2}$" maxlength="2" class="validate" required>
             <label for="no_of_races">Number of Races</label>
           </div>
         </div>

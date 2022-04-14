@@ -35,6 +35,15 @@ $("#constructorModal").click(function () {
     });
 });
 
+$("#statusModal").click(function () {
+  $("#statusSearch").val("");
+  $(".list")
+    .find("tr")
+    .each(function () {
+      $(this).show();
+    });
+});
+
 $("#driverSearch").keyup(function () {
   $(".list")
     .find("tr")
@@ -69,22 +78,48 @@ $("#constructorSearch").keyup(function () {
     });
 });
 
+$("#statusSearch").keyup(function () {
+  $(".list")
+    .find("tr")
+    .each(function () {
+      if (
+        $(this)
+          .text()
+          .toLowerCase()
+          .includes($("#statusSearch").val().toLowerCase())
+      ) {
+        $(this).show();
+      } else {
+        $(this).hide();
+      }
+    });
+});
+
 $(".quali").click(function () {
   page = "quali";
-  console.log(page);
 });
 
 $(".race").click(function () {
   page = "race";
-  console.log(page);
+});
+
+$(".driver").click(function () {
+  page = "driver";
+});
+
+$(".constructor").click(function () {
+  page = "constructor";
 });
 
 $(".select").click(function () {
   if (page == "quali") {
     value = $(this).closest("tr").children("td:first").text().slice(0, -1) - 1;
-    console.log("Test 1");
   } else if (page == "race") {
     value = $(this).closest("tr").children("td:first").text();
+  } else if (page == "driver") {
+    value = $(this).closest("tr").children("td:first").text().slice(0, -1) - 1;
+  } else if (page == "constructor") {
+    value = $(this).closest("tr").children("td:first").text().slice(0, -1) - 1;
   }
 });
 
@@ -111,6 +146,15 @@ $(".driverSelect").click(function () {
     $("#driver_id_pos_race_" + value).val(
       $(this).closest("tr").children("td:eq(2)").text()
     );
+  } else if (page == "driver") {
+    $("#driver_name_standings_pos_" + value).val(
+      $(this).closest("tr").children("td:first").text() +
+        " " +
+        $(this).closest("tr").children("td:eq(1)").text()
+    );
+    $("#driver_id_standings_pos_" + value).val(
+      $(this).closest("tr").children("td:eq(2)").text()
+    );
   }
 });
 
@@ -129,7 +173,23 @@ $(".constructorSelect").click(function () {
     $("#constructor_id_race_pos_" + value).val(
       $(this).closest("tr").children("td:eq(1)").text()
     );
+  } else if (page == "constructor") {
+    $("#constructor_name_standings_pos_" + value).val(
+      $(this).closest("tr").children("td:first").text()
+    );
+    $("#constructor_id_standings_pos_" + value).val(
+      $(this).closest("tr").children("td:eq(1)").text()
+    );
   }
+});
+
+$(".statusSelect").click(function () {
+  $("#status_id_pos_race_" + value).val(
+    $(this).closest("tr").children("td:first").text()
+  );
+  $("#status_pos_race_" + value).val(
+    $(this).closest("tr").children("td:eq(1)").text()
+  );
 });
 
 $('input[type="checkbox"]').on("change", function () {

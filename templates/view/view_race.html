@@ -32,9 +32,11 @@
           races.circuitId %}
           <p><b>Circuit:</b></p>
           <p>
-            <a href="{{ url_for('view_circuit', circuit_id=circuit._id) }}"
-              >{{circuit.name}}</a
-            >
+            <a
+              href="{{ url_for('view_circuit', circuit_id=circuit._id) }}"
+              class="circuitLink"
+              >{{circuit.name}} <i class="fa-solid fa-link"></i
+            ></a>
           </p>
           {% endif %} {% endfor %}
         </span>
@@ -88,7 +90,10 @@
         <thead>
           <tr>
             <th>Position</th>
-            <th>Driver</th>
+            <th>
+              Driver<br />
+              (Click a driver to view their stats)
+            </th>
             <th>Constructor</th>
             <th>Q1</th>
             <th>Q2</th>
@@ -117,8 +122,7 @@
               <a
                 class="constructorLink"
                 href="{{ url_for('view_constructor', constructor_id=constructor._id) }}"
-                >{{constructor.name}}
-                <i class="fa-solid fa-arrow-right-to-bracket"></i
+                >{{constructor.name}} <i class="fa-solid fa-link"></i
               ></a>
               {% endif %} {% endfor %}
             </td>
@@ -202,7 +206,7 @@
                 data-tooltip="Did Not Start - Withdrew"
                 >DNS</span
               >
-              {% else %} {{ result.position }}
+              {% else %} {{ result.position }}.
             </td>
             {% endif %}
             <td>
@@ -212,7 +216,7 @@
                 class="driverLink"
                 href="{{ url_for('view_driver', driver_id=driver._id) }}"
                 >{{driver.forename}} {{driver.surname}}
-                <i class="fa-solid fa-eye"></i
+                <i class="fa-solid fa-link"></i
               ></a>
               {% endif %} {% endfor %}
             </td>
@@ -222,7 +226,7 @@
               <a
                 class="constructorLink"
                 href="{{ url_for('view_constructor', constructor_id=constructor._id) }}"
-                >{{constructor.name}} <i class="fa-solid fa-angle-right"></i
+                >{{constructor.name}} <i class="fa-solid fa-link"></i
               ></a>
               {% endif %} {% endfor %}
             </td>
@@ -252,15 +256,16 @@
           {% for standing in driver_standings | selectattr('raceId', 'equalto',
           races.raceId) %}
           <tr>
-            <td>{{ standing.position }}</td>
+            <td>{{ standing.position }}.</td>
             <td>
               {% for driver in drivers %} {% if standing.driverId ==
               driver.driverId %}
               <a
                 class="driverLink"
                 href="{{ url_for('view_driver', driver_id=driver._id) }}"
-                >{{driver.forename}} {{driver.surname}}</a
-              >
+                >{{driver.forename}} {{driver.surname}}
+                <i class="fa-solid fa-link"></i
+              ></a>
               {% endif %} {% endfor %}
             </td>
             <td>{{ standing.wins }}</td>
@@ -304,8 +309,8 @@
               <a
                 class="constructorLink"
                 href="{{ url_for('view_constructor', constructor_id=constructor._id) }}"
-                >{{constructor.name}}</a
-              >
+                >{{constructor.name}} <i class="fa-solid fa-link"></i
+              ></a>
               {% endif %} {% endfor %}
             </td>
             <td>{{ standing.wins }}</td>

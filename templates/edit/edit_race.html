@@ -1,14 +1,14 @@
 {% extends "base.html" %} {% block content %}
 <div class="center-align">
   <div class="pageHeader">
-    <h4 class="center-align displayName white-text text-shadow">
+    <h4 class="center-align displayName white-text ">
       Editing {{ races.year}} {{ races.name }}
     </h4>
   </div>
 
   <a
     href="{{ url_for('view_race', race_id=races._id) }}"
-    class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
+    class="grey lighten-3 btn z-depth-2 black-text glow-on-hover" id="topButton"
     >View Race</a
   >
 </div>
@@ -23,10 +23,10 @@
         <a href="#race" class="white-text race">Race Results</a>
       </li>
       <li class="tab col s3 grey darken-1 z-depth-5">
-        <a href="#drivers" class="white-text race">Driver Standings</a>
+        <a href="#drivers" class="white-text driver">Driver Standings</a>
       </li>
       <li class="tab col s3 grey darken-1 z-depth-5">
-        <a href="#constructors" class="white-text race"
+        <a href="#constructors" class="white-text constructor"
           >Constructor Standings</a
         >
       </li>
@@ -94,7 +94,7 @@
             </td>
             <td>
               <a
-                class="waves-effect waves-light btn modal-trigger select"
+                class="grey lighten-3 btn z-depth-2 black-text glow-on-hover modal-trigger select"
                 id="driver_select_pos_quali_{{quali.position | int - 1}}"
                 name="driver_select_pos_quali_{{quali.position | int - 1}}"
                 href="#driverModal"
@@ -126,7 +126,7 @@
             </td>
             <td>
               <a
-                class="waves-effect waves-light btn modal-trigger select"
+                class="grey lighten-3 btn z-depth-2 black-text glow-on-hover modal-trigger select"
                 id="constructor_select_pos_quali_{{quali.position | int - 1}}"
                 name="constructor_select_pos_quali_{{quali.position | int - 1}}"
                 href="#constructorModal"
@@ -199,7 +199,7 @@
             </td>
             <td>
               <a
-                class="waves-effect waves-light btn modal-trigger select"
+                class="grey lighten-3 btn z-depth-2 black-text glow-on-hover modal-trigger select"
                 id="driver_select_pos_quali_{{n}}"
                 name="driver_select_pos_quali_{{n}}"
                 href="#driverModal"
@@ -227,7 +227,7 @@
             </td>
             <td>
               <a
-                class="waves-effect waves-light btn modal-trigger select"
+                class="grey lighten-3 btn z-depth-2 black-text glow-on-hover modal-trigger select"
                 id="constructor_select_pos_quali_{{n}}"
                 name="constructor_select_pos_quali_{{n}}"
                 href="#constructorModal"
@@ -277,7 +277,8 @@
           type="submit"
           name="action"
           value="qualifying"
-          class="col s12 btn-large red darken-4 text-shadow"
+          class="col s12 btn-large red darken-4"
+          id="bottomButton"
         >
           Submit Changes
         </button>
@@ -296,7 +297,21 @@
           <tr>
             <th class="hide">Row ID</th>
             <th>Position</th>
-            <th>Position Text<br><sub> Pos or D/E/F/N/R/W</sub></th>
+            <th>Position Text<br><sub>
+               <span class="tooltipped" data-position="bottom" data-tooltip="Finishing Position">Pos</span>
+                 or 
+                <span class="tooltipped" data-position="bottom" data-tooltip="Disqualified">D</span>
+                /
+                <span class="tooltipped" data-position="bottom" data-tooltip="Excluded">E</span>
+                /
+                <span class="tooltipped" data-position="bottom" data-tooltip="Did Not Qualify">F</span>
+                /
+                <span class="tooltipped" data-position="bottom" data-tooltip="Not Classified">N</span>
+                /
+                <span class="tooltipped" data-position="bottom" data-tooltip="Retired">R</span>
+                /
+                <span class="tooltipped" data-position="bottom" data-tooltip="Did Not Start - Withdrew">W</span>
+                 </sub></th>
             <th>Driver Forename</th>
             <th>Driver Surname</th>
             <th class="hide">Driver ID</th>
@@ -307,6 +322,8 @@
             <th>Points</th>
             <th>Laps</th>
             <th>Status</th>
+            <th class="hide">Status ID</th>
+            <th>Select Status</th>
           </tr>
         </thead>
 
@@ -316,17 +333,12 @@
             {% for result in results %}
             <td class="hide">{{ (result.position)|int - 1  }}</td>
             <td>
-              <input
-                placeholder="Position"
-                id="position_pos_{{result.position| int -1}}"
-                type="text"
-                value="{{result.position}}."
-                class="center-align validate"
-              /></td>
+              {{ (result.position)}}
               <td>
                 <input
                   placeholder="Position Text"
                   id="position_text_pos_{{result.position| int -1}}"
+                  name="position_text_pos_{{result.position| int -1}}"
                   pattern="^[a-zA-Z0-9]{2}$"
                   type="text"
                   value="{{result.position}}."
@@ -338,6 +350,7 @@
               <input
                 placeholder="Driver"
                 id="driver_forename_pos_race_{{result.position| int -1}}"
+                name="driver_forename_pos_race_{{result.position| int -1}}"
                 type="text"
                 value="{{driver.forename }}"
                 class="center-align validate"
@@ -348,11 +361,12 @@
               <input
                 placeholder="Driver"
                 id="driver_surname_pos_race_{{result.position| int -1}}"
+                name="driver_surname_pos_race_{{result.position| int -1}}"
                 type="text"
                 value=" {{driver.surname }}"
                 class="center-align validate"
                 readonly
-              />
+              /></td>
               <td class="hide">
                 <input
                   placeholder="Driver ID"
@@ -365,7 +379,7 @@
             </td>
             <td>
               <a
-                class="waves-effect waves-light btn modal-trigger select"
+                class="grey lighten-3 btn z-depth-2 black-text glow-on-hover modal-trigger select"
                 id="driver_select_pos_{{result.position| int -1}}"
                 href="#driverModal"
                 >Select</a
@@ -377,6 +391,7 @@
               <input
                 placeholder="Constructor"
                 id="constructor_race_pos_{{result.position| int -1}}"
+                name="constructor_race_pos_{{result.position| int -1}}"
                 value="{{constructor.name}}"
                 type="text"
                 class="center-align validate"
@@ -395,8 +410,8 @@
             </td>
             <td>
               <a
-                class="waves-effect waves-light btn modal-trigger select"
-                id="driver_select_pos_race_{{result.position| int -1}}"
+                class="grey lighten-3 btn z-depth-2 black-text glow-on-hover modal-trigger select"
+                id="constructor_select_pos_race_{{result.position| int -1}}"
                 href="#constructorModal"
                 >Select</a
               >
@@ -408,8 +423,10 @@
               <input
                 placeholder="Points"
                 id="points_pos_race_{{result.position| int -1}}"
+                name="points_pos_race_{{result.position| int -1}}"
                 type="text"
                 value="{{driver.points}}"
+                pattern="^[0-9]{1,2}$"
                 class="center-align validate"
               />
               {% endif %} {% endfor %}
@@ -420,22 +437,46 @@
               <input
                 placeholder="Laps"
                 id="laps_pos_race_{{result.position| int -1}}"
+                name="laps_pos_race_{{result.position| int -1}}"
                 type="text"
                 value="{{result.laps}}"
+                pattern="^[0-9]{1,2}$"
                 class="center-align validate"
               />
               {% endif %} {% endfor %}
             </td>
-            <td class="input-field">
-              <select>
-                <option value="" disabled selected>Select Status</option>
-                {% for status in statuses %}
-                <option value="{{status.status}}" class="left">
-                  {{status.status}}
-                </option>
-                {% endfor %}
-              </select>
+            <td>
+            {% for status in statuses %} {% if result.statusId ==
+              status.statusId %}
+              <input
+                placeholder="Status"
+                id="status_pos_race_{{result.position| int -1}}"
+                name="status_pos_race_{{result.position| int -1}}"
+                type="text"
+                value="{{status.status}}"
+                class="center-align validate"
+              />
             </td>
+            <td class="hide">
+                <input
+                  placeholder="Status ID"
+                  id="status_id_pos_race_{{result.position| int -1}}"
+                  name="status_id_pos_race_{{result.position| int -1}}"
+                  type="text"
+                  value="{{status.statusId}}"
+                  class="center-align validate "
+                />
+                {% endif %} {% endfor %}
+              </td>
+              <td>
+                <a
+                  class="grey lighten-3 btn z-depth-2 black-text glow-on-hover modal-trigger select"
+                  id="status_select_pos_race_{{result.position| int -1}}"
+                  href="#statusModal"
+                  >Select</a
+                >
+              </td>
+            
           </tr>
           {% endfor %} {% else %} {% for n in range(20) %}
           <tr>
@@ -443,12 +484,14 @@
             <td><input
               placeholder="Position"
               id="position_pos_{{n}}"
+              name="position_pos_{{n}}"
               type="text"
               class="center-align validate"
             /></td>
               <td><input
                 placeholder="Position Text"
                 id="position_text_pos_{{n}}"
+                name="position_text_pos_{{n}}"
                 pattern="^[a-zA-Z0-9]{1,2}$"
                 type="text"
                 class="center-align validate"
@@ -457,6 +500,7 @@
               <input
                 placeholder="Driver"
                 id="driver_forename_pos_race_{{n}}"
+                name="driver_forename_pos_race_{{n}}"
                 type="text"
                 value=""
                 class="center-align validate"
@@ -466,6 +510,7 @@
               <input
                 placeholder="Driver"
                 id="driver_surname_pos_race_{{n}}"
+                name="driver_surname_pos_race_{{n}}"
                 type="text"
                 value=""
                 class="center-align validate"
@@ -481,7 +526,7 @@
               />
             <td>
               <a
-                class="waves-effect waves-light btn modal-trigger select"
+                class="grey lighten-3 btn z-depth-2 black-text glow-on-hover modal-trigger select"
                 id="driver_select_pos_race_{{n}}"
                 href="#driverModal"
                 >Select</a
@@ -491,6 +536,7 @@
               <input
                 placeholder="Constructor"
                 id="constructor_race_pos_{{n}}"
+                name="constructor_race_pos_{{n}}"
                 value=""
                 type="text"
                 class="center-align validate"
@@ -507,7 +553,7 @@
             </td>
             <td>
               <a
-                class="waves-effect waves-light btn modal-trigger select"
+                class="grey lighten-3 btn z-depth-2 black-text glow-on-hover modal-trigger select"
                 id="driver_select_pos_race_{{n}}"
                 href="#constructorModal"
                 >Select</a
@@ -518,8 +564,10 @@
               <input
                 placeholder="Points"
                 id="points_pos_race_{{n}}"
+                name="points_pos_race_{{n}}"
                 type="text"
                 value=""
+                pattern="^[0-9]{1,2}$"
                 class="center-align validate"
               />
             </td>
@@ -527,23 +575,40 @@
               <input
                 placeholder="Laps"
                 id="laps_pos_race_{{n}}"
+                name="laps_pos_race_{{n}}"
                 type="text"
                 value=""
+                pattern="^[0-9]{1,2}$"
                 class="center-align validate"
               />
             </td>
             <td>
-              <div class="input-field col s12">
-              <select>
-                <option value="" disabled selected>Select Status</option>
-                {% for status in statuses %}
-                <option value="{{status.status}}" class="left">
-                  {{status.status}}
-                </option>
-                {% endfor %}
-              </select>
-            </div>
-            </td>
+                <input
+                  placeholder="Status"
+                  id="status_pos_race_{{n}}"
+                  name="status_pos_race_{{n}}"
+                  type="text"
+                  class="center-align validate"
+                />
+              </td>
+              <td class="hide">
+                  <input
+                    placeholder="Status ID"
+                    id="status_id_pos_race_{{n}}"
+                    name="status_id_pos_race_{{n}}"
+                    type="text"
+                    class="center-align validate"
+                  />
+  
+                </td>
+                <td>
+                  <a
+                    class="grey lighten-3 btn z-depth-2 black-text glow-on-hover modal-trigger select"
+                    id="status_select_pos_race_{{n}}"
+                    href="#statusModal"
+                    >Select</a
+                  >
+                </td>
           </tr>
           {% endfor %} {% endif %}
         </tbody>
@@ -553,7 +618,8 @@
         type="submit"
         name="action"
         value="race"
-        class="col s12 btn-large red darken-4 text-shadow"
+        class="col s12 btn-large red darken-4"
+        id="bottomButton"
       >
         Submit Changes
       </button>
@@ -565,26 +631,133 @@
   <!--  -->
 
   <div id="drivers" class="col s12">
-    <form>
+    <form method="post" action="{{ url_for('edit_race', race_id=races._id) }}">
       <table class="striped centered">
         <thead>
           <tr>
             <th>Position</th>
             <th>Driver</th>
+            <th class="hide">Driver ID</th>
+            <th>Driver Select</th>
             <th>Wins</th>
             <th>Points</th>
           </tr>
         </thead>
 
         <tbody>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
+            {% if driver_standings | length > 0 %}
+              {% for standing in driver_standings %}
+              <tr>
+                <td>{{ standing.position }}</td>
+                <td>
+                {% for driver in drivers %} {% if standing.driverId ==
+                  driver.driverId %}
+                  <input
+                    placeholder="Driver"
+                    id="driver_name_standings_pos_{{standing.position| int -1}}"
+                    name="driver_name_standings_pos_{{standing.position| int -1}}"
+                    type="text"
+                    value="{{driver.forename}} {{driver.surname}}"
+                    class="center-align validate"
+                    readonly
+                  />
+                </td>
+                  <td class="hide">
+                    <input
+                      placeholder="Driver ID"
+                      id="driver_id_standings_pos_{{standing.position| int -1}}"
+                      name="driver_id_standings_pos_{{standing.position| int -1}}"
+                      type="text"
+                      class="center-align validate"
+                    />
+                  </td>
+                  {% endif %} {% endfor %}
+                <td><a
+                  class="grey lighten-3 btn z-depth-2 black-text glow-on-hover modal-trigger select"
+                  id="driver_select_standings_pos_{{standing.position| int -1}}"
+                  href="#driverModal"
+                  >Select</a
+                ></td>
+                <td><input
+                  placeholder="Wins"
+                  id="wins_standings_pos_{{standing.position| int -1}}"
+                  name="wins_standings_pos_{{standing.position| int -1}}"
+                  type="text"
+                  value="{{standing.wins}}"
+                  pattern="^[0-9]{1,2}$"
+                  class="center-align validate"
+                /></td>
+                <td><input
+                  placeholder="Points"
+                  id="points_standings_pos_{{standing.position| int -1}}"
+                  name="points_standings_pos_{{standing.position| int -1}}"
+                  type="text"
+                  value="{{standing.points}}"
+                  pattern="^[0-9]{1,3}$"
+                  class="center-align validate"
+                /></td>
+              </tr>
+              {% endfor %}
+             {% else %}
+             {% for n in range(20) %}
+              <tr>
+                <td>{{n+1}}.</td>
+                <td>
+                  <input
+                    placeholder="Driver"
+                    id="driver_name_standings_pos_{{n}}"
+                    name="driver_name_standings_pos_{{n}}"
+                    type="text"
+                    value=""
+                    class="center-align validate"
+                  />
+                </td>
+                <td class="hide">
+                  <input
+                    placeholder="Driver ID"
+                    id="driver_id_standings_pos_{{n}}"
+                    name="driver_id_standings_pos_{{n}}"
+                    type="text"
+                    class="center-align validate"
+                  /></td>
+                <td><a
+                  class="grey lighten-3 btn z-depth-2 black-text glow-on-hover modal-trigger select"
+                  id="driver_select_pos_race_{{n}}"
+                  href="#driverModal"
+                  >Select</a
+                ></td>
+                <td><input
+                  placeholder="Wins"
+                  id="wins_standings_pos_{{n}}"
+                  name="wins_standings_pos_{{n}}"
+                  type="text"
+                  pattern="^[0-9]{1,2}$"
+                  class="center-align validate"
+                /></td>
+                <td><input
+                  placeholder="Points"
+                  id="points_standings_pos_{{n}}"
+                  name="points_standings_pos_{{n}}"
+                  type="text"
+                  pattern="^[0-9]{1,3}$"
+                  class="center-align validate"
+                /></td>
+              </tr>
+              {% endfor %}
+            {% endif %}
         </tbody>
       </table>
+
       <div class="center-align">
-        <a href="" class="btn green accent-4 center-align">Submit Changes</a>
+        <button
+        type="submit"
+        name="action"
+        value="driver"
+        class="col s12 btn-large red darken-4"
+        id="bottomButton"
+      >
+        Submit Changes
+      </button>
       </div>
     </form>
   </div>
@@ -592,26 +765,133 @@
   <!-- Start of Constructor Standings -->
 
   <div id="constructors" class="col s12">
-    <form>
+    <form method="post" action="{{ url_for('edit_race', race_id=races._id) }}">
       <table class="striped centered">
         <thead>
           <tr>
             <th>Position</th>
-            <th>Driver</th>
+            <th>Constructor</th>
+            <th class="">Constructor ID</th>
+            <th>Constructor Select</th>
             <th>Wins</th>
             <th>Points</th>
           </tr>
         </thead>
 
         <tbody>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
+            {% if constructor_standings | length > 0 %}
+              {% for standing in constructor_standings %}
+              <tr>
+                <td>{{ standing.position }}.</td>
+                <td>
+                {% for constructor in constructors %} {% if standing.constructorId ==
+                  constructor.constructorId %}
+                  <input
+                    placeholder="Constructor"
+                    id="constructor_name_standings_pos_{{standing.position| int -1}}"
+                    name="constructor_name_standings_pos_{{standing.position| int -1}}"
+                    type="text"
+                    value="{{constructor.name}}"
+                    class="center-align validate"
+                    readonly
+                  />
+                </td>
+                  <td class="">
+                    <input
+                      placeholder="Constructor ID"
+                      id="constructor_id_standings_pos_{{standing.position| int -1}}"
+                      name="constructor_id_standings_pos_{{standing.position| int -1}}"
+                      type="text"
+                      class="center-align validate"
+                    />
+                  </td>
+                  {% endif %} {% endfor %}
+                <td><a
+                  class="grey lighten-3 btn z-depth-2 black-text glow-on-hover modal-trigger select"
+                  id="constructor_select_standings_pos_{{standing.position| int -1}}"
+                  href="#constructorModal"
+                  >Select</a
+                ></td>
+                <td><input
+                  placeholder="Wins"
+                  id="wins_constructor_pos_{{standing.position| int -1}}"
+                  name="wins_constructor_pos_{{standing.position| int -1}}"
+                  type="text"
+                  value="{{standing.wins}}"
+                  pattern="^[0-9]{1,2}$"
+                  class="center-align validate"
+                /></td>
+                <td><input
+                  placeholder="Points"
+                  id="points_constructor_pos_{{standing.position| int -1}}"
+                  name="points_constructor_pos_{{standing.position| int -1}}"
+                  type="text"
+                  value="{{standing.points}}"
+                  pattern="^[0-9]{1,3}$"
+                  class="center-align validate"
+                /></td>
+              </tr>
+              {% endfor %}
+             {% else %}
+             {% for n in range(10) %}
+              <tr>
+                <td>{{n+1}}.</td>
+                <td>
+                  <input
+                    placeholder="Constructor"
+                    id="constructor_name_standings_pos_{{n}}"
+                    name="constructor_name_standings_pos_{{n}}"
+                    type="text"
+                    value=""
+                    class="center-align validate"
+                  />
+                </td>
+                <td class="">
+                  <input
+                    placeholder="Constructor ID"
+                    id="constructor_id_standings_pos_{{n}}"
+                    name="constructor_id_standings_pos_{{n}}"
+                    type="text"
+                    class="center-align validate"
+                  /></td>
+                <td><a
+                  class="grey lighten-3 btn z-depth-2 black-text glow-on-hover modal-trigger select"
+                  id="driver_select_pos_race_{{n}}"
+                  href="#constructorModal"
+                  >Select</a
+                ></td>
+                <td><input
+                  placeholder="Wins"
+                  id="wins_constructor_pos_{{n}}"
+                  name="wins_constructor_pos_{{n}}"
+                  type="text"
+                  pattern="^[0-9]{1,2}$"
+                  class="center-align validate"
+                /></td>
+                <td><input
+                  placeholder="Points"
+                  id="points_constructor_pos_{{n}}"
+                  name="points_constructor_pos_{{n}}"
+                  type="text"
+                  pattern="^[0-9]{1,3}$"
+                  class="center-align validate"
+                /></td>
+              </tr>
+              {% endfor %}
+            {% endif %}
         </tbody>
       </table>
+
       <div class="center-align">
-        <a href="" class="btn green accent-4 center-align">Submit Changes</a>
+        <button
+        type="submit"
+        name="action"
+        value="constructor"
+        class="col s12 btn-large red darken-4"
+        id="bottomButton"
+      >
+        Submit Changes
+      </button>
       </div>
     </form>
   </div>
@@ -649,7 +929,7 @@
             <td>{{ driver.surname }}</td>
             <td>{{ driver.driverId }}</td>
             <td>
-              <a class="btn green accent-4 driverSelect modal-close">Select</a>
+              <a class="grey lighten-3 btn z-depth-2 black-text glow-on-hover driverSelect modal-close">Select</a>
             </td>
           </tr>
           {% endfor %}
@@ -685,7 +965,45 @@
             <td>{{ constructor.name }}</td>
             <td>{{ constructor.constructorId }}</td>
             <td>
-              <a class="btn green accent-4 constructorSelect modal-close"
+              <a class="grey lighten-3 btn z-depth-2 black-text glow-on-hover constructorSelect modal-close"
+                >Select</a
+              >
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat"
+        >Close</a
+      >
+    </div>
+  </div>
+
+  <div id="statusModal" class="modal modal-fixed-footer">
+    <nav>
+      <div class="nav-wrapper">
+        <form>
+          <div class="input-field">
+            <input id="statusSearch" type="search" required />
+            <label class="label-icon" for="statusSearch"
+              ><i class="fa-solid fa-magnifying-glass"></i
+            ></label>
+            <i class="fa-solid fa-xmark">close</i>
+          </div>
+        </form>
+      </div>
+    </nav>
+    <div class="modal-content">
+      <table class="striped centered list">
+        <tbody>
+          {% for status in statuses|sort(attribute='statusId') %}
+          <tr>
+            <td>{{ status.statusId }}</td>
+            <td>{{ status.status }}</td>
+            <td>
+              <a class="grey lighten-3 btn z-depth-2 black-text glow-on-hover statusSelect modal-close"
                 >Select</a
               >
             </td>

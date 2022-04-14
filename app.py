@@ -132,11 +132,33 @@ def edit_race(race_id):
                     "position": int(request.form.get("position_pos_" + str(n))),
                     "positionText": request.form.get("position_text_pos_" + str(n)),
                     "positionOrder": n+1,
-                    "points": int(request.form.get("points_pos_" + str(n))),
-                    "laps": int(request.form.get("laps_pos_" + str(n))),
-                    "statusId": int(request.form.get("status_id_pos_" + str(n))),
+                    "points": int(request.form.get("points_pos_race_" + str(n))),
+                    "laps": int(request.form.get("laps_pos_race_" + str(n))),
+                    "statusId": int(request.form.get("status_id_pos_race_" + str(n))),
                 }
-                mongo.db.test.insert_one(race)
+                mongo.db.results.insert_one(race)
+        elif request.form["action"] == "driver":
+            for n in range(20):
+                driver_standings = {
+                    "raceId": races["raceId"],
+                    "driverId": int(request.form.get("driver_id_standings_pos_" + str(n))),
+                    "points": int(request.form.get("points_standings_pos_" + str(n))),
+                    "position": n+1,
+                    "positionText": n+1,
+                    "wins": int(request.form.get("wins_standings_pos_" + str(n))),
+                }
+                mongo.db.driver_standings.insert_one(driver_standings)
+        elif request.form["action"] == "constructor":
+            for n in range(10):
+                constructor_standings = {
+                    "raceId": races["raceId"],
+                    "constructorId": int(request.form.get("constructor_id_standings_pos_" + str(n))),
+                    "points": int(request.form.get("points_constructor_pos_" + str(n))),
+                    "position": n+1,
+                    "positionText": n+1,
+                    "wins": int(request.form.get("wins_constructor_pos_" + str(n))),
+                }
+                mongo.db.constructor_standings.insert_one(constructor_standings)
             return redirect(url_for("view_race", race_id=races["_id"]))
         else:
             return redirect(url_for("home"))

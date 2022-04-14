@@ -468,7 +468,6 @@ def delete_account():
             return redirect(url_for("login"))
 
         else:
-            # invalid password match
             flash("Username does not match.")
             return redirect(url_for("delete_account"))
 
@@ -635,6 +634,56 @@ def add_season():
             return redirect(url_for("dashboard"))
     if username == "admin":
         return render_template("admin/add_season.html", username=username, drivers=drivers, constructors=constructors)
+    else: 
+         return redirect(url_for("login"))
+
+@app.route("/manage_users")
+def manage_users():
+    if session.get("user") is None:
+        return redirect(url_for("home"))
+    else:
+        username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+        users = list(mongo.db.users.find())
+    if username == "admin":
+        return render_template("admin/manage_users.html", username=username, users=users)
+    else: 
+         return redirect(url_for("login"))
+
+@app.route("/edit_user/<user_id>", methods=["GET", "POST"])
+def edit_user(user_id):
+    if session.get("user") is None:
+        return redirect(url_for("home"))
+    else:
+        username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+        users = mongo.db.users.find_one({"_id": ObjectId(user_id)})
+        if request.method == "POST":
+            mongo.db.users.update_one(
+            {"username": users["username"]},
+            {"$set": {"display_name": request.form.get("display_name")}})
+            flash("Display Name has been updated successfully.")
+            return redirect(url_for("manage_users"))
+    if username == "admin":
+        return render_template("admin/edit_user.html", username=username, users=users)
+    else: 
+         return redirect(url_for("login"))
+
+@app.route("/delete_user/<user_id>", methods=["GET", "POST"])
+def delete_user(user_id):
+    if session.get("user") is None:
+        return redirect(url_for("home"))
+    else:
+        username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+        users = mongo.db.users.find_one({"_id": ObjectId(user_id)})
+
+        if request.method == "POST":
+                mongo.db.users.delete_one({"username": users["username"]})
+                flash("Account has been deleted.")
+                return redirect(url_for("manage_users"))
+    if username == "admin":
+        return render_template("admin/delete_user.html", username=username, users=users)
     else: 
          return redirect(url_for("login"))
 

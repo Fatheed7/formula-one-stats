@@ -1,4 +1,6 @@
-{% extends "base.html" %} {% block content %}
+
+{% extends "base.html" %} {% block title %}F1 Statistics - Add Circuit{% endblock %}{% block content %}
+
 <div class="pageHeader">
     <h4 class="center-align displayName white-text text-shadow">
       Add Circuit
@@ -6,7 +8,7 @@
   </div>
   <div class="row remove-bottom-margin">
     <form class="col s12" method="POST" action="{{ url_for('add_circuit') }}">
-      <div class="row add_circuit_row">
+      <div class="row top_row_spacer">
         <div class="input-field col col s2 offset-s5">
           <input id="circuitId" name="circuitId" type="text" value="{{circuits.circuitId + 1}}" class="validate" required readonly>
           <label for="circuitId">Circuit ID (This Field Is Read Only)</label>
@@ -34,11 +36,11 @@
       </div>
       <div class="row">
         <div class="input-field col s4 offset-s2">
-          <input id="latitude" name="latitude" type="text" value="" pattern="^[0-9\.]*$">
+          <input id="latitude" name="latitude" type="text" value="" pattern="^[0-9\.]*$" required>
             <label for="latitude">Latitude</label>
         </div>
         <div class="input-field col s4">
-          <input id="longitude" name="longitude" type="text" value="" pattern="^[0-9\.]*$">
+          <input id="longitude" name="longitude" type="text" value="" pattern="^[0-9\.]*$" required>
             <label for="longitude">Longitude</label>
         </div>
 

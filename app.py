@@ -209,16 +209,33 @@ def view_constructor(constructor_id):
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     constructors = mongo.db.constructors.find_one({"_id": ObjectId(constructor_id)})
-    constructor_results = list(mongo.db.constructor_results.find({"constructorId": constructors["constructorId"]}))
-    seasons = list(mongo.db.seasons.find({"constructorChampionId": constructors["constructorId"]})) 
+    constructor_results = list(mongo.db.results.find({"constructorId": constructors["constructorId"]}))
+    wins = list(mongo.db.results.find({"constructorId": constructors["constructorId"], "position": 1}))
+    second = list(mongo.db.results.find({"constructorId": constructors["constructorId"], "position": 2}))
+    third = list(mongo.db.results.find({"constructorId": constructors["constructorId"], "position": 3}))
+    def get_wiki_main_image(title):
+        url = 'https://en.wikipedia.org/w/api.php'
+        data = {
+            'action' :'query',
+            'format' : 'json',
+            'formatversion' : 2,
+            'prop' : 'pageimages|pageterms',
+            'piprop' : 'original',
+            'titles' : title
+        }
+        response = requests.get(url, data)
+        json_data = json.loads(response.text)
+        return json_data['query']['pages'][0]['original']['source'] if len(json_data['query']['pages']) >0 else 'Not found'
+    try: 
+        image = get_wiki_main_image(constructors["name"])
+    except KeyError:
+        image = "../static/img/no_image_available.svg"
     return render_template(
-        "view/view_constructor.html", constructor_results=constructor_results, constructors=constructors, seasons=seasons, username=username)
+        "view/view_constructor.html", results=constructor_results, constructors=constructors, wins=wins, second=second, third=third, username=username, image=image)
 
 
 @app.route("/view_driver/<driver_id>")
 def view_driver(driver_id):
-    response = requests.get("https://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&piprop=original&titles=Adolf_Brudes")
-    print(response)
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     drivers = mongo.db.drivers.find_one({"_id": ObjectId(driver_id)})
@@ -234,7 +251,7 @@ def view_driver(driver_id):
             'action' :'query',
             'format' : 'json',
             'formatversion' : 2,
-            'prop' : 'pageimages|pageterms--',
+            'prop' : 'pageimages|pageterms',
             'piprop' : 'original',
             'titles' : title
         }
@@ -449,27 +466,56 @@ def add_circuit():
             flash("Circuit has been added.")
             return redirect(url_for("dashboard"))
     if username == "admin":
-        username = mongo.db.users.find_one(
-        {"username": session["user"]})["username"]
         circuits = mongo.db.circuits.find_one(sort=[("circuitId", -1)])
-        
         return render_template("admin/add_circuit.html", username=username, circuits=circuits)
-
-@app.route("/add_constructor")
-def add_constructor():
-    username = mongo.db.users.find_one(
-        {"username": session["user"]})["username"]
-    if username == "admin":
-        return render_template("admin/add_constructor.html", username=username)
     else: 
          return redirect(url_for("login"))
 
-@app.route("/add_driver")
+@app.route("/add_constructor", methods=["GET", "POST"])
+def add_constructor():
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    countries = list(mongo.db.countries.find().sort("nationality", 1))
+    if request.method == "POST":
+            constructor = {
+                "constructorId": int(request.form.get("constructorId")),
+                "constructorRef": request.form.get("constructorRef"),
+                "name": request.form.get("constructorName"),
+                "nationality": request.form.get("nationality"),
+                "url": request.form.get("url"),
+                }
+            mongo.db.constructors.insert_one(constructor)
+            flash("Constructor has been added.")
+            return redirect(url_for("dashboard"))
+    if username == "admin":
+        constructors = mongo.db.constructors.find_one(sort=[("constructorId", -1)])
+        return render_template("admin/add_constructor.html", username=username, constructors=constructors, countries=countries)
+    else: 
+         return redirect(url_for("login"))
+
+@app.route("/add_driver", methods=["GET", "POST"])
 def add_driver():
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
+    countries = list(mongo.db.countries.find().sort("nationality", 1))
+    if request.method == "POST":
+            driver = {
+                "driverId": int(request.form.get("driverId")),
+                "driverRef": request.form.get("driverRef"),
+                "number": request.form.get("number"),
+                "code": request.form.get("code"),
+                "forename": request.form.get("forename"),
+                "surname": request.form.get("forename"),
+                "dob": request.form.get("dob"),
+                "nationality": request.form.get("nationality"),
+                "url": request.form.get("url"),
+                }
+            mongo.db.drivers.insert_one(driver)
+            flash("Driver has been added.")
+            return redirect(url_for("dashboard"))
     if username == "admin":
-        return render_template("admin/add_driver.html", username=username)
+        drivers = mongo.db.drivers.find_one(sort=[("driverId", -1)])
+        return render_template("admin/add_driver.html", username=username, drivers=drivers, countries=countries)
     else: 
          return redirect(url_for("login"))
 

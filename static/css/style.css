@@ -63,7 +63,7 @@ hr {
 
 .inner_card,
 .edit_driver_row,
-.add_circuit_row {
+.top_row_spacer {
   margin-top: 2vh;
 }
 
@@ -269,7 +269,8 @@ label {
   width: 150px;
 }
 
-#driver_image {
+#driver_image,
+#constructor_image {
   width: 75%;
 }
 

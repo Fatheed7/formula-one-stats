@@ -1,1 +1,74 @@
-{% extends "base.html" %} {% block content %} Add Driver {% endblock %}
+{% extends "base.html" %}{% block title %}F1 Statistics - Add Driver{% endblock %} {% block content %}
+<div class="pageHeader">
+  <h4 class="center-align displayName white-text text-shadow">
+    Add Driver
+  </h4>
+</div>
+  <div class="row remove-bottom-margin">
+    <form class="col s12" method="POST" action="{{ url_for('add_driver')}}">
+      <div class="row edit_driver_row">
+        <div class="input-field col col s4 offset-s2">
+          <input id="forename" name="forename" type="text" class="validate" required>
+          <label for="forename">Forename</label>
+        </div>
+        <div class="input-field col col s4 ">
+          <input id="surname" name="surname" type="text" class="validate" required>
+          <label for="surname">Surname</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s4 offset-s2">
+            <input id="driverId" name="driverId" type="text" value="{{drivers.driverId + 1}}" class="validate" required readonly>
+          <label for="driverId">Driver ID (This field is Read Only)</label>
+        </div>
+        <div class="input-field col s4">
+          <input id="driverRef" name="driverRef" type="text" class="validate" required>
+          <label for="driverRef">Driver Ref </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s4 offset-s2">
+          <input id="number" name="number" type="text" pattern="^[0-9\]{2}$" maxlength="2">
+            <label for="number">Number</label>
+        </div>
+        <div class="input-field col s4">
+          <input id="code" name="code" type="text" pattern="^[a-zA-Z]{3}$" maxlength="3">
+            <label for="code">Code</label>
+        </div>
+
+      </div>
+      <div class="input-field col s4 offset-s2">
+        <select id="nationality" name="nationality" class="icons" required>
+          <option value="Please select a nationality" selected disabled>Please select a nationality</option>
+          {% for country in countries %}
+          <option value="{{country.nationality}}" data-icon="../static/svg/{{(country.code).lower()}}.svg" class="left">{{ country.nationality }}</option>
+          {% endfor %}
+        </select>
+        <label for="nationality">Country of Birth</label>
+      </div>
+      <div class="row">
+        <div class="input-field col s4">
+          <input id="dob" name="dob" type="text" class="datepicker" required>
+          <label for="dob">Date of Birth</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6 offset-s3">
+          <input id="url" name="url" type="text" class="materialize-textarea"></input>
+          <label for="url">Wikipedia Link</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 center-align">
+          <a href="{{url_for('dashboard')}}" class="grey lighten-3 btn-large z-depth-2 black-text glow-on-hover">
+            Cancel <i class="fas fa-times-circle right"></i>
+          </a>
+          <button type="submit" class="grey lighten-3 btn-large z-depth-2 black-text glow-on-hover">
+            Submit Changes <i class="fas fa-edit right"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+{% endblock %}

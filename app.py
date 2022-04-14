@@ -34,8 +34,11 @@ def home():
 
 @app.errorhandler(404)
 def invalid_route(e):
-    username = mongo.db.users.find_one(
-        {"username": session["user"]})["username"]
+    if session.get("user") is None:
+        return render_template("error/404.html")
+    else:
+        username = mongo.db.users.find_one(
+            {"username": session["user"]})["username"]
     return render_template("error/404.html", username=username)
 
 

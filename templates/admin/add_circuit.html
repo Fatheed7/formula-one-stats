@@ -6,6 +6,13 @@
       Add Circuit
     </h4>
   </div>
+  <div class="center-align">
+    <a
+      href="{{ url_for('dashboard') }}"
+      class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
+      >Back to Dashboard</a
+    >
+  </div>
   <div class="row remove-bottom-margin">
     <form class="col s12" method="POST" action="{{ url_for('add_circuit') }}">
       <div class="row top_row_spacer">

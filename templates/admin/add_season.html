@@ -1,1 +1,151 @@
-{% extends "base.html" %} {% block content %} Add Seasons {% endblock %}
+
+{% extends "base.html" %}{% block title %}F1 Statistics | Add Season{% endblock %} {% block content %}
+<div class="pageHeader">
+    <h4 class="center-align displayName white-text text-shadow">
+      Add Season
+    </h4>
+  </div>
+  <div class="center-align">
+    <a
+      href="{{ url_for('dashboard') }}"
+      class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
+      >Back to Dashboard</a
+    >
+  </div>
+  <div class="row remove-bottom-margin">
+    <form class="col s12" method="POST" action="{{ url_for('add_season') }}">
+      <div class="row top_row_spacer">
+        <div class="input-field col col s2 offset-s4">
+          <input id="year" name="year" type="text" class="validate" pattern="^[0-9\]{4}$" maxlength="4" required>
+          <label for="year">Year</label>
+        </div>
+        <div class="input-field col col s2">
+            <input id="no_of_races" name="no_of_races" type="text" value="" pattern="^[0-9\]{1,2}$" maxlength="2" class="validate" required>
+            <label for="no_of_races">Number of Races</label>
+          </div>
+        </div>
+      <div class="row">
+        <div class="input-field col col s3 offset-s4">
+          <input id="driverChampion" name="driverChampion" type="text" value=" " class="validate" required>
+          <label for="driverChampion">Drivers Champion</label>
+        </div>
+        <div class="input-field col col s3 hide">
+            <input id="driverChampionId" name="driverChampionId" type="text" value=" " class="validate" required>
+            <label for="driverChampionId">Drivers Champion ID</label>
+          </div>
+        <div class="input-field col col s1">
+            <a href="#driverModal" class="grey lighten-3 btn z-depth-2 black-text glow-on-hover modal-trigger select">
+              Select
+            </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col col s3 offset-s4">
+          <input id="constructorChampion" name="constructorChampion" type="text" value=" " class="validate">
+          <label for="constructorChampion">Constructors Champion</label>
+        </div>
+        <div class="input-field col col hide">
+            <input id="constructorChampionId" name="constructorChampionId" type="text" value=" " class="validate">
+            <label for="constructorChampionId">Constructors Champion ID</label>
+          </div>
+        <div class="input-field col col s1">
+            <a href="#constructorModal" class="grey lighten-3 btn z-depth-2 black-text glow-on-hover modal-trigger select">
+              Select
+            </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s4 offset-s4">
+          <input id="url" name="url" type="text" value="" class="materialize-textarea" required></input>
+          <label for="url">Wikipedia Link</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 center-align">
+          <a href="{{url_for('dashboard')}}" class="grey lighten-3 btn-large z-depth-2 black-text glow-on-hover">
+            Cancel <i class="fas fa-times-circle right"></i>
+          </a>
+          <button type="submit" class="grey lighten-3 btn-large z-depth-2 black-text glow-on-hover">
+            Submit Changes <i class="fas fa-edit right"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+    <!-- Start of Modals -->
+
+    <div id="driverModal" class="modal modal-fixed-footer">
+        <nav>
+          <div class="nav-wrapper">
+            <form>
+              <div class="input-field">
+                <input id="driverSearch" type="search" required />
+                <label class="label-icon" for="driverSearch"
+                  ><i class="fa-solid fa-magnifying-glass"></i
+                ></label>
+                <i class="fa-solid fa-xmark">close</i>
+              </div>
+            </form>
+          </div>
+        </nav>
+        <div class="modal-content">
+          <table class="striped centered">
+            <thead>
+              <tr>
+                <th>Forename</th>
+                <th>Surname</th>
+                <th>Driver ID</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody class="list">
+              {% for driver in drivers %}
+              <tr>
+                <td>{{ driver.forename }}</td>
+                <td>{{ driver.surname }}</td>
+                <td>{{ driver.driverId }}</td>
+                <td>
+                  <a class="grey lighten-3 btn z-depth-2 black-text glow-on-hover seasonDriverSelect modal-close">Select</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    
+      <div id="constructorModal" class="modal modal-fixed-footer">
+        <nav>
+          <div class="nav-wrapper">
+            <form>
+              <div class="input-field">
+                <input id="constructorSearch" type="search" required />
+                <label class="label-icon" for="constructorSearch"
+                  ><i class="fa-solid fa-magnifying-glass"></i
+                ></label>
+                <i class="fa-solid fa-xmark">close</i>
+              </div>
+            </form>
+          </div>
+        </nav>
+        <div class="modal-content">
+          <table class="striped centered list">
+            <tbody>
+              {% for constructor in constructors %}
+              <tr>
+                <td>{{ constructor.name }}</td>
+                <td>{{ constructor.constructorId }}</td>
+                <td>
+                  <a class="grey lighten-3 btn z-depth-2 black-text glow-on-hover seasonConstructorSelect modal-close"
+                    >Select</a
+                  >
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+{% endblock %}

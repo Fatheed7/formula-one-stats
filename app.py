@@ -44,7 +44,10 @@ def invalid_route(e):
 
 @app.route("/circuits")
 def circuits():
-    username = mongo.db.users.find_one(
+    if session.get("user") is None:
+        return redirect(url_for("home"))
+    else:
+        username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     circuits = list(mongo.db.circuits.find())
     return render_template('circuits.html',
@@ -55,7 +58,10 @@ def circuits():
 
 @app.route("/constructors")
 def constructors():
-    username = mongo.db.users.find_one(
+    if session.get("user") is None:
+        return redirect(url_for("home"))
+    else:
+        username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     constructors = list(mongo.db.constructors.find())
     return render_template('constructors.html',
@@ -65,7 +71,10 @@ def constructors():
 
 @app.route("/drivers")
 def drivers():
-    username = mongo.db.users.find_one(
+    if session.get("user") is None:
+        return redirect(url_for("home"))
+    else:
+        username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     drivers = list(mongo.db.drivers.find())
     return render_template('drivers.html',
@@ -75,7 +84,10 @@ def drivers():
 
 @app.route("/edit_driver/<driver_id>", methods=["GET", "POST"])
 def edit_driver(driver_id):
-    username = mongo.db.users.find_one(
+    if session.get("user") is None:
+        return redirect(url_for("home"))
+    else:
+        username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     if request.method == "POST":
         submit = {
@@ -97,7 +109,10 @@ def edit_driver(driver_id):
 
 @app.route("/edit_race/<race_id>", methods=["GET", "POST"])
 def edit_race(race_id):
-    username = mongo.db.users.find_one(
+    if session.get("user") is None:
+        return redirect(url_for("home"))
+    else:
+        username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     races = mongo.db.races.find_one({"_id": ObjectId(race_id)})
     results = list(mongo.db.results.find({"raceId": races["raceId"]}).sort("positionOrder", 1))
@@ -110,8 +125,6 @@ def edit_race(race_id):
     constructors = list(mongo.db.constructors.find())
     constructor_standings = list(mongo.db.constructor_standings.find({"raceId": races["raceId"]}).sort("position", 1))
     previous_race = list(mongo.db.races.find({"year": races["year"], "round": races["round"] - 1}))
-
-    
     
     if request.method == "POST":
         if request.form["action"] == "qualifying":
@@ -173,7 +186,10 @@ def edit_race(race_id):
 
 @app.route("/races")
 def races():
-    username = mongo.db.users.find_one(
+    if session.get("user") is None:
+        return redirect(url_for("home"))
+    else:
+        username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     races = list(mongo.db.races.find().sort("year", 1))
     seasons = list(mongo.db.seasons.find())
@@ -188,7 +204,10 @@ def races():
 
 @app.route("/seasons")
 def seasons():
-    username = mongo.db.users.find_one(
+    if session.get("user") is None:
+        return redirect(url_for("home"))
+    else:
+        username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     seasons = list(mongo.db.seasons.find())
     return render_template('seasons.html',
@@ -199,7 +218,10 @@ def seasons():
 
 @app.route("/view_circuit/<circuit_id>")
 def view_circuit(circuit_id):
-    username = mongo.db.users.find_one(
+    if session.get("user") is None:
+        return redirect(url_for("home"))
+    else:
+        username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     circuits = mongo.db.circuits.find_one({"_id": ObjectId(circuit_id)})
     races = list(mongo.db.races.find().sort("year", 1))
@@ -209,7 +231,10 @@ def view_circuit(circuit_id):
 
 @app.route("/view_constructor/<constructor_id>")
 def view_constructor(constructor_id):
-    username = mongo.db.users.find_one(
+    if session.get("user") is None:
+        return redirect(url_for("home"))
+    else:
+        username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     constructors = mongo.db.constructors.find_one({"_id": ObjectId(constructor_id)})
     constructor_results = list(mongo.db.results.find({"constructorId": constructors["constructorId"]}))
@@ -239,7 +264,10 @@ def view_constructor(constructor_id):
 
 @app.route("/view_driver/<driver_id>")
 def view_driver(driver_id):
-    username = mongo.db.users.find_one(
+    if session.get("user") is None:
+        return redirect(url_for("home"))
+    else:
+        username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     drivers = mongo.db.drivers.find_one({"_id": ObjectId(driver_id)})
     results = list(mongo.db.results.find({"driverId": drivers["driverId"]}))
@@ -271,7 +299,10 @@ def view_driver(driver_id):
 
 @app.route("/view_race/<race_id>")
 def view_race(race_id):
-    username = mongo.db.users.find_one(
+    if session.get("user") is None:
+        return redirect(url_for("home"))
+    else:
+        username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     races = mongo.db.races.find_one({"_id": ObjectId(race_id)})
     statuses = list(mongo.db.status.find())
@@ -289,7 +320,10 @@ def view_race(race_id):
 
 @app.route("/view_season/<season_id>")
 def view_season(season_id):
-    username = mongo.db.users.find_one(
+    if session.get("user") is None:
+        return redirect(url_for("home"))
+    else:
+        username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     seasons = mongo.db.seasons.find_one({"_id": ObjectId(season_id)})
     races = list(mongo.db.races.find().sort("round", 1))
@@ -368,7 +402,10 @@ def logout():
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
     # grab the session user's username from db
-    username = mongo.db.users.find_one(
+    if session.get("user") is None:
+        return render_template("home.html")
+    else:
+        username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     display_name = mongo.db.users.find_one(
         {"username": session["user"]})["display_name"]
@@ -389,7 +426,10 @@ def profile(username):
 
 @app.route("/changepassword", methods=["GET", "POST"])
 def change_password():
-    username = mongo.db.users.find_one(
+    if session.get("user") is None:
+        return redirect(url_for("home"))
+    else:
+        username = mongo.db.users.find_one(
         {"username": session["user"]})
     if request.method == "POST":
         if check_password_hash(
@@ -410,7 +450,10 @@ def change_password():
 @app.route("/deleteaccount", methods=["GET", "POST"])
 def delete_account():
 
-    username = mongo.db.users.find_one(
+    if session.get("user") is None:
+        return redirect(url_for("home"))
+    else:
+        username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
 
     if request.method == "POST":
@@ -433,7 +476,10 @@ def delete_account():
 
 @app.route("/favourites", methods=["GET", "POST"])
 def favourites():
-    username = mongo.db.users.find_one(
+    if session.get("user") is None:
+        return redirect(url_for("home"))
+    else:
+        username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     display_name = mongo.db.users.find_one(
         {"username": session["user"]})["display_name"]
@@ -443,7 +489,10 @@ def favourites():
 
 @app.route("/dashboard")
 def dashboard():
-    username = mongo.db.users.find_one(
+    if session.get("user") is None:
+        return redirect(url_for("home"))
+    else:
+        username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     if username == "admin":
         return render_template("admin/dashboard.html", username=username)
@@ -452,7 +501,10 @@ def dashboard():
 
 @app.route("/add_circuit", methods=["GET", "POST"])
 def add_circuit():
-    username = mongo.db.users.find_one(
+    if session.get("user") is None:
+        return redirect(url_for("home"))
+    else:
+        username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     if request.method == "POST":
             circuit = {
@@ -476,7 +528,10 @@ def add_circuit():
 
 @app.route("/add_constructor", methods=["GET", "POST"])
 def add_constructor():
-    username = mongo.db.users.find_one(
+    if session.get("user") is None:
+        return redirect(url_for("home"))
+    else:
+        username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     countries = list(mongo.db.countries.find().sort("nationality", 1))
     if request.method == "POST":
@@ -498,7 +553,10 @@ def add_constructor():
 
 @app.route("/add_driver", methods=["GET", "POST"])
 def add_driver():
-    username = mongo.db.users.find_one(
+    if session.get("user") is None:
+        return redirect(url_for("home"))
+    else:
+        username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     countries = list(mongo.db.countries.find().sort("nationality", 1))
     if request.method == "POST":
@@ -524,19 +582,42 @@ def add_driver():
 
 @app.route("/add_race")
 def add_race():
-    username = mongo.db.users.find_one(
+    if session.get("user") is None:
+        return redirect(url_for("home"))
+    else:
+        username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
     if username == "admin":
         return render_template("admin/add_race.html", username=username)
     else: 
          return redirect(url_for("login"))
 
-@app.route("/add_season")
+@app.route("/add_season", methods=["GET", "POST"])
 def add_season():
-    username = mongo.db.users.find_one(
+    if session.get("user") is None:
+        return redirect(url_for("home"))
+    else:
+        username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
+        drivers = list(mongo.db.drivers.find())
+        constructors = list(mongo.db.constructors.find())
+    if request.method == "POST":
+        if mongo.db.seasons.find_one({"year": int(request.form.get("year"))}) is None:
+            season = {
+                "year": int(request.form.get("year")),
+                "no_of_races": int(request.form.get("no_of_races")),
+                "driverChampionId": request.form.get("driverChampionId"),
+                "constructorChampionId": request.form.get("constructorChampionId"),
+                "url": request.form.get("url"),
+                }
+            mongo.db.seasons.insert_one(season)
+            flash("Season has been added.")
+            return redirect(url_for("dashboard"))
+        else: 
+            flash("Season already exists.")
+            return redirect(url_for("dashboard"))
     if username == "admin":
-        return render_template("admin/add_season.html", username=username)
+        return render_template("admin/add_season.html", username=username, drivers=drivers, constructors=constructors)
     else: 
          return redirect(url_for("login"))
 

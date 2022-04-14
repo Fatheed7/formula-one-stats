@@ -124,8 +124,6 @@ $(".select").click(function () {
 });
 
 $(".driverSelect").click(function () {
-  console.log(value);
-  console.log(page);
   if (page == "quali") {
     $("#driver_forename_pos_quali_" + value).val(
       $(this).closest("tr").children("td:first").text()
@@ -154,6 +152,10 @@ $(".driverSelect").click(function () {
     );
     $("#driver_id_standings_pos_" + value).val(
       $(this).closest("tr").children("td:eq(2)").text()
+    );
+  } else if (page == "add_season") {
+    $("##driverChampion").val(
+      $(this).closest("tr").children("td:first").text()
     );
   }
 });
@@ -192,6 +194,20 @@ $(".statusSelect").click(function () {
   );
 });
 
-$('input[type="checkbox"]').on("change", function () {
-  $('input[type="checkbox"]').not(this).prop("checked", false);
+$(".seasonDriverSelect").click(function () {
+  $("#driverChampion").val(
+    $(this).closest("tr").children("td:first").text() +
+      " " +
+      $(this).closest("tr").children("td:eq(1)").text()
+  );
+  $("#driverChampionId").val($(this).closest("tr").children("td:eq(2)").text());
+});
+
+$(".seasonConstructorSelect").click(function () {
+  $("#constructorChampion").val(
+    $(this).closest("tr").children("td:first").text()
+  );
+  $("#constructorChampionId").val(
+    $(this).closest("tr").children("td:eq(1)").text()
+  );
 });

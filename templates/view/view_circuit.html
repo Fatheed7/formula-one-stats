@@ -5,6 +5,29 @@ endblock %}{% block content %}
     {{ circuits.name }}
   </h4>
 </div>
+<div class="col s12 center-align">
+  <form method="POST">
+    {% if favourites %}
+    <button
+      type="submit"
+      name="action"
+      value="remove"
+      class="grey lighten-3 btn-large z-depth-2 black-text glow-on-hover"
+    >
+      Remove from Favourites <i class="fas fa-heart-circle-minus right"></i>
+    </button>
+    {% else %}
+    <button
+      type="submit"
+      name="action"
+      value="add"
+      class="grey lighten-3 btn-large z-depth-2 black-text glow-on-hover"
+    >
+      Add to Favourites <i class="fas fa-heart-circle-plus right"></i>
+    </button>
+    {% endif %}
+  </form>
+</div>
 <div class="row">
   <div class="col s4 m4">
     <div class="card-panel center-align orange lighten-3">

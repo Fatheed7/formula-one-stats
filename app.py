@@ -216,7 +216,7 @@ def seasons():
                            )
 
 
-@app.route("/view_circuit/<circuit_id>")
+@app.route("/view_circuit/<circuit_id>", methods=["GET", "POST"])
 def view_circuit(circuit_id):
     if session.get("user") is None:
         return redirect(url_for("home"))
@@ -226,8 +226,20 @@ def view_circuit(circuit_id):
     circuits = mongo.db.circuits.find_one({"_id": ObjectId(circuit_id)})
     races = list(mongo.db.races.find().sort("year", 1))
     seasons = list(mongo.db.seasons.find().sort("year", 1))
+    favourites = list(mongo.db.test.find({"username": username},{"_id": ObjectId(circuit_id)}))
+    print(favourites)
+    if request.method == "POST":
+        if request.form["action"] == "add":
+            circuit = {
+                "username": username,
+                "circuitId": circuits["_id"],
+                }
+            mongo.db.test.insert_one(circuit)
+        elif request.form["action"] == "remove":
+            mongo.db.test.delete_one({"circuitId": circuits["_id"]})
+        return redirect(url_for("view_circuit", circuit_id=circuits["_id"]))
     return render_template(
-        "view/view_circuit.html", races=races, circuits=circuits, seasons=seasons, username=username)
+        "view/view_circuit.html", races=races, circuits=circuits, seasons=seasons, username=username, favourites=favourites)
 
 @app.route("/view_constructor/<constructor_id>")
 def view_constructor(constructor_id):

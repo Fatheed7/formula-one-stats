@@ -1,1 +1,65 @@
-{% extends "base.html" %} {% block content %} Add Circuit {% endblock %}
+{% extends "base.html" %} {% block content %}
+<div class="pageHeader">
+    <h4 class="center-align displayName white-text text-shadow">
+      Add Circuit
+    </h4>
+  </div>
+  <div class="row remove-bottom-margin">
+    <form class="col s12" method="POST" action="{{ url_for('add_circuit') }}">
+      <div class="row add_circuit_row">
+        <div class="input-field col col s2 offset-s5">
+          <input id="circuitId" name="circuitId" type="text" value="{{circuits.circuitId + 1}}" class="validate" required readonly>
+          <label for="circuitId">Circuit ID (This Field Is Read Only)</label>
+        </div>
+        </div>
+      <div class="row">
+        <div class="input-field col col s4 offset-s2">
+          <input id="circuitRef" name="circuitRef" type="text" value="" class="validate" required>
+          <label for="circuitRef">Circuit Ref</label>
+        </div>
+        <div class="input-field col col s4">
+            <input id="circuitName" name="circuitName" type="text" value="" class="validate" required>
+            <label for="circuitName">Circuit Name</label>
+          </div>
+      </div>
+      <div class="row">
+        <div class="input-field col col s4 offset-s2">
+          <input id="location" name="location" type="text" value="" class="validate" required>
+          <label for="location">Location</label>
+        </div>
+        <div class="input-field col col s4">
+            <input id="country" name="country" type="text" value="" class="validate" required>
+            <label for="country">Country</label>
+          </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s4 offset-s2">
+          <input id="latitude" name="latitude" type="text" value="" pattern="^[0-9\.]*$">
+            <label for="latitude">Latitude</label>
+        </div>
+        <div class="input-field col s4">
+          <input id="longitude" name="longitude" type="text" value="" pattern="^[0-9\.]*$">
+            <label for="longitude">Longitude</label>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="input-field col s6 offset-s3">
+          <input id="url" name="url" type="text" value="" class="materialize-textarea"></input>
+          <label for="url">Wikipedia Link</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s12 center-align">
+          <a href="{{url_for('dashboard')}}" class="grey lighten-3 btn-large z-depth-2 black-text glow-on-hover">
+            Cancel <i class="fas fa-times-circle right"></i>
+          </a>
+          <button type="submit" class="grey lighten-3 btn-large z-depth-2 black-text glow-on-hover">
+            Submit Changes <i class="fas fa-edit right"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+{% endblock %}

@@ -430,14 +430,30 @@ def dashboard():
     else: 
          return redirect(url_for("login"))
 
-@app.route("/add_circuit")
+@app.route("/add_circuit", methods=["GET", "POST"])
 def add_circuit():
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
+    if request.method == "POST":
+            circuit = {
+                "circuitId": int(request.form.get("circuitId")),
+                "circuitRef": request.form.get("circuitRef"),
+                "name": request.form.get("circuitName"),
+                "location": request.form.get("location"),
+                "country": request.form.get("country"),
+                "lat": float(request.form.get("latitude")),
+                "lng": float(request.form.get("longitude")),
+                "url": request.form.get("url"),
+                }
+            mongo.db.circuits.insert_one(circuit)
+            flash("Circuit has been added.")
+            return redirect(url_for("dashboard"))
     if username == "admin":
-        return render_template("admin/add_circuit.html", username=username)
-    else: 
-         return redirect(url_for("login"))
+        username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+        circuits = mongo.db.circuits.find_one(sort=[("circuitId", -1)])
+        
+        return render_template("admin/add_circuit.html", username=username, circuits=circuits)
 
 @app.route("/add_constructor")
 def add_constructor():

@@ -771,7 +771,7 @@
           <tr>
             <th>Position</th>
             <th>Constructor</th>
-            <th class="">Constructor ID</th>
+            <th class="hide">Constructor ID</th>
             <th>Constructor Select</th>
             <th>Wins</th>
             <th>Points</th>
@@ -796,12 +796,13 @@
                     readonly
                   />
                 </td>
-                  <td class="">
+                  <td class="hide">
                     <input
                       placeholder="Constructor ID"
                       id="constructor_id_standings_pos_{{standing.position| int -1}}"
                       name="constructor_id_standings_pos_{{standing.position| int -1}}"
                       type="text"
+                      value="{{constructor.constructorId}}"
                       class="center-align validate"
                     />
                   </td>
@@ -846,7 +847,7 @@
                     class="center-align validate"
                   />
                 </td>
-                <td class="">
+                <td class="hide">
                   <input
                     placeholder="Constructor ID"
                     id="constructor_id_standings_pos_{{n}}"

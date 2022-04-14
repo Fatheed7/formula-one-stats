@@ -62,7 +62,8 @@ hr {
 }
 
 .inner_card,
-.edit_driver_row {
+.edit_driver_row,
+.add_circuit_row {
   margin-top: 2vh;
 }
 

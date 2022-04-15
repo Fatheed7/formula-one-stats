@@ -5,7 +5,30 @@
     {{ constructors.name }}
   </h4>
 </div>
-<div class="center-align">
+<div class="col s12 center-align">
+  <form method="POST">
+    {% if favourites %}
+    <button
+      type="submit"
+      name="action"
+      value="remove"
+      class="grey lighten-3 btn-large z-depth-2 black-text glow-on-hover"
+    >
+      Remove from Favourites <i class="fas fa-heart-circle-minus right"></i>
+    </button>
+    {% else %}
+    <button
+      type="submit"
+      name="action"
+      value="add"
+      class="grey lighten-3 btn-large z-depth-2 black-text glow-on-hover"
+    >
+      Add to Favourites <i class="fas fa-heart-circle-plus right"></i>
+    </button>
+    {% endif %}
+  </form>
+</div>
+<div class="center-align top_row_spacer">
   <a
     href="{{ url_for('constructors') }}"
     class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"

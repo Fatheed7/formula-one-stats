@@ -1,4 +1,5 @@
 from calendar import c
+from doctest import FAIL_FAST
 import os
 
 from bson.objectid import ObjectId
@@ -227,7 +228,6 @@ def view_circuit(circuit_id):
     races = list(mongo.db.races.find().sort("year", 1))
     seasons = list(mongo.db.seasons.find().sort("year", 1))
     favourites = list(mongo.db.test.find({"username": username},{"_id": ObjectId(circuit_id)}))
-    print(favourites)
     if request.method == "POST":
         if request.form["action"] == "add":
             circuit = {
@@ -241,7 +241,7 @@ def view_circuit(circuit_id):
     return render_template(
         "view/view_circuit.html", races=races, circuits=circuits, seasons=seasons, username=username, favourites=favourites)
 
-@app.route("/view_constructor/<constructor_id>")
+@app.route("/view_constructor/<constructor_id>", methods=["GET", "POST"])
 def view_constructor(constructor_id):
     if session.get("user") is None:
         return redirect(url_for("home"))
@@ -253,6 +253,18 @@ def view_constructor(constructor_id):
     wins = list(mongo.db.results.find({"constructorId": constructors["constructorId"], "position": 1}))
     second = list(mongo.db.results.find({"constructorId": constructors["constructorId"], "position": 2}))
     third = list(mongo.db.results.find({"constructorId": constructors["constructorId"], "position": 3}))
+    favourites = list(mongo.db.test.find({"username": username},{"_id": ObjectId(constructor_id)}))
+    print(favourites)
+    if request.method == "POST":
+        if request.form["action"] == "add":
+            constructor = {
+                "username": username,
+                "constructorId": constructors["_id"],
+                }
+            mongo.db.test.insert_one(constructor)
+        elif request.form["action"] == "remove":
+            mongo.db.test.delete_one({"constructorId": constructors["_id"]})
+        return redirect(url_for("view_constructor", constructor_id=constructors["_id"]))
     def get_wiki_main_image(title):
         url = 'https://en.wikipedia.org/w/api.php'
         data = {
@@ -271,10 +283,10 @@ def view_constructor(constructor_id):
     except KeyError:
         image = "../static/img/no_image_available.svg"
     return render_template(
-        "view/view_constructor.html", results=constructor_results, constructors=constructors, wins=wins, second=second, third=third, username=username, image=image)
+        "view/view_constructor.html", results=constructor_results, constructors=constructors, wins=wins, second=second, third=third, username=username, image=image, favourites=favourites)
 
 
-@app.route("/view_driver/<driver_id>")
+@app.route("/view_driver/<driver_id>", methods=["GET", "POST"])
 def view_driver(driver_id):
     if session.get("user") is None:
         return redirect(url_for("home"))
@@ -286,6 +298,17 @@ def view_driver(driver_id):
     wins = list(mongo.db.results.find({"driverId": drivers["driverId"], "position": 1}))
     second = list(mongo.db.results.find({"driverId": drivers["driverId"], "position": 2}))
     third = list(mongo.db.results.find({"driverId": drivers["driverId"], "position": 3}))
+    favourites = list(mongo.db.test.find({"username": username} and {"driverId": ObjectId(driver_id)}))
+    if request.method == "POST":
+        if request.form["action"] == "add":
+            driver = {
+                "username": username,
+                "driverId": drivers["_id"],
+                }
+            mongo.db.test.insert_one(driver)
+        elif request.form["action"] == "remove":
+            mongo.db.test.delete_one({"driverId": drivers["_id"]})
+        return redirect(url_for("view_driver", driver_id=drivers["_id"]))
     
     ## https://stackoverflow.com/questions/59801085/finding-the-main-picture-of-the-wikipedia-page-with-python
     def get_wiki_main_image(title):
@@ -306,10 +329,10 @@ def view_driver(driver_id):
     except KeyError:
         image = "../static/img/no_image_available.svg"
     return render_template(
-        "view/view_driver.html", results=results, drivers=drivers, wins=wins, second=second, third=third, username=username, image=image)
+        "view/view_driver.html", results=results, drivers=drivers, wins=wins, second=second, third=third, username=username, image=image, favourites=favourites)
 
 
-@app.route("/view_race/<race_id>")
+@app.route("/view_race/<race_id>", methods=["GET", "POST"])
 def view_race(race_id):
     if session.get("user") is None:
         return redirect(url_for("home"))
@@ -326,9 +349,21 @@ def view_race(race_id):
     constructors = list(mongo.db.constructors.find())
     constructor_standings = list(mongo.db.constructor_standings.find({"raceId": races["raceId"]}).sort("position", 1))
     results = list(mongo.db.results.find().sort("positionOrder", 1))
+    favourites = list(mongo.db.test.find({"username": username},{"_id": ObjectId(race_id)}))
+    print(favourites)
+    if request.method == "POST":
+        if request.form["action"] == "add":
+            race = {
+                "username": username,
+                "raceId": races["_id"],
+                }
+            mongo.db.test.insert_one(race)
+        elif request.form["action"] == "remove":
+            mongo.db.test.delete_one({"raceId": races["_id"]})
+        return redirect(url_for("view_race", race_id=races["_id"]))
     return render_template(
         "view/view_race.html", statuses=statuses, races=races, results=results, drivers=drivers, constructors=constructors, qualifying=qualifying, 
-        circuits=circuits, driver_standings=driver_standings, constructor_standings=constructor_standings, seasons=seasons, username=username)
+        circuits=circuits, driver_standings=driver_standings, constructor_standings=constructor_standings, seasons=seasons, username=username, favourites=favourites)
 
 @app.route("/view_season/<season_id>")
 def view_season(season_id):
@@ -492,9 +527,14 @@ def favourites():
     else:
         username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
-    display_name = mongo.db.users.find_one(
+        display_name = mongo.db.users.find_one(
         {"username": session["user"]})["display_name"]
-    return render_template("profile/favourites.html", username=username,display_name=display_name)
+        test=list(mongo.db.test.find())
+        circuits = list(mongo.db.circuits.find())
+        constructors = list(mongo.db.constructors.find())
+        drivers = list(mongo.db.drivers.find())
+        races = list(mongo.db.races.find())
+    return render_template("profile/favourites.html", username=username,display_name=display_name, test=test, circuits=circuits, constructors=constructors, drivers=drivers, races=races)
 
 ## Admin Routes
 

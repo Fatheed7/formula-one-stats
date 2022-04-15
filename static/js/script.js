@@ -16,6 +16,10 @@ $(document).ready(function () {
   $(".tooltipped").tooltip();
   $(".modal").modal({});
   $("#contentTable").DataTable();
+  $("#circuitTable").DataTable();
+  $("#constructorTable").DataTable();
+  $("#driverTable").DataTable();
+  $("#raceTable").DataTable();
   $("#year").html(new Date().getFullYear());
   $("#loading").fadeOut(1500);
 });

@@ -16,8 +16,9 @@ Season {% endblock %} {% block content %}
   <a
     class="winner"
     href="{{ url_for('view_driver', driver_id=drivers[0]._id) }}"
-    >{{ drivers[0].forename }} {{ drivers[0].surname }}</a
-  >
+    >{{ drivers[0].forename }} {{ drivers[0].surname }}
+    <i class="fa-solid fa-link"></i
+  ></a>
 </h4>
 {% endif %} {% if constructors | length > 0 %}
 <h4 class="light-blue-text text-darken-4 center-align">
@@ -25,8 +26,8 @@ Season {% endblock %} {% block content %}
     class="winner"
     href="{{ url_for('view_constructor', constructor_id=constructors[0]._id) }}"
   >
-    {{ constructors[0].name}}</a
-  >
+    {{ constructors[0].name}} <i class="fa-solid fa-link"></i
+  ></a>
 </h4>
 {% endif %}
 <table class="striped centered">
@@ -57,8 +58,8 @@ Season {% endblock %} {% block content %}
         <a
           class="circuitLink"
           href="{{ url_for('view_circuit', circuit_id=circuit._id) }}"
-          >{{ circuit.name }}</a
-        >
+          >{{ circuit.name }} <i class="fa-solid fa-link"></i
+        ></a>
         {% endif %} {% endfor %}
       </td>
       <td>{{ race.name }}</td>

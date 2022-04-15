@@ -227,7 +227,7 @@ def view_circuit(circuit_id):
     circuits = mongo.db.circuits.find_one({"_id": ObjectId(circuit_id)})
     races = list(mongo.db.races.find().sort("year", 1))
     seasons = list(mongo.db.seasons.find().sort("year", 1))
-    favourites = list(mongo.db.test.find({"username": username},{"_id": ObjectId(circuit_id)}))
+    favourites = list(mongo.db.test.find({"username": username} and {"circuitId": ObjectId(circuit_id)}))
     if request.method == "POST":
         if request.form["action"] == "add":
             circuit = {
@@ -253,7 +253,7 @@ def view_constructor(constructor_id):
     wins = list(mongo.db.results.find({"constructorId": constructors["constructorId"], "position": 1}))
     second = list(mongo.db.results.find({"constructorId": constructors["constructorId"], "position": 2}))
     third = list(mongo.db.results.find({"constructorId": constructors["constructorId"], "position": 3}))
-    favourites = list(mongo.db.test.find({"username": username},{"_id": ObjectId(constructor_id)}))
+    favourites = list(mongo.db.test.find({"username": username} and {"constructorId": ObjectId(constructor_id)}))
     print(favourites)
     if request.method == "POST":
         if request.form["action"] == "add":
@@ -349,7 +349,7 @@ def view_race(race_id):
     constructors = list(mongo.db.constructors.find())
     constructor_standings = list(mongo.db.constructor_standings.find({"raceId": races["raceId"]}).sort("position", 1))
     results = list(mongo.db.results.find().sort("positionOrder", 1))
-    favourites = list(mongo.db.test.find({"username": username},{"_id": ObjectId(race_id)}))
+    favourites = list(mongo.db.test.find({"username": username} and {"raceId": ObjectId(race_id)}))
     print(favourites)
     if request.method == "POST":
         if request.form["action"] == "add":
@@ -534,6 +534,16 @@ def favourites():
         constructors = list(mongo.db.constructors.find())
         drivers = list(mongo.db.drivers.find())
         races = list(mongo.db.races.find())
+        if request.method == "POST":
+            if request.form["action"] == "add":
+                    driver = {
+                    "username": username,
+                    "driverId": drivers["_id"],
+                    }
+                    mongo.db.test.insert_one(driver)
+            elif request.form["action"] == "remove":
+                mongo.db.test.delete_one({"driverId": drivers["_id"]})
+            return redirect(url_for("view_driver", driver_id=drivers["_id"]))
     return render_template("profile/favourites.html", username=username,display_name=display_name, test=test, circuits=circuits, constructors=constructors, drivers=drivers, races=races)
 
 ## Admin Routes

@@ -8,7 +8,6 @@
 <div class="col s12 center-align">
   <form method="POST">
     {% if favourites | length > 0 %}
-    {% if favourites[0].driverId == drivers._id %}
     <button
       type="submit"
       name="action"
@@ -27,16 +26,7 @@
       Add to Favourites <i class="fas fa-heart-circle-plus right"></i>
     </button>
     {% endif %}
-    {% else %}
-    <button
-      type="submit"
-      name="action"
-      value="add"
-      class="grey lighten-3 btn-large z-depth-2 black-text glow-on-hover"
-    >
-      Add to Favourites <i class="fas fa-heart-circle-plus right"></i>
-    </button>
-    {% endif %}
+
   </form>
 </div>
 <div class="center-align top_row_spacer">

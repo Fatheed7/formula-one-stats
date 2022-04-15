@@ -8,7 +8,7 @@
 </div>
 <div class="col s12 center-align">
   <form method="POST">
-    {% if favourites.driverId == drivers._id %}
+    {% if favourites | length > 0 %}
     <button
       type="submit"
       name="action"

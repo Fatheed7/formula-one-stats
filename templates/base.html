@@ -67,6 +67,7 @@
           </h1>
         </li>
              {% if session.user %}
+             <li><a href="{{url_for('home')}}">Home</a></li>
             <li><a href="{{url_for('circuits')}}">Circuits</a></li>
             <li><a href="{{url_for('constructors')}}">Constructors</a></li>
             <li><a href="{{url_for('drivers')}}">Drivers</a></li>

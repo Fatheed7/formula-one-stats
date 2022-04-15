@@ -4,6 +4,7 @@
     Constructors
   </h4>
 </div>
+<div class="wrapper">
 <table class="striped centered display" id="contentTable">
   <thead>
     <tr>
@@ -33,11 +34,12 @@
         <a
           href="{{ url_for('view_constructor', constructor_id=constructor._id) }}"
           class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-          >View Constructor</a
+          >View</a
         >
       </td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
+</div>
 {% endblock %}

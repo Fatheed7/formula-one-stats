@@ -8,6 +8,9 @@ from flask_pymongo import PyMongo
 import json
 import requests
 from werkzeug.security import generate_password_hash, check_password_hash
+import plotly
+import plotly.graph_objs as go
+import pandas as pd
 
 
 if os.path.exists("env.py"):
@@ -372,6 +375,7 @@ def view_driver(driver_id):
         {"driverId": drivers["driverId"], "position": 3}))
     favourites = list(mongo.db.favourites.find(
             {"username": username} and {"driverId": ObjectId(driver_id)}))
+    
     if request.method == "POST":
         if request.form["action"] == "add":
             driver = {

@@ -35,43 +35,25 @@ Favourites {% endblock %} {% block content %}
         </tr>
       </thead>
       <tbody>
-        {% for i in test %}{% for circuit in circuits %}{% if circuit._id ==
+        {% for favourite in favourites %}{% for circuit in circuits %}{% if circuit._id ==
         i.circuitId and username == i.username %}
         <tr>
           <td>{{circuit.name}}</td>
           <td>
-            <a
-              href="{{ url_for('view_circuit', circuit_id=circuit._id) }}"
-              class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-              >View</a
-            >
+            <a href="{{ url_for('view_circuit', circuit_id=circuit._id) }}"
+              class="grey lighten-3 btn z-depth-2 black-text glow-on-hover">View</a>
           </td>
           <td>
-            <a
-              target="_blank"
-              type="button"
-              class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-              href="https://www.google.com/maps/search/{{ circuit.lat }},{{ circuit.lng }}"
-            >
-              <img
-                src="{{ url_for('static', filename='svg/Google_Maps_icon.svg') }}"
-                alt="Google Maps link for {{ circuit.name }}"
-                class="google-maps"
-              />
+            <a target="_blank" type="button" class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
+              href="https://www.google.com/maps/search/{{ circuit.lat }},{{ circuit.lng }}">
+              <img src="{{ url_for('static', filename='svg/Google_Maps_icon.svg') }}"
+                alt="Google Maps link for {{ circuit.name }}" class="google-maps" />
             </a>
           </td>
           <td>
-            <a
-              target="_blank"
-              type="button"
-              class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-              href="{{ circuit.url }}"
-            >
-              <i class="fa-brands fa-wikipedia-w"
-                ><span class="sr-only"
-                  >Wikipedia link for {{circuit.name}}</span
-                ></i
-              >
+            <a target="_blank" type="button" class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
+              href="{{ circuit.url }}">
+              <i class="fa-brands fa-wikipedia-w"><span class="sr-only">Wikipedia link for {{circuit.name}}</span></i>
             </a>
           </td>
           <td>Placeholder</td>
@@ -91,29 +73,19 @@ Favourites {% endblock %} {% block content %}
         </tr>
       </thead>
       <tbody>
-        {% for i in test %}{% for constructor in constructors %}{% if
+        {% for favourite in favourites %}{% for constructor in constructors %}{% if
         constructor._id == i.constructorId and username == i.username %}
         <tr>
           <td>{{constructor.name}}</td>
           <td>
-            <a
-              href="{{ url_for('view_constructor', constructor_id=constructor._id) }}"
-              class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-              >View</a
-            >
+            <a href="{{ url_for('view_constructor', constructor_id=constructor._id) }}"
+              class="grey lighten-3 btn z-depth-2 black-text glow-on-hover">View</a>
           </td>
           <td>
-            <a
-              target="_blank"
-              type="button"
-              class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-              href="{{ constructor.url }}"
-            >
-              <i class="fa-brands fa-wikipedia-w"
-                ><span class="sr-only"
-                  >Wikipedia link for {{constructor.name}}</span
-                ></i
-              >
+            <a target="_blank" type="button" class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
+              href="{{ constructor.url }}">
+              <i class="fa-brands fa-wikipedia-w"><span class="sr-only">Wikipedia link for
+                  {{constructor.name}}</span></i>
             </a>
           </td>
           <td>Placeholder</td>
@@ -133,30 +105,19 @@ Favourites {% endblock %} {% block content %}
         </tr>
       </thead>
       <tbody>
-        {% for i in test %}{% for driver in drivers %}{% if driver._id ==
+        {% for favourite in favourites %}{% for driver in drivers %}{% if driver._id ==
         i.driverId and username == i.username %}
         <tr>
           <td>{{driver.forename}} {{driver.surname}}</td>
           <td>
-            <a
-              href="{{ url_for('view_driver', driver_id=driver._id) }}"
-              class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-              >View</a
-            >
+            <a href="{{ url_for('view_driver', driver_id=driver._id) }}"
+              class="grey lighten-3 btn z-depth-2 black-text glow-on-hover">View</a>
           </td>
           <td>
-            <a
-              target="_blank"
-              type="button"
-              class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-              href="{{ driver.url }}"
-            >
-              <i class="fa-brands fa-wikipedia-w"
-                ><span class="sr-only"
-                  >Wikipedia link for {{driver.forename}}
-                  {{driver.surname}}</span
-                ></i
-              >
+            <a target="_blank" type="button" class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
+              href="{{ driver.url }}">
+              <i class="fa-brands fa-wikipedia-w"><span class="sr-only">Wikipedia link for {{driver.forename}}
+                  {{driver.surname}}</span></i>
             </a>
           </td>
           <td>Placeholder</td>
@@ -176,29 +137,19 @@ Favourites {% endblock %} {% block content %}
         </tr>
       </thead>
       <tbody>
-        {% for i in test %}{% for race in races %}{% if race._id == i.raceId and
+        {% for favourite in favourites %}{% for race in races %}{% if race._id == i.raceId and
         username == i.username %}
         <tr>
           <td>{{race.year}} {{race.name}}</td>
           <td>
-            <a
-              href="{{ url_for('view_race', race_id=race._id) }}"
-              class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-              >View</a
-            >
+            <a href="{{ url_for('view_race', race_id=race._id) }}"
+              class="grey lighten-3 btn z-depth-2 black-text glow-on-hover">View</a>
           </td>
           <td>
-            <a
-              target="_blank"
-              type="button"
-              class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-              href="{{ race.url }}"
-            >
-              <i class="fa-brands fa-wikipedia-w"
-                ><span class="sr-only"
-                  >Wikipedia link for {{race.year}} {{race.name}}</span
-                ></i
-              >
+            <a target="_blank" type="button" class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
+              href="{{ race.url }}">
+              <i class="fa-brands fa-wikipedia-w"><span class="sr-only">Wikipedia link for {{race.year}}
+                  {{race.name}}</span></i>
             </a>
           </td>
           <td>Placeholder</td>

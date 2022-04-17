@@ -443,7 +443,6 @@ table.striped>tbody>tr:nth-child(odd) {
 .chart-row {
   display: flex;
   justify-content: center;
-  margin-top: 3%;
 }
 
 iframe {

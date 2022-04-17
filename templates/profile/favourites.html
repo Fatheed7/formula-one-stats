@@ -36,7 +36,7 @@ Favourites {% endblock %} {% block content %}
       </thead>
       <tbody>
         {% for favourite in favourites %}{% for circuit in circuits %}{% if circuit._id ==
-        i.circuitId and username == i.username %}
+        favourite.circuitId and username == favourite.username %}
         <tr>
           <td>{{circuit.name}}</td>
           <td>
@@ -74,7 +74,7 @@ Favourites {% endblock %} {% block content %}
       </thead>
       <tbody>
         {% for favourite in favourites %}{% for constructor in constructors %}{% if
-        constructor._id == i.constructorId and username == i.username %}
+        constructor._id == favourite.constructorId and username == favourite.username %}
         <tr>
           <td>{{constructor.name}}</td>
           <td>
@@ -106,7 +106,7 @@ Favourites {% endblock %} {% block content %}
       </thead>
       <tbody>
         {% for favourite in favourites %}{% for driver in drivers %}{% if driver._id ==
-        i.driverId and username == i.username %}
+        favourite.driverId and username == favourite.username %}
         <tr>
           <td>{{driver.forename}} {{driver.surname}}</td>
           <td>
@@ -137,8 +137,8 @@ Favourites {% endblock %} {% block content %}
         </tr>
       </thead>
       <tbody>
-        {% for favourite in favourites %}{% for race in races %}{% if race._id == i.raceId and
-        username == i.username %}
+        {% for favourite in favourites %}{% for race in races %}{% if race._id == favourite.raceId and
+        username == favourite.username %}
         <tr>
           <td>{{race.year}} {{race.name}}</td>
           <td>

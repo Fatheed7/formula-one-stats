@@ -1,96 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico')}}" type="image/x-icon" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
-      integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-      type="text/css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
-      type="text/css"
-    />
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" type="text/css" />
-     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
-  </head>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/style.css')}}"
-    />
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico')}}" type="image/x-icon" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+    integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    type="text/css" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" type="text/css" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
+</head>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}" />
 <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
-    <title>{% block title %}{% endblock %}</title>
-  </head>
-  <body>
+<title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
 
   <header>
-      <nav class="nav-extended text-shadow red darken-4 z-depth-0">
-        <div class="nav-wrapper">
-          <a href="{{url_for('home')}}" class="brand-logo slogan">F1 Statistics</a>
-          <a href="#" data-target="mobile-demo" class="sidenav-trigger right"
-            ><i class="fa-solid fa-bars"><span class="sr-only">F1 Statistics Menu</span></i
-          ></a>
-          <ul class="right hide-on-med-and-down"></li>
-             {% if session.user %}
-            <li><a href="{{url_for('circuits')}}">Circuits</a></li>
-            <li><a href="{{url_for('constructors')}}">Constructors</a></li>
-            <li><a href="{{url_for('drivers')}}">Drivers</a></li>
-            <li><a href="{{url_for('races')}}">Races</a></li>
-            <li><a href="{{url_for('seasons')}}">Seasons</a></li>
-            <li> | </li>
-            {% if session.user|lower == "admin"|lower %}
-            <li><a href="{{url_for('dashboard')}}">Admin Dashboard</a></li>
-            {% else %}
-            <li><a href="{{url_for('profile', username=username)}}">Profile</a></li>
-            {% endif %}
-            <li>|</li>
-            <li><a href="{{url_for('logout')}}">Logout</a></li>
-             {% else %}
-            <li><a href="{{url_for('login')}}">Log In</a></li>
-            <li><a href="{{url_for('register')}}">Register</a></li>
-            {% endif %}
-          </ul>
-        </div>
-      </nav>
+    <nav class="nav-extended text-shadow red darken-4 z-depth-0">
+      <div class="nav-wrapper">
+        <a href="{{url_for('home')}}" class="brand-logo slogan">F1 Statistics</a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fa-solid fa-bars"><span
+              class="sr-only">F1 Statistics Menu</span></i></a>
+        <ul class="right hide-on-med-and-down">
+          </li>
+          {% if session.user %}
+          <li><a href="{{url_for('circuits')}}">Circuits</a></li>
+          <li><a href="{{url_for('constructors')}}">Constructors</a></li>
+          <li><a href="{{url_for('drivers')}}">Drivers</a></li>
+          <li><a href="{{url_for('races')}}">Races</a></li>
+          <li><a href="{{url_for('seasons')}}">Seasons</a></li>
+          <li> | </li>
+          {% if session.user|lower == "admin"|lower %}
+          <li><a href="{{url_for('dashboard')}}">Admin Dashboard</a></li>
+          {% else %}
+          <li><a href="{{url_for('profile', username=username)}}">Profile</a></li>
+          {% endif %}
+          <li>|</li>
+          <li><a href="{{url_for('logout')}}">Logout</a></li>
+          {% else %}
+          <li><a href="{{url_for('login')}}">Log In</a></li>
+          <li><a href="{{url_for('register')}}">Register</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
 
-      <ul class="sidenav" id="mobile-demo">
-        <li>
-          <h1 class="center-align light-blue-text text-darken-4 slogan">
-            F1 Statistics
-          </h1>
-        </li>
-             {% if session.user %}
-             <li><a href="{{url_for('home')}}">Home</a></li>
-            <li><a href="{{url_for('circuits')}}">Circuits</a></li>
-            <li><a href="{{url_for('constructors')}}">Constructors</a></li>
-            <li><a href="{{url_for('drivers')}}">Drivers</a></li>
-            <li><a href="{{url_for('races')}}">Races</a></li>
-            <li><a href="{{url_for('seasons')}}">Seasons</a></li>
-            <li> <hr> </li>
-            {% if session.user|lower == "admin"|lower %}
-            <li><a href="{{url_for('dashboard')}}">Admin Dashboard</a></li>
-            {% else %}
-            <li><a href="{{url_for('profile', username=username)}}">Profile</a></li>
-            {% endif %}
-            <li><hr></li>
-            <li><a href="{{url_for('logout')}}">Logout</a></li>
-             {% else %}
-            <li><a href="{{url_for('login')}}">Log In</a></li>
-            <li><a href="{{url_for('register')}}">Register</a></li>
-            {% endif %}
-      </ul>
-    </header>
-       
-    {%- if request.path == "/" or request.path == "/home" %}
-        <main class="container home">
-         <section>
+    <ul class="sidenav" id="mobile-demo">
+      <li>
+        <h1 class="center-align light-blue-text text-darken-4 slogan">
+          F1 Statistics
+        </h1>
+      </li>
+      {% if session.user %}
+      <li><a href="{{url_for('home')}}">Home</a></li>
+      <li><a href="{{url_for('circuits')}}">Circuits</a></li>
+      <li><a href="{{url_for('constructors')}}">Constructors</a></li>
+      <li><a href="{{url_for('drivers')}}">Drivers</a></li>
+      <li><a href="{{url_for('races')}}">Races</a></li>
+      <li><a href="{{url_for('seasons')}}">Seasons</a></li>
+      <li>
+        <hr>
+      </li>
+      {% if session.user|lower == "admin"|lower %}
+      <li><a href="{{url_for('dashboard')}}">Admin Dashboard</a></li>
+      {% else %}
+      <li><a href="{{url_for('profile', username=username)}}">Profile</a></li>
+      {% endif %}
+      <li>
+        <hr>
+      </li>
+      <li><a href="{{url_for('logout')}}">Logout</a></li>
+      {% else %}
+      <li><a href="{{url_for('login')}}">Log In</a></li>
+      <li><a href="{{url_for('register')}}">Register</a></li>
+      {% endif %}
+    </ul>
+  </header>
+
+  {%- if request.path == "/" or request.path == "/home" %}
+  <main class="container home">
+    <section>
       <!-- flash messages -->
       {% with messages = get_flashed_messages() %} {% if messages %} {% for
       message in messages %}
@@ -100,65 +95,68 @@
       {% endfor %} {% endif %} {% endwith %}
     </section>
     {% else %}
-        <main class="container">
-          <div class="wrapper">
-           <section>
-            <div id="loading">
-              <div class="preloader-wrapper big active">
-                <div class="spinner-layer spinner-blue-only">
-                  <div class="circle-clipper left">
-                    <div class="circle"></div>
-                  </div><div class="gap-patch">
-                    <div class="circle"></div>
-                  </div><div class="circle-clipper right">
-                    <div class="circle"></div>
-                  </div>
+    <main class="container">
+      <div class="wrapper">
+        <section>
+          <div id="loading">
+            <div class="preloader-wrapper big active">
+              <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                  <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                  <div class="circle"></div>
                 </div>
               </div>
             </div>
-             
-      <!-- flash messages -->
-      {% with messages = get_flashed_messages() %} {% if messages %} {% for
-      message in messages %}
-      <div class="flashes">
-        <h4 class="light-blue lighten-4 center-align">{{ message }}</h4>
-      </div>
-      {% endfor %} {% endif %} {% endwith %}
-    </section>
-    {%- endif %}
+          </div>
 
-    {% block content %} 
-    {% endblock %}
+          <!-- flash messages -->
+          {% with messages = get_flashed_messages() %} {% if messages %} {% for
+          message in messages %}
+          <div class="flashes">
+            <h4 class="light-blue lighten-4 center-align">{{ message }}</h4>
+          </div>
+          {% endfor %} {% endif %} {% endwith %}
+        </section>
+        {%- endif %}
+
+        {% block content %}
+        {% endblock %}
       </div>
     </main>
-    <div class="container"> 
-    
-      <footer class="page-footer red darken-4">
-          <div class="container">
-            <div class="row">
-              <div class="col l6 s12">
-                <p class="grey-text text-lighten-4">The F1 Word Mark is used in accordance with the guidance issued by FORMULA 1.</p>
-                <p>More information can be found <a  class="f1Link" href="https://www.formula1.com/en/toolbar/guidelines.html" target="_blank">here <i class="fa-solid fa-link"></i
-                  ></a>.</p>
-              </div>
+    <div class="container">
 
+      <footer class="page-footer red darken-4">
+        <div class="container">
+          <div class="row">
+            <div class="col l6 s12">
+              <p class="grey-text text-lighten-4">The F1 Word Mark is used in accordance with the guidance issued by
+                FORMULA 1.</p>
+              <p>More information can be found <a class="f1Link"
+                  href="https://www.formula1.com/en/toolbar/guidelines.html" target="_blank">here <i
+                    class="fa-solid fa-link"></i></a>.</p>
             </div>
+
           </div>
-          <div class="footer-copyright">
-            <div class="container">
-            © <span id="year"></span>
-            <a class="grey-text text-lighten-4 right" target="_blank" href="https://github.com/Fatheed7/formula-one-stats">View Source Code On GitHub</a>
-            </div>
-          </div>
-        </footer>
         </div>
-    <script
-      src="https://code.jquery.com/jquery-3.6.0.min.js"
-      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-      crossorigin="anonymous"
-    ></script>
+        <div class="footer-copyright">
+          <div class="container">
+            © <span id="year"></span>
+            <a class="grey-text text-lighten-4 right" target="_blank"
+              href="https://github.com/Fatheed7/formula-one-stats">View Source Code On GitHub</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="{{ url_for('static', filename='js/script.js')}}"></script>
-  </body>
+</body>
+
 </html>

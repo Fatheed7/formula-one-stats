@@ -93,17 +93,28 @@ block content %}
     </table>
   </div>
 </div>
-<div class="row center-align">
-  <p>
-  <h5>The chart below shows a graph detailing the position {{drivers.forename}} {{drivers.surname}} has finished each
-    race.</h5>
-  </p>
-  <p>Please note: Races in which {{drivers.forename}} {{drivers.surname}} did not finish are not shown.</p>
-</div>
-<div class="row chart-row">
-  <iframe class="center-align"
-    style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);"
-    width="640" height="480" src="https://charts.mongodb.com/charts-project-0-jtyss/embed/charts?id=625c6f81-ecf4-4d24-8223-9a3fddc76950&maxDataAge=3600&
+{% if hide_chart %}
+<div class="row chart-row noChartData">
+  <div class="card-panel center-align orange lighten-3">
+    <span>
+      <p><b> As they have no results where they finished a race, no chart is available for {{drivers.forename}}
+          {{drivers.surname}}. </b></p>
+    </span>
+  </div>
+  {% else %}
+  <div class="row center-align">
+    <p>
+    <h5>The chart below shows a graph detailing the position {{drivers.forename}} {{drivers.surname}} has finished each
+      race.</h5>
+    </p>
+    <p>Please note: Races in which {{drivers.forename}} {{drivers.surname}} did not finish are not shown.</p>
+  </div>
+  <div class="row chart-row">
+    <iframe class="center-align"
+      style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);"
+      width="640" height="480" src="https://charts.mongodb.com/charts-project-0-jtyss/embed/charts?id=625c6f81-ecf4-4d24-8223-9a3fddc76950&maxDataAge=3600&
   theme=light&autoRefresh=true&filter={'driverId':%20{$eq:%20{{drivers.driverId}}}}"></iframe>
-</div>
-{% endblock %}
+  </div>
+  {% endif %}
+
+  {% endblock %}

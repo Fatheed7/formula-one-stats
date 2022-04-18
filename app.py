@@ -7,6 +7,7 @@ from flask import (Flask, flash, redirect, render_template, request,
 from flask_pymongo import PyMongo
 import json
 import requests
+from sqlalchemy import null
 from werkzeug.security import generate_password_hash, check_password_hash
 import plotly
 import plotly.graph_objs as go
@@ -375,7 +376,9 @@ def view_driver(driver_id):
         {"driverId": drivers["driverId"], "position": 3}))
     favourites = list(mongo.db.favourites.find(
             {"username": username} and {"driverId": ObjectId(driver_id)}))
-    
+    did_not_finish = list(mongo.db.results.find(
+        {"driverId": drivers["driverId"], "position": ""}))
+    hide_chart = (did_not_finish == results)
     if request.method == "POST":
         if request.form["action"] == "add":
             driver = {
@@ -417,7 +420,9 @@ def view_driver(driver_id):
         third=third,
         username=username,
         image=image,
-        favourites=favourites)
+        favourites=favourites,
+        all_finishes=did_not_finish,
+        hide_chart=hide_chart)
 
 
 @app.route("/view_race/<race_id>", methods=["GET", "POST"])
@@ -442,7 +447,6 @@ def view_race(race_id):
     results = list(mongo.db.results.find().sort("positionOrder", 1))
     favourites = list(mongo.db.favourites.find({"username": username} and
                                                {"raceId": ObjectId(race_id)}))
-    print(favourites)
     if request.method == "POST":
         if request.form["action"] == "add":
             race = {
@@ -649,16 +653,17 @@ def favourites():
         constructors = list(mongo.db.constructors.find())
         drivers = list(mongo.db.drivers.find())
         races = list(mongo.db.races.find())
+
         if request.method == "POST":
-            if request.form["action"] == "add":
-                    driver = {
-                             "username": username,
-                             "driverId": drivers["_id"],
-                    }
-                    mongo.db.favourites.insert_one(driver)
-            elif request.form["action"] == "remove":
+            if request.form["action"] == "circuit":
+                print(favourites[0]["_id"])
+            elif request.form["action"] == "constructor":
+                mongo.db.favourites.delete_one({"constructorId": constructors["_id"]})
+            elif request.form["action"] == "driver":
                 mongo.db.favourites.delete_one({"driverId": drivers["_id"]})
-            return redirect(url_for("view_driver", driver_id=drivers["_id"]))
+            elif request.form["action"] == "race":
+                mongo.db.favourites.delete_one({"raceId": races["_id"]})
+            return redirect(url_for("favourites"))
     return render_template("profile/favourites.html",
                            username=username,
                            display_name=display_name,

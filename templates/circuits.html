@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} {% block title %}F1 Statistics | Circuits{% endblock %}{% block content %}
 
 <table class="striped centered display" id="contentTable">
   <thead>
@@ -24,37 +24,21 @@
       <td>{{ circuit.location }}</td>
       <td>{{ circuit.country }}</td>
       <td>
-        <a
-          target="_blank"
-          type="button"
-          class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-          href="https://www.google.com/maps/search/{{ circuit.lat }},{{ circuit.lng }}"
-        >
-          <img
-            src="{{ url_for('static', filename='svg/Google_Maps_icon.svg') }}"
-            alt="Google Maps link for {{ circuit.name }}"
-            class="google-maps"
-          />
+        <a target="_blank" type="button" class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
+          href="https://www.google.com/maps/search/{{ circuit.lat }},{{ circuit.lng }}">
+          <img src="{{ url_for('static', filename='svg/Google_Maps_icon.svg') }}"
+            alt="Google Maps link for {{ circuit.name }}" class="google-maps" />
         </a>
       </td>
       <td>
-        <a
-          target="_blank"
-          type="button"
-          class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-          href="{{ circuit.url }}"
-        >
-          <i class="fa-brands fa-wikipedia-w"
-            ><span class="sr-only">Wikipedia link for {{circuit.name}}</span></i
-          >
+        <a target="_blank" type="button" class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
+          href="{{ circuit.url }}">
+          <i class="fa-brands fa-wikipedia-w"><span class="sr-only">Wikipedia link for {{circuit.name}}</span></i>
         </a>
       </td>
       <td>
-        <a
-          href="{{ url_for('view_circuit', circuit_id=circuit._id) }}"
-          class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-          >View</a
-        >
+        <a href="{{ url_for('view_circuit', circuit_id=circuit._id) }}"
+          class="grey lighten-3 btn z-depth-2 black-text glow-on-hover">View</a>
       </td>
     </tr>
     {% endfor %}

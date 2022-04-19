@@ -2,38 +2,25 @@
 Profile {% endblock %} {% block content %}
 
 <div class="pageHeader">
-  <h4 class="center-align displayName white-text text-shadow">
+  <h1 class="center-align pageName white-text text-shadow slogan">
     {{ display_name }}'s Profile
-  </h4>
+  </h1>
 </div>
 <div class="row remove-bottom-margin">
   <div class="col s12 m8 offset-m2">
+    <p class="center-align">Want to change your Display Name? Enter it below!</p>
     <form method="POST" action="{{ url_for('profile', username=username)}}">
       <div class="input-field col s6 offset-s3">
-        <i
-          class="fa-solid fa-user-tag prefix light-blue-text text-darken-4"
-        ></i>
-        <input
-          id="display_name"
-          name="display_name"
-          type="text"
-          minlength="5"
-          maxlength="15"
-          pattern="^[a-zA-Z0-9]{5,15}$"
-          class="validate"
-          value="{{display_name}}"
-          required
-        />
+        <i class="fa-solid fa-user-tag prefix light-blue-text text-darken-4"></i>
+        <input id="display_name" name="display_name" type="text" minlength="5" maxlength="15"
+          pattern="^[a-zA-Z0-9]{5,15}$" class="validate" value="{{display_name}}" required />
         <label for="display_name">Display Name</label>
       </div>
 
       <div class="row">
         <div class="col s12">
           <p class="center-align">
-            <button
-              type="submit"
-              class="col s6 offset-s3 btn light-blue darken-4 text-shadow"
-            >
+            <button type="submit" class="col s6 offset-s3 btn light-blue darken-4 text-shadow">
               Save Changes
             </button>
           </p>
@@ -44,33 +31,23 @@ Profile {% endblock %} {% block content %}
     <div class="row">
       <div class="col s12">
         <p class="center-align">
-          <a
-            href="{{url_for('favourites')}}"
-            class="col s6 offset-s3 btn green darken-3 text-shadow"
-            >My Favourites</a
-          >
+          <a href="{{url_for('favourites')}}" class="col s6 offset-s3 btn green darken-3 text-shadow">My Favourites</a>
         </p>
       </div>
     </div>
     <div class="row">
       <div class="col s12">
         <p class="center-align">
-          <a
-            href="{{url_for('change_password')}}"
-            class="col s6 offset-s3 btn green darken-3 text-shadow"
-            >Change Password</a
-          >
+          <a href="{{url_for('change_password')}}" class="col s6 offset-s3 btn green darken-3 text-shadow">Change
+            Password</a>
         </p>
       </div>
     </div>
     <div class="row">
       <div class="col s12">
         <p class="center-align">
-          <a
-            href="{{url_for('delete_account')}}"
-            class="col s6 offset-s3 btn grey darken-2 text-shadow"
-            >Delete Account</a
-          >
+          <a href="{{url_for('delete_account')}}" class="col s6 offset-s3 btn grey darken-2 text-shadow">Delete
+            Account</a>
         </p>
       </div>
     </div>

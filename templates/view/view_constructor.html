@@ -1,64 +1,52 @@
 {% extends "base.html" %}{% block title %}F1 Statistics | {{constructors.name}}{% endblock %} {% block content %}
 
 <div class="pageHeader">
-  <h4 class="center-align displayName white-text text-shadow">
+  <h1 class="center-align pageName white-text text-shadow slogan">
     {{ constructors.name }}
-  </h4>
+  </h1>
 </div>
 <div class="col s12 center-align">
   <form method="POST">
     {% if favourites | length > 0 %}
-    <button
-      type="submit"
-      name="action"
-      value="remove"
-      class="grey lighten-3 btn-large z-depth-2 black-text glow-on-hover"
-    >
+    <button type="submit" name="action" value="remove"
+      class="grey lighten-3 btn-large z-depth-2 black-text glow-on-hover">
       Remove from Favourites <i class="fas fa-heart-circle-minus right"></i>
     </button>
     {% else %}
-    <button
-      type="submit"
-      name="action"
-      value="add"
-      class="grey lighten-3 btn-large z-depth-2 black-text glow-on-hover"
-    >
+    <button type="submit" name="action" value="add" class="grey lighten-3 btn-large z-depth-2 black-text glow-on-hover">
       Add to Favourites <i class="fas fa-heart-circle-plus right"></i>
     </button>
     {% endif %}
   </form>
 </div>
 <div class="center-align top_row_spacer">
-  <a
-    href="{{ url_for('constructors') }}"
-    class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-    >Back to Constructors</a
-  >
-  <a
-  target="_blank"
-  type="button"
-  class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-  href="{{ constructors.url }}"
->
-  <i class="fa-brands fa-wikipedia-w"></i>
-    View Wikipedia Article<span class="sr-only"
-      >Wikipedia link for {{constructors.name}}</span
-    ></i
-  ></a
->
+  <a href="{{ url_for('constructors') }}" class="grey lighten-3 btn z-depth-2 black-text glow-on-hover">Back to
+    Constructors</a>
+  <a target="_blank" type="button" class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
+    href="{{ constructors.url }}">
+    <i class="fa-brands fa-wikipedia-w"></i>
+    View Wikipedia Article<span class="sr-only">Wikipedia link for {{constructors.name}}</span></i></a>
 </div>
 <div class="row remove-bottom-margin valign-wrapper">
   <div class="col s4 center-align">
     <p>
-      <img id="constructor_image" src="{{ image }}" />
+      {% if image == "../static/img/no_image_available.svg" %}
+      <img id="constructor_image" src="{{ image }}" alt="No image available" />
+      {% else %}
+      <img id="constructor_image" src="{{ image }}" alt="{{constructors.forename}} {{constructors.surname}}" />
+      {% endif %}
     </p>
   </div>
   <div class="col s8 center-align">
-    <h3 class="light-blue-text text-darken-4 center-align">
-      Information about {{ constructors.name }}
-    </h3>
-    <table id="#myTable">
+    <table class="infoTable">
       <tbody>
+        <tr>
+          <th>
+            <h2 class="light-blue-text text-darken-4 center-align slogan">
+              Information about {{ constructors.name }}
+            </h2>
+          </th>
+        </tr>
         <tr>
           <td>Name</td>
           <td>{{ constructors.name }}</td>
@@ -69,11 +57,16 @@
         </tr>
       </tbody>
     </table>
-    <h3 class="light-blue-text text-darken-4 center-align">
-      Race Statistics for {{ constructors.name }}
-    </h3>
-    <table>
+
+    <table class="infoTable">
       <tbody>
+        <tr>
+          <th>
+            <h2 class="light-blue-text text-darken-4 center-align slogan">
+              Race Statistics for {{ constructors.name }}
+            </h2>
+          </th>
+        </tr>
         <tr>
           <td>Number of Entries</td>
           <td>{{ results | length }}</td>

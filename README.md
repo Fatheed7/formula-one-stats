@@ -1,6 +1,6 @@
 # F1 Statistics - CI Project 3
 
-![F1 Statistics - Am I Responsive Image](assets/docs/readme_images/responsive.png)
+![F1 Statistics - Am I Responsive Image](docs/readme_images/responsive.png)
 
 This website was created as a third portfolio project for Code Institute's Diploma in Web Application Development. The site was inspired by my interest in FORMULA 1 as a sport and a desire to have easily accesible information.
 
@@ -107,10 +107,12 @@ I spent time thinking about the logic and flow of the site to make sure I had a 
 
 - ## Colours
 
-  -
-  -
-  -
-  -
+  - ![#b71c1c](https://via.placeholder.com/15/b71c1c/000000?text=+) - This colour was chosen for the navbar and footer as a subtle nod to the main colour of the official FORMULA 1 logo.
+  - ![#03a9f4](https://via.placeholder.com/15/03a9f4/000000?text=+) - This colour is used for the icons on the main page and was chosen as it contrasts well against the striking red colour of the navbar.
+  - ![#01579b](https://via.placeholder.com/15/01579b/000000?text=+)
+  - ![#000022](https://via.placeholder.com/15/000022/000000?text=+)
+  - ![#002266](https://via.placeholder.com/15/002266/000000?text=+)
+  - ![#001133](https://via.placeholder.com/15/001133/000000?text=+)
 
 #
 
@@ -188,7 +190,7 @@ I spent time thinking about the logic and flow of the site to make sure I had a 
   - [JQuery](https://en.wikipedia.org/wiki/JQuery) - Used to simplify definition of DOM elements, but used minimally with a preference for vanilla Javascript.
   - [JSHint](https://jshint.com/about/) - Linter used to flag errors, bugs and warnings.
   - [LucidChart](https://lucid.app/) - Used to create the flowchart for this site.
-  - Main framework used for the site
+  - [PEP8Online](http://pep8online.com/) - Tool used to ensure app.py is PEP8 compliant.
   - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) - Used for consistent code formatting.
   - [Slack](https://slack.com/) - Used for support and advice from the Code Insitute Community.
   - [SVG Backgrounds](https://www.svgbackgrounds.com/) - Used to style the background for the site due to low file size and responsiveness. Licensed under [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/).

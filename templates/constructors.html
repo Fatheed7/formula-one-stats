@@ -1,45 +1,36 @@
 {% extends "base.html" %} {% block title %}F1 Statistics | Constructors{% endblock %}{% block content %}
 <div class="pageHeader">
-  <h4 class="center-align displayName white-text text-shadow">
+  <h1 class="center-align pageName white-text text-shadow slogan">
     Constructors
-  </h4>
+  </h1>
 </div>
 <div class="wrapper">
-<table class="striped centered display" id="contentTable">
-  <thead>
-    <tr>
-      <th>Constructor</th>
-      <th>Nationality</th>
-      <th class="table-links">Wikipedia Article<br /> (Opens in a new tab)</th>
-      <th>View Constructor</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for constructor in constructors %}
-    <tr>
-      <td>{{ constructor.name }}</td>
-      <td>{{ constructor.nationality }}</td>
-      <td>
-        <a
-          target="_blank"
-          type="button"
-          class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-          href="{{ constructor.url }}"
-        >
-          <i class="fa-brands fa-wikipedia-w"
-            ><span class="sr-only">Wikipedia link for {{constructor.name}}</span></i
-          >
-      </td>
-      <td>
-        <a
-          href="{{ url_for('view_constructor', constructor_id=constructor._id) }}"
-          class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-          >View</a
-        >
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+  <table class="striped centered display" id="contentTable">
+    <thead>
+      <tr>
+        <th>Constructor</th>
+        <th>Nationality</th>
+        <th class="table-links">Wikipedia Article<br /> (Opens in a new tab)</th>
+        <th>View Constructor</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for constructor in constructors %}
+      <tr>
+        <td>{{ constructor.name }}</td>
+        <td>{{ constructor.nationality }}</td>
+        <td>
+          <a target="_blank" type="button" class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
+            href="{{ constructor.url }}">
+            <i class="fa-brands fa-wikipedia-w"><span class="sr-only">Wikipedia link for {{constructor.name}}</span></i>
+        </td>
+        <td>
+          <a href="{{ url_for('view_constructor', constructor_id=constructor._id) }}"
+            class="grey lighten-3 btn z-depth-2 black-text glow-on-hover">View</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 {% endblock %}

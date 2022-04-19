@@ -2,9 +2,9 @@
 block content %}
 
 <div class="pageHeader">
-  <h4 class="center-align displayName white-text text-shadow">
+  <h1 class="center-align pageName white-text text-shadow slogan">
     {{ drivers.forename }} {{ drivers.surname }}
-  </h4>
+  </h1>
 </div>
 <div class="col s12 center-align">
   <form method="POST">
@@ -37,11 +37,16 @@ block content %}
     </p>
   </div>
   <div class="col s8 center-align">
-    <h3 class="light-blue-text text-darken-4 center-align">
-      Information about {{ drivers.forename }} {{ drivers.surname }}
-    </h3>
-    <table id="#myTable">
+
+    <table class="infoTable">
       <tbody>
+        <tr>
+          <th>
+            <h2 class="light-blue-text text-darken-4 center-align slogan">
+              Information about {{ drivers.forename }} {{ drivers.surname }}
+            </h2>
+          </th>
+        </tr>
         <tr>
           <td>Forename</td>
           <td>{{ drivers.forename }}</td>
@@ -64,11 +69,15 @@ block content %}
         </tr>
       </tbody>
     </table>
-    <h3 class="light-blue-text text-darken-4 center-align">
-      Race Statistics for {{ drivers.forename }} {{ drivers.surname }}
-    </h3>
-    <table>
+    <table class="infoTable">
       <tbody>
+        <tr>
+          <th>
+            <h2 class="light-blue-text text-darken-4 center-align slogan">
+              Race Statistics for {{ drivers.forename }} {{ drivers.surname }}
+            </h2>
+          </th>
+        </tr>
         <tr>
           <td>Number of Races</td>
           <td>{{ results | length }}</td>
@@ -97,7 +106,7 @@ block content %}
 <div class="row chart-row noChartData">
   <div class="card-panel center-align orange lighten-3">
     <span>
-      <p><b> As they have no results where they finished a race, no chart is available for {{drivers.forename}}
+      <p><b> As there are no results where they finished a race, no chart is available for {{drivers.forename}}
           {{drivers.surname}}. </b></p>
     </span>
   </div>

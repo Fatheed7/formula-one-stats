@@ -1,28 +1,19 @@
 {% extends "base.html" %} {% block title %}F1 Statistics | {{circuits.name}} {%
 endblock %}{% block content %}
 <div class="pageHeader">
-  <h4 class="center-align displayName white-text text-shadow">
+  <h1 class="center-align pageName white-text text-shadow slogan">
     {{ circuits.name }}
-  </h4>
+  </h1>
 </div>
 <div class="col s12 center-align">
   <form method="POST">
     {% if favourites | length > 0 %}
-    <button
-      type="submit"
-      name="action"
-      value="remove"
-      class="grey lighten-3 btn-large z-depth-2 black-text glow-on-hover"
-    >
+    <button type="submit" name="action" value="remove"
+      class="grey lighten-3 btn-large z-depth-2 black-text glow-on-hover">
       Remove from Favourites <i class="fas fa-heart-circle-minus right"></i>
     </button>
     {% else %}
-    <button
-      type="submit"
-      name="action"
-      value="add"
-      class="grey lighten-3 btn-large z-depth-2 black-text glow-on-hover"
-    >
+    <button type="submit" name="action" value="add" class="grey lighten-3 btn-large z-depth-2 black-text glow-on-hover">
       Add to Favourites <i class="fas fa-heart-circle-plus right"></i>
     </button>
     {% endif %}
@@ -49,17 +40,10 @@ endblock %}{% block content %}
     <div class="card-panel center-align orange lighten-3">
       <span>
         <p><b>View On Google Maps:</b></p>
-        <a
-          target="_blank"
-          type="button"
-          class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-          href="https://www.google.com/maps/search/{{ circuits.lat }},{{ circuits.lng }}"
-        >
-          <img
-            src="{{ url_for('static', filename='svg/Google_Maps_icon.svg') }}"
-            alt="Google Maps link for {{ circuits.name }}"
-            class="google-maps"
-          />
+        <a target="_blank" type="button" class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
+          href="https://www.google.com/maps/search/{{ circuits.lat }},{{ circuits.lng }}">
+          <img src="{{ url_for('static', filename='svg/Google_Maps_icon.svg') }}"
+            alt="Google Maps link for {{ circuits.name }}" class="google-maps" />
         </a>
       </span>
     </div>
@@ -82,30 +66,18 @@ endblock %}{% block content %}
     <tr>
       <td>{{ race.year }} {{race.name }}</td>
       <td>
-        <a
-          class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-          target="_blank"
-          href="{{ race.url }}"
-          ><i class="fa-brands fa-wikipedia-w"></i
-          ><span class="sr-only"
-            >Wikipedia link for {{ race.year }} {{race.name }}</span
-          ></a
-        >
+        <a class="grey lighten-3 btn z-depth-2 black-text glow-on-hover" target="_blank" href="{{ race.url }}"><i
+            class="fa-brands fa-wikipedia-w"></i><span class="sr-only">Wikipedia link for {{ race.year }} {{race.name
+            }}</span></a>
       </td>
       <td>
-        <a
-          href="{{ url_for('view_race', race_id=race._id) }}"
-          class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-          >View Race</a
-        >
+        <a href="{{ url_for('view_race', race_id=race._id) }}"
+          class="grey lighten-3 btn z-depth-2 black-text glow-on-hover">View Race</a>
       </td>
       <td>
         {% for season in seasons %} {% if season.year == race.year %}
-        <a
-          href="{{ url_for('view_season', season_id=season._id) }}"
-          class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-          >View Season</a
-        >
+        <a href="{{ url_for('view_season', season_id=season._id) }}"
+          class="grey lighten-3 btn z-depth-2 black-text glow-on-hover">View Season</a>
         {% endif %} {% endfor %}
       </td>
     </tr>

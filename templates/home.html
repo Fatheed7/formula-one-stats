@@ -1,16 +1,14 @@
 {% extends "base.html" %}{% block title %}F1 Statistics | Home{% endblock %} {%
 block content %}
 <style type="text/css">
-  @media (min-width: 768px) {
-
-    html,
-    body {
-      overflow: hidden;
-    }
-  }
-
   footer {
     display: none;
+  }
+
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
   }
 </style>
 
@@ -18,44 +16,41 @@ block content %}
   <div class="container" id="title">
     <h1 class="header center">Welcome to F1 Statistics</h1>
     <div class="slogan row center">
-      <h5 class="slogan col s12 light">
+      <h2 class="slogan headerSlogan col s12 light">
         Your one-stop-shop for F1 Data.
-      </h5>
+      </h2>
     </div>
     <br /><br />
   </div>
 
-  <div class="row">
-    <div class="col s12 m4">
+  <div class="row iconRow">
+    <div class="col s12 m4 iconCol">
       <div class="icon-block">
-        <p class="center icon light-blue-text">
-          <i class="fa-solid fa-database fa-flip" style="--fa-animation-duration: 3s"></i>
-        </p>
-        <h4 class="center">All the info!</h4>
-
-        <h5 class="light">Data for every driver, race and season!</h5>
+        <h3 class="center icon light-blue-text">
+          <i class="fa-solid fa-database fa-flip" style="--fa-animation-duration: 3s"></i> <span
+            class="white-text iconText">All
+            the info!</span>
+        </h3>
+        <h4 class="light iconText">Data for every driver, race and season!</h4>
       </div>
     </div>
 
-    <div class="col s12 m4">
+    <div class="col s12 m4 iconCol ">
       <div class="icon-block">
-        <p class="center icon light-blue-text">
-          <i class="fa-solid fa-heart fa-beat"></i>
-        </p>
-        <h4 class="center">Favourites!</h4>
-
-        <h5 class="light">Add data to your favourites for access later!</h5>
+        <h3 class="center icon light-blue-text">
+          <i class="fa-solid fa-heart fa-beat"></i> <span class="white-text iconText">Favourites!</span>
+        </h3>
+        <h4 class="light iconText">Add data to your favourites for access later!</h4>
       </div>
     </div>
 
-    <div class="col s12 m4">
+    <div class="col s12 m4 iconCol">
       <div class="icon-block">
-        <p class="center icon light-blue-text">
+        <h3 class="center icon light-blue-text">
           <i class="fa-solid fa-flag-checkered fa-fade" style="--fa-animation-duration: 2s; --fa-fade-opacity: 0.6"></i>
-        </p>
-        <h4 class="center">Always up to date!</h4>
-
-        <h5 class="light">Data is updated soon after every session!</h5>
+          <span class="white-text iconText">Up to date!</span>
+        </h3>
+        <h4 class="light iconText">Data is updated soon after every session!</h4>
       </div>
     </div>
     <br /><br />

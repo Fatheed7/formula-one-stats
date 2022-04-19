@@ -2,28 +2,19 @@
 {{races.name}} {% endblock %} {% block content %}
 
 <div class="pageHeader">
-  <h4 class="center-align displayName white-text text-shadow">
+  <h1 class="center-align pageName white-text text-shadow slogan">
     {{ races.year}} {{ races.name }}
-  </h4>
+  </h1>
 </div>
 <div class="col s12 center-align">
   <form method="POST">
     {% if favourites | length > 0 %}
-    <button
-      type="submit"
-      name="action"
-      value="remove"
-      class="grey lighten-3 btn-large z-depth-2 black-text glow-on-hover"
-    >
+    <button type="submit" name="action" value="remove"
+      class="grey lighten-3 btn-large z-depth-2 black-text glow-on-hover">
       Remove from Favourites <i class="fas fa-heart-circle-minus right"></i>
     </button>
     {% else %}
-    <button
-      type="submit"
-      name="action"
-      value="add"
-      class="grey lighten-3 btn-large z-depth-2 black-text glow-on-hover"
-    >
+    <button type="submit" name="action" value="add" class="grey lighten-3 btn-large z-depth-2 black-text glow-on-hover">
       Add to Favourites <i class="fas fa-heart-circle-plus right"></i>
     </button>
     {% endif %}
@@ -34,17 +25,11 @@
     Round {{ races.round}} - {{ races.date }}
   </h4>
   {% if session.user|lower == "admin"|lower %}
-  <a
-    href="{{ url_for('edit_race', race_id=races._id) }}"
-    class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-    >Edit Race</a
-  >
+  <a href="{{ url_for('edit_race', race_id=races._id) }}"
+    class="grey lighten-3 btn z-depth-2 black-text glow-on-hover">Edit Race</a>
   {% endif %} {% for season in seasons %} {% if season.year == races.year %}
-  <a
-    href="{{ url_for('view_season', season_id=season._id) }}"
-    class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-    >View Season</a
-  >
+  <a href="{{ url_for('view_season', season_id=season._id) }}"
+    class="grey lighten-3 btn z-depth-2 black-text glow-on-hover">View Season</a>
   {% endif %} {% endfor %}
 </div>
 <div class="row remove-bottom-margin">
@@ -56,11 +41,8 @@
           races.circuitId %}
           <p><b>Circuit:</b></p>
           <p>
-            <a
-              href="{{ url_for('view_circuit', circuit_id=circuit._id) }}"
-              class="circuitLink"
-              >{{circuit.name}} <i class="fa-solid fa-link"></i
-            ></a>
+            <a href="{{ url_for('view_circuit', circuit_id=circuit._id) }}" class="circuitLink">{{circuit.name}} <i
+                class="fa-solid fa-link"></i></a>
           </p>
           {% endif %} {% endfor %}
         </span>
@@ -132,22 +114,17 @@
             <td>
               {% for driver in drivers %} {% if quali.driverId ==
               driver.driverId %}
-              <a
-                class="driverLink"
-                href="{{ url_for('view_driver', driver_id=driver._id) }}"
-                >{{driver.forename}} {{driver.surname}}
-                <i class="fa-solid fa-link"></i
-              ></a>
+              <a class="driverLink" href="{{ url_for('view_driver', driver_id=driver._id) }}">{{driver.forename}}
+                {{driver.surname}}
+                <i class="fa-solid fa-link"></i></a>
               {% endif %} {% endfor %}
             </td>
             <td>
               {% for constructor in constructors %} {% if quali.constructorId ==
               constructor.constructorId %}
-              <a
-                class="constructorLink"
-                href="{{ url_for('view_constructor', constructor_id=constructor._id) }}"
-                >{{constructor.name}} <i class="fa-solid fa-link"></i
-              ></a>
+              <a class="constructorLink"
+                href="{{ url_for('view_constructor', constructor_id=constructor._id) }}">{{constructor.name}} <i
+                  class="fa-solid fa-link"></i></a>
               {% endif %} {% endfor %}
             </td>
             <td>{{ quali.q1 if quali.q1 }}</td>
@@ -161,8 +138,7 @@
       <div class="row center-align">
         <div class="col s6 offset-s3">
           <div class="card-panel s12 teal inner_card">
-            <span class="white-text"
-              >Unfortunately, there is no data available for Qualifying at the
+            <span class="white-text">Unfortunately, there is no data available for Qualifying at the
               {{ races.year}} {{ races.name }}
             </span>
           </div>
@@ -189,69 +165,34 @@
           <tr>
             <td>
               {% if result.positionText == "D" %}
-              <span
-                class="tooltipped"
-                data-position="left"
-                data-tooltip="Disqualified"
-                >DSQ</span
-              >
+              <span class="tooltipped" data-position="left" data-tooltip="Disqualified">DSQ</span>
               {% elif result.positionText == "E" %}
-              <span
-                class="tooltipped"
-                data-position="left"
-                data-tooltip="Excluded"
-                >Excluded</span
-              >
+              <span class="tooltipped" data-position="left" data-tooltip="Excluded">Excluded</span>
               {% elif result.positionText == "F" %}
-              <span
-                class="tooltipped"
-                data-position="left"
-                data-tooltip="Did Not Qualify"
-                >DNQ</span
-              >
+              <span class="tooltipped" data-position="left" data-tooltip="Did Not Qualify">DNQ</span>
               {% elif result.positionText == "N" %}
-              <span
-                class="tooltipped"
-                data-position="left"
-                data-tooltip="Not Classified"
-                >NC</span
-              >
+              <span class="tooltipped" data-position="left" data-tooltip="Not Classified">NC</span>
               {% elif result.positionText == "R" %}
-              <span
-                class="tooltipped"
-                data-position="left"
-                data-tooltip="Retired"
-                >Ret</span
-              >
+              <span class="tooltipped" data-position="left" data-tooltip="Retired">Ret</span>
               {% elif result.positionText == "W" %}
-              <span
-                class="tooltipped"
-                data-position="left"
-                data-tooltip="Did Not Start - Withdrew"
-                >DNS</span
-              >
+              <span class="tooltipped" data-position="left" data-tooltip="Did Not Start - Withdrew">DNS</span>
               {% else %} {{ result.position }}.
             </td>
             {% endif %}
             <td>
               {% for driver in drivers %} {% if result.driverId ==
               driver.driverId %}
-              <a
-                class="driverLink"
-                href="{{ url_for('view_driver', driver_id=driver._id) }}"
-                >{{driver.forename}} {{driver.surname}}
-                <i class="fa-solid fa-link"></i
-              ></a>
+              <a class="driverLink" href="{{ url_for('view_driver', driver_id=driver._id) }}">{{driver.forename}}
+                {{driver.surname}}
+                <i class="fa-solid fa-link"></i></a>
               {% endif %} {% endfor %}
             </td>
             <td>
               {% for constructor in constructors %} {% if result.constructorId
               == constructor.constructorId %}
-              <a
-                class="constructorLink"
-                href="{{ url_for('view_constructor', constructor_id=constructor._id) }}"
-                >{{constructor.name}} <i class="fa-solid fa-link"></i
-              ></a>
+              <a class="constructorLink"
+                href="{{ url_for('view_constructor', constructor_id=constructor._id) }}">{{constructor.name}} <i
+                  class="fa-solid fa-link"></i></a>
               {% endif %} {% endfor %}
             </td>
             <td>{{ result.points }}</td>
@@ -284,12 +225,9 @@
             <td>
               {% for driver in drivers %} {% if standing.driverId ==
               driver.driverId %}
-              <a
-                class="driverLink"
-                href="{{ url_for('view_driver', driver_id=driver._id) }}"
-                >{{driver.forename}} {{driver.surname}}
-                <i class="fa-solid fa-link"></i
-              ></a>
+              <a class="driverLink" href="{{ url_for('view_driver', driver_id=driver._id) }}">{{driver.forename}}
+                {{driver.surname}}
+                <i class="fa-solid fa-link"></i></a>
               {% endif %} {% endfor %}
             </td>
             <td>{{ standing.wins }}</td>
@@ -302,8 +240,7 @@
       <div class="row center-align">
         <div class="col s6 offset-s3">
           <div class="card-panel s12 teal inner_card">
-            <span class="white-text"
-              >Unfortunately, there is no data available for Driver Standings
+            <span class="white-text">Unfortunately, there is no data available for Driver Standings
               from after the {{ races.year}} {{ races.name }}
             </span>
           </div>
@@ -330,11 +267,9 @@
             <td>
               {% for constructor in constructors %} {% if standing.constructorId
               == constructor.constructorId %}
-              <a
-                class="constructorLink"
-                href="{{ url_for('view_constructor', constructor_id=constructor._id) }}"
-                >{{constructor.name}} <i class="fa-solid fa-link"></i
-              ></a>
+              <a class="constructorLink"
+                href="{{ url_for('view_constructor', constructor_id=constructor._id) }}">{{constructor.name}} <i
+                  class="fa-solid fa-link"></i></a>
               {% endif %} {% endfor %}
             </td>
             <td>{{ standing.wins }}</td>
@@ -347,8 +282,7 @@
       <div class="row center-align">
         <div class="col s6 offset-s3">
           <div class="card-panel s12 teal inner_card">
-            <span class="white-text"
-              >Unfortunately, there is no data available for the Constructor
+            <span class="white-text">Unfortunately, there is no data available for the Constructor
               Standings after the {{ races.year}} {{ races.name }}
             </span>
           </div>

@@ -154,15 +154,24 @@ I spent time thinking about the logic and flow of the site to make sure I had a 
 
 - ## Manual Testing
 
-  #
+ <details>
+  <summary>CSS Validation</summary>
 
-  - ## Lighthouse Testing
+CSS was validated using [The W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/validator). A full report can be viewed [here](docs/readme_images/css_validator_full.png).
 
-  #
+![CSS Validation](docs/readme_images/css_validator.png)
 
-  - ## Wave Testing
+  </details>
 
-  #
+#
+
+- ## Lighthouse Testing
+
+#
+
+- ## Wave Testing
+
+#
 
 ## Credits
 

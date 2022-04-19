@@ -425,10 +425,6 @@ label {
 }
 
 @media (min-width: 600px) {
-  .container {
-    max-width: 100% !important;
-    width: 100% !important;
-  }
 
   .footer-copyright {
     padding: 10px !important;
@@ -450,18 +446,24 @@ label {
   .icon-block {
     height: 100%;
   }
+
 }
 
-@media only screen and (max-width: 992px) {
+@media (max-width: 992px) {
 
   header,
   main,
   footer {
     padding-left: 0;
   }
+
+  .container {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
 }
 
-@media only screen and (max-width: 600px) {
+@media (max-width: 600px) {
 
   .icon {
     margin: 0 !important;
@@ -471,6 +473,7 @@ label {
     margin-top: 20px;
     padding: 10px;
   }
+
 }
 
 @media (max-width: 600px) {

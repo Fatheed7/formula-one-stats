@@ -145,40 +145,6 @@ nav {
   margin-bottom: 0 !important;
 }
 
-@media (max-width: 600px) {
-  .content {
-    height: 100%;
-  }
-}
-
-@media (max-width: 680px) {
-  .container {
-    max-width: 100% !important;
-    width: 100% !important;
-  }
-
-  .footer-copyright {
-    padding: 10px !important;
-  }
-
-  #loading {
-    width: 100% !important;
-  }
-}
-
-@media (max-width: 1577px) {
-  .admin-card {
-    min-width: 180px;
-    max-width: 200px;
-    height: 211.55px;
-  }
-
-  .admin-content {
-    max-width: 200px;
-    height: 120px;
-  }
-}
-
 
 .pageHeader {
   height: 64px;
@@ -436,4 +402,45 @@ iframe {
 .noChartData {
   height: 100px;
   width: 90%;
+}
+
+
+@media (max-width: 600px) {
+  .content {
+    height: 100%;
+  }
+}
+
+@media (max-width: 680px) {
+  .container {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .footer-copyright {
+    padding: 10px !important;
+  }
+
+  #loading {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 1577px) {
+  .admin-card {
+    min-width: 180px;
+    max-width: 200px;
+    height: 211.55px;
+  }
+
+  .admin-content {
+    max-width: 200px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 350px) {
+  nav .brand-logo {
+    font-size: 1.5rem;
+  }
 }

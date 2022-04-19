@@ -145,6 +145,7 @@ def edit_race(race_id):
         {"year": races["year"], "round": races["round"] - 1}))
 
     if request.method == "POST":
+
         if request.form["action"] == "qualifying":
             for n in range(20):
                 qualifying = {
@@ -160,21 +161,25 @@ def edit_race(race_id):
                 }
                 mongo.db.qualifying.insert_one(qualifying)
             return redirect(url_for("view_race", race_id=races["_id"]))
+
         elif request.form["action"] == "qualifying-update":
             for n in range(20):
                 qualifying_update = {
                     "raceId": races["raceId"],
                     "driverId": int(request.form.get(
-                    "driver_id_pos_quali_" + str(n))),
+                        "driver_id_pos_quali_" + str(n))),
                     "constructorId": int(request.form.get(
-                    "constructor_id_quali_pos_" + str(n))),
+                        "constructor_id_quali_pos_" + str(n))),
                     "position": n+1,
                     "q1": request.form.get("q1_pos_" + str(n)),
                     "q2": request.form.get("q2_pos_" + str(n)),
                     "q3": request.form.get("q3_pos_" + str(n)),
                 }
-                mongo.db.qualifying.replace_one({"raceId": races["raceId"],"position": n+1}, qualifying_update)
+                mongo.db.qualifying.replace_one(
+                    {"raceId": races["raceId"], "position": n+1},
+                    qualifying_update)
             return redirect(url_for("view_race", race_id=races["_id"]))
+
         elif request.form["action"] == "race":
             for n in range(20):
                 race = {
@@ -197,6 +202,7 @@ def edit_race(race_id):
                 }
                 mongo.db.results.insert_one(race)
             return redirect(url_for("view_race", race_id=races["_id"]))
+
         elif request.form["action"] == "race-update":
             for n in range(20):
                 race_update = {
@@ -218,8 +224,11 @@ def edit_race(race_id):
                         "status_id_pos_race_" + str(n))),
                 }
                 print(race_update)
-                mongo.db.results.replace_one({"raceId": races["raceId"],"positionOrder": n+1}, race_update)
+                mongo.db.results.replace_one(
+                    {"raceId": races["raceId"], "positionOrder": n+1},
+                    race_update)
             return redirect(url_for("view_race", race_id=races["_id"]))
+
         elif request.form["action"] == "driver":
             for n in range(20):
                 driver_standings = {
@@ -235,6 +244,7 @@ def edit_race(race_id):
                 }
                 mongo.db.driver_standings.insert_one(driver_standings)
             return redirect(url_for("view_race", race_id=races["_id"]))
+
         elif request.form["action"] == "driver-update":
             for n in range(20):
                 driver_standings_update = {
@@ -248,8 +258,11 @@ def edit_race(race_id):
                     "wins": int(request.form.get(
                         "wins_standings_pos_" + str(n))),
                 }
-                mongo.db.driver_standings.replace_one({"raceId": races["raceId"],"position": n+1}, driver_standings_update)
+                mongo.db.driver_standings.replace_one(
+                    {"raceId": races["raceId"], "position": n+1},
+                    driver_standings_update)
             return redirect(url_for("view_race", race_id=races["_id"]))
+
         elif request.form["action"] == "constructor":
             for n in range(10):
                 constructor_standings = {
@@ -266,6 +279,7 @@ def edit_race(race_id):
                 mongo.db.constructor_standings.insert_one(
                     constructor_standings)
             return redirect(url_for("view_race", race_id=races["_id"]))
+
         elif request.form["action"] == "constructor-update":
             for n in range(10):
                 constructor_standings_update = {
@@ -279,9 +293,10 @@ def edit_race(race_id):
                     "wins": int(request.form.get(
                         "wins_constructor_pos_" + str(n))),
                 }
-                
+
                 mongo.db.constructor_standings.replace_one(
-                    {"raceId": races["raceId"],"position": n+1}, constructor_standings_update)
+                    {"raceId": races["raceId"], "position": n+1},
+                    constructor_standings_update)
             return redirect(url_for("view_race", race_id=races["_id"]))
         else:
             return redirect(url_for("home"))
@@ -728,13 +743,17 @@ def favourites():
 
         if request.method == "POST":
             if request.form["action"] == "circuit":
-                mongo.db.favourites.delete_one({"circuitId": circuits["_id"]})
+                mongo.db.favourites.delete_one(
+                    {"circuitId": circuits["_id"]})
             elif request.form["action"] == "constructor":
-                mongo.db.favourites.delete_one({"constructorId": constructors["_id"]})
+                mongo.db.favourites.delete_one(
+                    {"constructorId": constructors["_id"]})
             elif request.form["action"] == "driver":
-                mongo.db.favourites.delete_one({"driverId": drivers["_id"]})
+                mongo.db.favourites.delete_one(
+                    {"driverId": drivers["_id"]})
             elif request.form["action"] == "race":
-                mongo.db.favourites.delete_one({"raceId": races["_id"]})
+                mongo.db.favourites.delete_one(
+                    {"raceId": races["_id"]})
             return redirect(url_for("favourites"))
     return render_template("profile/favourites.html",
                            username=username,

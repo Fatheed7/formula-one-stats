@@ -20,9 +20,9 @@
         <td>{{ constructor.name }}</td>
         <td>{{ constructor.nationality }}</td>
         <td>
-          <a target="_blank" type="button" class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-            href="{{ constructor.url }}">
-            <i class="fa-brands fa-wikipedia-w"><span class="sr-only">Wikipedia link for {{constructor.name}}</span></i>
+          <a target="_blank" class="grey lighten-3 btn z-depth-2 black-text glow-on-hover" href="{{ constructor.url }}">
+            <i class="fa-brands fa-wikipedia-w"><span class="sr-only">Wikipedia link for
+                {{constructor.name}}</span></i></a>
         </td>
         <td>
           <a href="{{ url_for('view_constructor', constructor_id=constructor._id) }}"

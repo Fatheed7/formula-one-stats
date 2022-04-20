@@ -22,30 +22,24 @@ endblock %}{% block content %}
 <div class="row">
   <div class="col s4 m4">
     <div class="card-panel center-align orange lighten-3">
-      <span>
-        <p><b>Location:</b></p>
-        <p>{{circuits.location}}</p>
-      </span>
+      <p><b>Location:</b></p>
+      <p>{{circuits.location}}</p>
     </div>
   </div>
   <div class="col s4 m4">
     <div class="card-panel center-align orange lighten-3">
-      <span>
-        <p><b>Country:</b></p>
-        <p>{{circuits.country}}</p>
-      </span>
+      <p><b>Country:</b></p>
+      <p>{{circuits.country}}</p>
     </div>
   </div>
   <div class="col s4 m4">
     <div class="card-panel center-align orange lighten-3">
-      <span>
-        <p><b>View On Google Maps:</b></p>
-        <a target="_blank" type="button" class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-          href="https://www.google.com/maps/search/{{ circuits.lat }},{{ circuits.lng }}">
-          <img src="{{ url_for('static', filename='svg/Google_Maps_icon.svg') }}"
-            alt="Google Maps link for {{ circuits.name }}" class="google-maps" />
-        </a>
-      </span>
+      <p><b>View On Google Maps:</b></p>
+      <a target="_blank" class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
+        href="https://www.google.com/maps/search/{{ circuits.lat }},{{ circuits.lng }}">
+        <img src="{{ url_for('static', filename='svg/Google_Maps_icon.svg') }}"
+          alt="Google Maps link for {{ circuits.name }}" class="google-maps" />
+      </a>
     </div>
   </div>
 </div>

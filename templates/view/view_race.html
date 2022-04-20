@@ -36,38 +36,32 @@
   <div class="row">
     <div class="col s4 m4">
       <div class="card-panel center-align orange lighten-3">
-        <span>
-          {% for circuit in circuits %} {% if circuit.circuitId ==
-          races.circuitId %}
-          <p><b>Circuit:</b></p>
-          <p>
-            <a href="{{ url_for('view_circuit', circuit_id=circuit._id) }}" class="circuitLink">{{circuit.name}} <i
-                class="fa-solid fa-link"></i></a>
-          </p>
-          {% endif %} {% endfor %}
-        </span>
+        {% for circuit in circuits %} {% if circuit.circuitId ==
+        races.circuitId %}
+        <p><b>Circuit:</b></p>
+        <p>
+          <a href="{{ url_for('view_circuit', circuit_id=circuit._id) }}" class="circuitLink">{{circuit.name}} <i
+              class="fa-solid fa-link"></i></a>
+        </p>
+        {% endif %} {% endfor %}
       </div>
     </div>
     <div class="col s4 m4">
       <div class="card-panel center-align orange lighten-3">
-        <span>
-          {% for circuit in circuits %} {% if circuit.circuitId ==
-          races.circuitId %}
-          <p><b>Location:</b></p>
-          <p>{{circuit.location}}</p>
-          {% endif %} {% endfor %}
-        </span>
+        {% for circuit in circuits %} {% if circuit.circuitId ==
+        races.circuitId %}
+        <p><b>Location:</b></p>
+        <p>{{circuit.location}}</p>
+        {% endif %} {% endfor %}
       </div>
     </div>
     <div class="col s4 m4">
       <div class="card-panel center-align orange lighten-3">
-        <span>
-          {% for circuit in circuits %} {% if circuit.circuitId ==
-          races.circuitId %}
-          <p><b>Country:</b></p>
-          <p>{{circuit.country}}</p>
-          {% endif %} {% endfor %}
-        </span>
+        {% for circuit in circuits %} {% if circuit.circuitId ==
+        races.circuitId %}
+        <p><b>Country:</b></p>
+        <p>{{circuit.country}}</p>
+        {% endif %} {% endfor %}
       </div>
     </div>
   </div>

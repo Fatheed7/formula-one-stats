@@ -13,14 +13,25 @@
     type="text/css" />
   <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" type="text/css" />
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
-</head>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}" />
-<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
-<title>{% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}" />
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+  {%- if request.path == "/" or request.path == "/home" %}
+  <style>
+    footer {
+      display: none;
+    }
+
+    html,
+    body {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+  </style>
+  {%- endif %}
+  <title>{% block title %}{% endblock %}</title>
 </head>
 
 <body>
-
   <header>
     <nav class="nav-extended text-shadow red darken-4 z-depth-0">
       <div class="nav-wrapper">
@@ -28,7 +39,6 @@
         <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fa-solid fa-bars"><span
               class="sr-only">F1 Statistics Menu</span></i></a>
         <ul class="right hide-on-med-and-down">
-          </li>
           {% if session.user %}
           <li><a href="{{url_for('circuits')}}">Circuits</a></li>
           <li><a href="{{url_for('constructors')}}">Constructors</a></li>
@@ -85,15 +95,6 @@
 
   {%- if request.path == "/" or request.path == "/home" %}
   <main class="container home">
-    <section>
-      <!-- flash messages -->
-      {% with messages = get_flashed_messages() %} {% if messages %} {% for
-      message in messages %}
-      <div class="flashes">
-        <h4 class="light-blue lighten-4 center-align">{{ message }}</h4>
-      </div>
-      {% endfor %} {% endif %} {% endwith %}
-    </section>
     {% else %}
     <main class="container">
       <div class="wrapper">
@@ -113,8 +114,6 @@
               </div>
             </div>
           </div>
-
-
           <!-- flash messages -->
           {% with messages = get_flashed_messages() %} {% if messages %} {% for
           message in messages %}
@@ -129,8 +128,8 @@
         {% endblock %}
       </div>
     </main>
-    <div class="container">
 
+    <div class="container">
       <footer class="page-footer red darken-4">
         <div class="container">
           <div class="row">
@@ -146,7 +145,7 @@
         </div>
         <div class="footer-copyright">
           <div class="container">
-            © <span id="year"></span>
+            © <span id="currentYear"></span>
             <a class="grey-text text-lighten-4 right" target="_blank"
               href="https://github.com/Fatheed7/formula-one-stats">View Source Code On GitHub</a>
           </div>

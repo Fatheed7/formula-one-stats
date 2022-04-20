@@ -7,12 +7,7 @@ from flask import (Flask, flash, redirect, render_template, request,
 from flask_pymongo import PyMongo
 import json
 import requests
-from sqlalchemy import null
 from werkzeug.security import generate_password_hash, check_password_hash
-import plotly
-import plotly.graph_objs as go
-import pandas as pd
-
 
 if os.path.exists("env.py"):
     import env

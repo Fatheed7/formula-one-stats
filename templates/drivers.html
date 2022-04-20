@@ -30,10 +30,9 @@
       <td>{{ driver.dob }}</td>
       <td>{{ driver.nationality }}</td>
       <td>
-        <a target="_blank" type="button" class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-          href="{{ driver.url }}">
+        <a target="_blank" class="grey lighten-3 btn z-depth-2 black-text glow-on-hover" href="{{ driver.url }}">
           <i class="fa-brands fa-wikipedia-w"><span class="sr-only">Wikipedia link for {{driver.forename}}
-              {{driver.surname}}</span></i>
+              {{driver.surname}}</span></i></a>
       </td>
       <td>
         <a href="{{ url_for('view_driver', driver_id=driver._id) }}"

@@ -20,7 +20,7 @@ $(document).ready(function () {
   $("#constructorTable").DataTable();
   $("#driverTable").DataTable();
   $("#raceTable").DataTable();
-  $("#year").html(new Date().getFullYear());
+  $("#currentYear").html(new Date().getFullYear());
   $("#loading").fadeOut(1500);
 });
 

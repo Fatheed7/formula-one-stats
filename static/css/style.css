@@ -120,6 +120,7 @@ table.striped>tbody>tr:nth-child(odd) {
 #driver_image,
 #constructor_image {
   width: 100%;
+  border-radius: 10px;
 }
 
 .noChartData {
@@ -129,6 +130,23 @@ table.striped>tbody>tr:nth-child(odd) {
 
 iframe {
   width: 95%;
+}
+
+.driverTitle {
+  line-height: 110%;
+  margin: 2.3733333333rem 0 1.424rem 0;
+  font-size: 2em;
+  font-weight: 500;
+}
+
+.topImage {
+  margin-top: 10px;
+  padding: 0 10%;
+  width: 50%;
+}
+
+.topImageWrapper {
+  display: contents;
 }
 
 /* Loading Styling */
@@ -264,7 +282,7 @@ h4 {
 
 .btn,
 .btn-large {
-  border: black 1px solid
+  border: black 1px solid !important;
 }
 
 #topButton,
@@ -445,6 +463,10 @@ label {
 
   .icon-block {
     height: 100%;
+  }
+
+  .hide-on-large-only {
+    width: 50% !important;
   }
 
 }

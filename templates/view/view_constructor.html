@@ -22,29 +22,39 @@
 <div class="center-align top_row_spacer">
   <a href="{{ url_for('constructors') }}" class="grey lighten-3 btn z-depth-2 black-text glow-on-hover">Back to
     Constructors</a>
-  <a target="_blank" type="button" class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-    href="{{ constructors.url }}">
+  <a target="_blank" class="grey lighten-3 btn z-depth-2 black-text glow-on-hover" href="{{ constructors.url }}">
     <i class="fa-brands fa-wikipedia-w"></i>
-    View Wikipedia Article<span class="sr-only">Wikipedia link for {{constructors.name}}</span></i></a>
+    View Wikipedia Article<span class="sr-only">Wikipedia link for {{constructors.name}}</span></a>
+</div>
+<div class="row remove-bottom-margin hide-on-large-only">
+  <div class="col s12 m4 offset-m2 valign-wrapper topImageWrapper ">
+    {% if image == "../static/img/no_image_available.svg" %}
+    <img class="topImage" id="constructor_image" src="{{ image }}" alt="No image available" />
+    {% else %}
+    <img class="topImage" id="constructor_image" src="{{ image }}"
+      alt="{{constructors.forename}} {{constructors.surname}}" />
+    {% endif %}
+  </div>
 </div>
 <div class="row remove-bottom-margin valign-wrapper">
-  <div class="col s4 center-align">
+  <div class="col s5 center-align hide-on-med-and-down">
     <p>
       {% if image == "../static/img/no_image_available.svg" %}
-      <img id="constructor_image" src="{{ image }}" alt="No image available" />
+      <img class="topImage" id="constructor_image" src="{{ image }}" alt="No image available" />
       {% else %}
-      <img id="constructor_image" src="{{ image }}" alt="{{constructors.forename}} {{constructors.surname}}" />
+      <img class="topImage" id="constructor_image" src="{{ image }}"
+        alt="{{constructors.forename}} {{constructors.surname}}" />
       {% endif %}
     </p>
   </div>
-  <div class="col s8 center-align">
+  <div class="col s12 m12 l7 center-align">
     <table class="infoTable">
       <tbody>
         <tr>
-          <th>
-            <h2 class="light-blue-text text-darken-4 center-align slogan">
+          <th colspan="2">
+            <p class="light-blue-text text-darken-4 center-align slogan constructorTitle">
               Information about {{ constructors.name }}
-            </h2>
+            </p>
           </th>
         </tr>
         <tr>
@@ -61,10 +71,10 @@
     <table class="infoTable">
       <tbody>
         <tr>
-          <th>
-            <h2 class="light-blue-text text-darken-4 center-align slogan">
+          <th colspan="2">
+            <p class="light-blue-text text-darken-4 center-align slogan constructorTitle">
               Race Statistics for {{ constructors.name }}
-            </h2>
+            </p>
           </th>
         </tr>
         <tr>

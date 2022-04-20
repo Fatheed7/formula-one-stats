@@ -16,7 +16,6 @@ The website can be [found here](https://formula-one-statistics.herokuapp.com/).
 - [Design](#design)
   - [Background](#background)
   - [Colours](#colours)
-  - [Fonts](#fonts)
   - [Favicon](#favicon)
 - [Logic](#logic)
   - [Flowchart](#flowchart)
@@ -52,9 +51,9 @@ The website can be [found here](https://formula-one-statistics.herokuapp.com/).
 
   The goal of the site for the owner is to:
 
-  1.
-  2.
-  3.
+  1. Create a home for data from all FORMULA 1 circuits, constructors, drivers, races and seasons.
+  2. Allow users to easily navigate the site and allow them to save things to their favourites to allow easy access later.
+  3. Have an easy way to add data to the database once an event has finished.
 
 #
 
@@ -62,14 +61,14 @@ The website can be [found here](https://formula-one-statistics.herokuapp.com/).
 
   - #### First Time Visitor Goals
 
-    1.
-    2.
-    3.
+    1. As a first time user, I want to immediately understand the purpose of the website and how to get started.
+    2. As a first time user, I want to be able to easily navigate the site, with a clear indication of which page I am currently on.
+    3. As a first time user, I want easy access to external information, where available, to content that I find interesting.
 
   - #### Returning Visitor Goals
 
-    1.
-    2.
+    1. As a returning visitor, I want to be able to access any content I've added to my favourites easily, without needing to search for it directly.
+    2. As a returning visitor, I want to be able to manage my account by changing my display name, password or deleting my account entirely.
 
   #
 
@@ -77,7 +76,22 @@ The website can be [found here](https://formula-one-statistics.herokuapp.com/).
 
   The wireframes for this site were created using Balasmiq, with each section and subsection noted.
 
-  The directory containing the wireframe images can be found [here]().
+  The sections below show individual wireframes for different devices, covering the home page when not logged in, the profile page once logged in and a generic overiew of most pages on the site.
+
+   <details>
+
+    <summary>Wireframe - Home & Profile</summary>
+
+  ![Desktop Wireframe Image](docs/wireframes/wireframe_home.png)
+    </details>
+    <details>
+
+    <summary>Wireframe - Other Pages</summary>
+
+  ![Desktop Wireframe Image](docs/wireframes/wireframe_pages.png)
+    </details>
+
+  The directory containing the wireframe images can be found [here](docs/wireframes/).
 
 #
 
@@ -93,6 +107,8 @@ The website can be [found here](https://formula-one-statistics.herokuapp.com/).
     </details>
 
 I spent time thinking about the logic and flow of the site to make sure I had a rough idea of how things were to be laid out and how each part of the site would interact with the database. The flowchart was created using [Lucidchart](https://lucid.app/).
+
+#
 
 ## Design
 
@@ -115,8 +131,6 @@ I spent time thinking about the logic and flow of the site to make sure I had a 
   - ![#001133](https://via.placeholder.com/15/001133/000000?text=+)
 
 #
-
-- ## Fonts
 
 - ## Favicon
 
@@ -148,18 +162,56 @@ I spent time thinking about the logic and flow of the site to make sure I had a 
 
 ## Deployment
 
+This project was created using GitHub and hosted on the Heroku Platform.
+
+The following steps were taken to deploy the project:
+
+    1. Login to the Heroku website, or create an account if you don't already have one.
+    2. After you have logged in, click on 'New' in the top right of the screen and select 'Create New App'
+    3. Enter a name for your app(This name MUST be unique). Heroku will display a warning if your chosen name has already been taken.
+    4. Choose the region in which you would like your app to be hosted.
+    5. Go to the Settings tab and go to "Config Vars", and then select "Reveal Config Vars"
+    6. Enter PORT into the KEY field and 8000 into the value, then click "Add".
+    7. Add any other relevant Config Vars to this section by repeating Step 6.
+    8. Navigate to the "Deploy" tab, and select Github as the deployment method
+    9. Log in to Github and select the repository you wish to link with Heroku.
+    10. You can choose between two deployment options for your app.
+      - Automatic will re-deploy your app when changes are made to the linked repository, or you will be notified if the deployment has failed.
+      - Manual deployment requires you to log in to Heroku and select the "Deploy" button when any changes have been made.
+    11. Once these steps have been followed your app will be built and deployed.
+      - If successful you will be provided a link to the live page.
+      - If not successful, the build will fail and the activity log will provide more information about the issue.
+
 #
 
 ## Testing
 
 - ## Manual Testing
 
- <details>
-  <summary>CSS Validation</summary>
+  <details>
+    <summary>CSS Validation</summary>
 
-CSS was validated using [The W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/validator). A full report can be viewed [here](docs/readme_images/css_validator_full.png).
+  CSS was validated using [The W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/validator). A full report can be viewed [here](docs/readme_images/CSS_Validation/css_validator_full.png).
 
-![CSS Validation](docs/readme_images/css_validator.png)
+  ![CSS Validation](docs/readme_images/CSS_Validation/css_validator.png)
+
+  </details>
+  <details>
+    <summary>HTML Validation</summary>
+
+  HTML was validated using [The W3C Nu Html Checker](https://validator.w3.org/nu/). All pages were checked using this tool and most screens have been captured and can be viewed [here](docs/readme_images/HTML_Validation/). Some pages have not been captured due to the large number of lines contained on certain pages.
+
+  ![CSS Validation](docs/readme_images/CSS_Validation/css_validator.png)
+
+  </details>
+
+    </details>
+  <details>
+    <summary>JS / Jquery Validation</summary>
+
+  Javascript/JQuery was validated using [JSHint](https://jshint.com/). Three warnings were returned, but all contained the same information regarding the use of 'let'. As ES6 is the version being used, these warnings were disregarded.
+
+  ![JSHint Warnings](docs/readme_images/jshint.png)
 
   </details>
 
@@ -170,6 +222,12 @@ CSS was validated using [The W3C CSS Validation Service](https://jigsaw.w3.org/c
 #
 
 - ## Wave Testing
+
+  All pages on the site were tested using the [WAVE Web Accessibility Evaluation Tool](https://wave.webaim.org/). All pages returned **0 errors**, **0 contrast errors**. A single Alert was returned on the Login page advising of a redundant link, but I believe this is not valid.
+
+  Due to the number of pages contained on the site, I have not linked the images within this repository, but the site can be explored on the WAVE tool by clicking [this link](https://wave.webaim.org/report#/https://formula-one-statistics.herokuapp.com/).
+
+  ![Wave Example](docs/readme_images/wave.png)
 
 #
 
@@ -195,7 +253,8 @@ CSS was validated using [The W3C CSS Validation Service](https://jigsaw.w3.org/c
   - [Favicon.io](https://favicon.io) - Used to generate Favicon image.
   - [Font Awesome](https://fontawesome.com/) - Used for icons on floating buttons.
   - [Flag Icons](https://github.com/lipis/flag-icons) - Repo created by [Lipis](https://github.com/lipis) containing SVG images of all country flags.
-  - [GitHub](https://github.com/) - Used for version control and hosting.
+  - [GitHub](https://github.com/) - Used for version control.
+  - [Heroku](https://heroku.com) - Used for deployment and hosting of the project.
   - [JQuery](https://en.wikipedia.org/wiki/JQuery) - Used to simplify definition of DOM elements, but used minimally with a preference for vanilla Javascript.
   - [JSHint](https://jshint.com/about/) - Linter used to flag errors, bugs and warnings.
   - [LucidChart](https://lucid.app/) - Used to create the flowchart for this site.

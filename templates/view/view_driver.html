@@ -23,28 +23,43 @@ block content %}
 </div>
 <div class="center-align top_row_spacer">
   <a href="{{ url_for('drivers') }}" class="grey lighten-3 btn z-depth-2 black-text glow-on-hover">Back to Drivers</a>
-  <a target="_blank" type="button" class="grey lighten-3 btn z-depth-2 black-text glow-on-hover"
-    href="{{ drivers.url }}">
+  <a target="_blank" class="grey lighten-3 btn z-depth-2 black-text glow-on-hover" href="{{ drivers.url }}">
     <i class="fa-brands fa-wikipedia-w"></i>
     View Wikipedia Article<span class="sr-only">Wikipedia link for {{drivers.forename}}
-      {{drivers.surname}}</span></i></a>
+      {{drivers.surname}}</span></a>
 </div>
-<div class="row remove-bottom-margin valign-wrapper">
-  <div class="col s4 center-align">
+<div class="row remove-bottom-margin hide-on-large-only">
+  <div class="col s12 m8 offset-s2 valign-wrapper topImageWrapper ">
     <p>
-      <img id="driver_image" src="{{ image }}"
+      {% if image == "../static/img/no_image_available.svg" %}
+      <img class="topImage" id="driver_image" src="{{ image }}" alt="No image available" />
+      {% else %}
+      <img class="topImage" id="driver_image" src="{{ image }}"
         alt="{{drivers.nationality}} racing driver {{drivers.forename}} {{drivers.surname}}" />
+      {% endif %}
     </p>
   </div>
-  <div class="col s8 center-align">
+</div>
+<div class="row remove-bottom-margin valign-wrapper">
+  <div class="col s5 center-align hide-on-med-and-down">
+    <p>
+      {% if image == "../static/img/no_image_available.svg" %}
+      <img class="topImage" id="driver_image" src="{{ image }}" alt="No image available" />
+      {% else %}
+      <img class="topImage" id="driver_image" src="{{ image }}"
+        alt="{{drivers.nationality}} racing driver {{drivers.forename}} {{drivers.surname}}" />
+      {% endif %}
+    </p>
+  </div>
+  <div class="col s12 m12 l7 center-align">
 
     <table class="infoTable">
       <tbody>
         <tr>
-          <th>
-            <h2 class="light-blue-text text-darken-4 center-align slogan">
+          <th colspan="2">
+            <p class="light-blue-text text-darken-4 center-align slogan driverTitle">
               Information about {{ drivers.forename }} {{ drivers.surname }}
-            </h2>
+            </p>
           </th>
         </tr>
         <tr>
@@ -72,10 +87,10 @@ block content %}
     <table class="infoTable">
       <tbody>
         <tr>
-          <th>
-            <h2 class="light-blue-text text-darken-4 center-align slogan">
+          <th colspan="2">
+            <p class="light-blue-text text-darken-4 center-align slogan driverTitle">
               Race Statistics for {{ drivers.forename }} {{ drivers.surname }}
-            </h2>
+            </p>
           </th>
         </tr>
         <tr>
@@ -112,10 +127,9 @@ block content %}
   </div>
   {% else %}
   <div class="row center-align">
-    <p>
-    <h5>The chart below shows a graph detailing the position {{drivers.forename}} {{drivers.surname}} has finished each
+    <h5>The chart below shows a graph detailing the position {{drivers.forename}} {{drivers.surname}} has finished
+      each
       race.</h5>
-    </p>
     <p>Please note: Races in which {{drivers.forename}} {{drivers.surname}} did not finish are not shown.</p>
   </div>
   <div class="row chart-row">

@@ -250,8 +250,9 @@ The following steps were taken to deploy the project:
   - [Balsamiq](https://balsamiq.com/) - Used to generate Wireframe images.
   - [Browser Stack](https://www.browserstack.com/) - Used for Cross Site Browser Testing.
   - [Chrome Dev Tools](https://developer.chrome.com/docs/devtools/) - Used for overall development and tweaking, including testing responsiveness and performance.
+  - [DataTables](https://datatables.net/) - A JQuery tool to allow pagination and searching functionality to be added to tables easily.
   - [Favicon.io](https://favicon.io) - Used to generate Favicon image.
-  - [Font Awesome](https://fontawesome.com/) - Used for icons on floating buttons.
+  - [Font Awesome](https://fontawesome.com/) - Used for icons on multiple pages.
   - [Flag Icons](https://github.com/lipis/flag-icons) - Repo created by [Lipis](https://github.com/lipis) containing SVG images of all country flags.
   - [GitHub](https://github.com/) - Used for version control.
   - [Heroku](https://heroku.com) - Used for deployment and hosting of the project.

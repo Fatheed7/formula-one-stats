@@ -363,11 +363,17 @@ The below colours were not chosen by myself, but are the default colours chosen 
 
     The [Wikipedia API](https://www.mediawiki.org/wiki/API:Main_page) is called using the constructor `name` as the title of the Wikipedia page. The API returns the head image of the Wikipedia article. If no image exists, the user is instead shown a 'No image available' replacement.
 
-    The user is shown some information that matches the previous page such as the Name and Nationality of the Circuit. Additionally, there is a link to the Wikipedia article at the top of the page.
+    The user is shown some information that matches the previous page such as the Name and Nationality of the Constructor. Additionally, there is a link to the Wikipedia article at the top of the page.
 
     Below this section is a table containing race statistics for the selected constructor such as the number race entries, wins, podiums and the percentage of wins the constructor has achieved.
 
     This is achieved with a `for` loop of the `results` collection, searching for any race entries with a `constructorId` matching that of the current constructor, with all results being output to a table.
+
+    - The number of entries is equal to the number of results of the `for` loop.
+    - The number of wins is equal to the number of results with a position of `1`
+    - The number of podiums is equal to the number of results with a position of `1`, `2` or `3`.
+    - The percentage of podiums is equal to the number of entries divided by the value of the number of podiums.
+    - The percentage of wins is equal to the number of entries divided by the value of the number of wins.
 
     ![F1 Statistics - View Constructor Schema](docs/readme_images/constructor_schema.png)
     ![F1 Statistics - Race Statistics Table](docs/readme_images/view_constructor.png)
@@ -375,6 +381,53 @@ The below colours were not chosen by myself, but are the default colours chosen 
     More information about this page can be found in the [Features To Add](#features-to-add) section.
 
 - ## Drivers
+
+  - ### Driver Overview
+
+    The Driver page itself is a table of information retrieved from the database (which is described below) and contains the following information:
+
+    - Driver Forename
+    - Driver Surname
+    - Driver Code
+    - Driver Number
+    - Driver Date of Birth
+    - Driver Nationality
+    - A button linking to the Wikipedia article about the Driver.
+    - A button linking to a more in depth view of the Driver.
+
+    A `for` loop is used to enter the details of each Driver into a data cell of the table, which is then styled by [DataTables](https://datatables.net).
+
+    The manner in which each field is retrieved from the database is detailed in the image below.
+
+    ![F1 Statistics - General Driver View](docs/readme_images/drivers.png)
+
+  - ### Driver View
+
+    Upon clicking the `View` button on the Driver page, the user is shown a more in depth break down of information about the Driver.
+
+    The [Wikipedia API](https://www.mediawiki.org/wiki/API:Main_page) is called using the Driver `forename` and `surname` as the title of the Wikipedia page. The API returns the head image of the Wikipedia article. If no image exists, the user is instead shown a 'No image available' replacement.
+
+    The user is shown some information that matches the previous page such as the Name, Nationality, Date of Birth and Driver Code for the Driver. Additionally, there is a link to the Wikipedia article at the top of the page.
+
+    Below this section is a table containing race statistics for the selected driver such as the number race entries, wins, podiums and the percentage of wins the constructor has achieved.
+
+    This is achieved with a `for` loop of the `results` collection, searching for any race entries with a `driverId` matching that of the current driver, with all results being output to a table.
+
+    - The number of races is equal to the number of results of the `for` loop.
+    - The number of wins is equal to the number of results with a position of `1`
+    - The number of podiums is equal to the number of results with a position of `1`, `2` or `3`.
+    - The percentage of podiums is equal to the number of races divided by the value of the number of podiums.
+    - The percentage of wins is equal to the number of races divided by the value of the number of wins.
+
+    Below the statistics is a chart built using MongoDB charts.
+
+    The chart contains all the data from the results table, but a filter is passed to the MongoDB chart equal to the current driverID, thus only showing the required statstics.
+
+    In early F1 races drivers had a propensity for not finishing due to vehicle unreliability. As such, if a driver did not finish any of the races they entered, no chart is shown.
+
+    ![F1 Statistics - View Driver Schema](docs/readme_images/driver_schema.png)
+    ![F1 Statistics - Driver Statistics Table](docs/readme_images/view_driver.png)
+    ![F1 Statistics - Driver Chart](docs/readme_images/driver_chart.png)
 
 - ## Races
 

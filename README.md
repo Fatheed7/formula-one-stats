@@ -514,6 +514,40 @@ The below colours were not chosen by myself, but are the default colours chosen 
 
 - ## Seasons
 
+- ## Constructors
+
+  - ### Season Overview
+
+    The Season page itself is a table of information retrieved from the database (which is described below) and contains the following information:
+
+    - Year
+    - Number of Races in the Season.
+    - A button linking to the Wikipedia article about the Season.
+    - A button linking to a more in depth view of the Season.
+
+    A `for` loop is used to enter the details of each Season into a data cell of the table, which is then styled by [DataTables](https://datatables.net).
+
+    The manner in which each field is retrieved from the database is detailed in the image below.
+
+    ![F1 Statistics - General Season View](docs/readme_images/season.png)
+
+  - ### Season View
+
+    Upon clicking the `View` button on the Season page, the user is shown a more in depth break down of information about the Season.
+
+    At the top of the page, the user is shown the number of races within the season.
+
+    Below this, the winner of the Drivers Championship is shown. If this data is not held, then this section will be hidden from the user.
+
+    Below this, the winner of the Constructors Championship is shown. If this data is not held, then this section will be hidden from the user.
+
+    Below this section is a table containing data for each race within the selected season, such as the round number, circuit, race name, date, and time.
+
+    This is achieved with a `for` loop of the `races` collection, searching for any race entries with a `year` matching that of the current season, with all results being output to a table.
+
+    ![F1 Statistics - View Season Schema](docs/readme_images/season_schema.png)
+    ![F1 Statistics - Season Example Table](docs/readme_images/season_example.png)
+
 - ## Profile
 
   - ### Favourites

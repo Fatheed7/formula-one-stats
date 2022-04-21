@@ -25,6 +25,7 @@ The website can be [found here](https://formula-one-statistics.herokuapp.com/).
     - [Login](#login)
     - [Register](#register)
     - [Logout](#logout)
+  - [Note For Sections Below](#note-for-sections-below)
   - [Circuits](#circuits)
   - [Constructors](#constructors)
   - [Drivers](#drivers)
@@ -37,6 +38,7 @@ The website can be [found here](https://formula-one-statistics.herokuapp.com/).
   - [Admin Dashboard](#admin-dashboard)
   - [404 Page](#404-page)
   - [Footer](#footer)
+- [Features to Add](#features-to-add)
 - [Deployment](#deployment)
 - [Testing](#testing)
   - [Validator Testing](#validator-testing)
@@ -264,13 +266,13 @@ The below colours were not chosen by myself, but are the default colours chosen 
 
     Below the Register form is a small section for users who have already registered and are not required to register again, with the hyperlink directing the customer to the log in. page.
 
-    ![F1 Statistics - Login Form Validation](docs/readme_images/register_already.png)
+    ![F1 Statistics - Already Registered? Link](docs/readme_images/register_already.png)
 
     #
 
     Upon attempting to register, and once validation checks have been passed, the database is accessed in the following manner:
 
-    ![F1 Statistics - Login Form Validation](docs/readme_images/login_schema.png)
+    ![F1 Statistics - Register Form Validation](docs/readme_images/login_schema.png)
 
     1. The `users` collection is searched for a value matching the username entered into the form in the "username" field. Unlike the login form, this check will fail if the username already existing within the database, as the same username cannot be used twice.
        - If this fails, the user is returned to the register page and a flash message of `Username already exists` is displayed.
@@ -285,9 +287,92 @@ The below colours were not chosen by myself, but are the default colours chosen 
 
     When the user selects the `Logout` button, the session cookie is removed with `session.pop` and the user is directed to the login page.
 
+- ## Note For Sections Below
+
+  A number of the sections below contain similar features as [DataTables](https://datatables.net/) was used to add functionality and, for the purpose of simplicity, I wanted to describe the features present on multiple pages to save on repetition.
+
+  #
+
+  All pages below require a user to be logged in. If a user is not logged in, they will automatically be redirected to the login page.
+
+  #
+
+  All pages share the same design features as the login and register pages and, unless specified, always show the name of the page the user is currently on.
+
+  #
+
+  As the dataset used contains a large amount of data, the main focus of this project was to allow easy viewing and searching and, as described above, [DataTables](https://datatables.net) was used to add pagination and search functionality, plus the ability for the user to select how many entries are displayed on the page.
+
+  ![F1 Statistics - Table Show Entries Selector and Search Box](docs/readme_images/table_entries_search.png)
+
+  ![F1 Statistics - Table Pagination](docs/readme_images/table_pagination.png)
+
 - ## Circuits
 
+  - ### Circuit Overview
+
+    The Circuit page itself is a table of information retrieved from the database (which is described below) and contains the following information:
+
+    - Circuit Name
+    - Location (City)
+    - Country
+    - A button linking to Google Maps using Latitude and Longitude
+    - A button linking to the Wikipedia article about the Circuit.
+    - A button linking to a more in depth view of the Circuit.
+
+    A `for` loop is used to enter the details of each circuit into a data cell of the table, which is then styled by [DataTables](https://datatables.net).
+
+    The manner in which each field is retrieved from the database is detailed in the image below.
+
+    ![F1 Statistics - General Circuit View](docs/readme_images/circuit.png)
+
+  - ### Circuit View
+
+    Upon clicking the `View` button on the Circuits page, the user is shown a more in depth break down of information about the circuit.
+
+    The user is shown some information that matches the previous page such as the Location, Country and a link to Google Maps for the Circuit.
+
+    Below this section is a table containing all F1 races that have been held at the circuit.
+
+    This is achieved with a `for` loop of the `races` collection, searching for any circuits with a `circuitId` matching that of the current circuit, with all results being output to a table.
+
+    ![F1 Statistics - View Circuit Screen](docs/readme_images/view_circuit.png)
+
+    More information about this page can be found in the [Features To Add](#features-to-add) section.
+
 - ## Constructors
+
+  - ### Constructor Overview
+
+    The Constructor page itself is a table of information retrieved from the database (which is described below) and contains the following information:
+
+    - Constructor Name
+    - Constructor Nationality
+    - A button linking to the Wikipedia article about the Constructor.
+    - A button linking to a more in depth view of the Constructor.
+
+    A `for` loop is used to enter the details of each Constructor into a data cell of the table, which is then styled by [DataTables](https://datatables.net).
+
+    The manner in which each field is retrieved from the database is detailed in the image below.
+
+    ![F1 Statistics - General Constructor View](docs/readme_images/constructor.png)
+
+  - ### Constructor View
+
+    Upon clicking the `View` button on the Constructor page, the user is shown a more in depth break down of information about the Constructor.
+
+    The [Wikipedia API](https://www.mediawiki.org/wiki/API:Main_page) is called using the constructor `name` as the title of the Wikipedia page. The API returns the head image of the Wikipedia article. If no image exists, the user is instead shown a 'No image available' replacement.
+
+    The user is shown some information that matches the previous page such as the Name and Nationality of the Circuit. Additionally, there is a link to the Wikipedia article at the top of the page.
+
+    Below this section is a table containing race statistics for the selected constructor such as the number race entries, wins, podiums and the percentage of wins the constructor has achieved.
+
+    This is achieved with a `for` loop of the `results` collection, searching for any race entries with a `constructorId` matching that of the current constructor, with all results being output to a table.
+
+    ![F1 Statistics - View Constructor Schema](docs/readme_images/constructor_schema.png)
+    ![F1 Statistics - Race Statistics Table](docs/readme_images/view_constructor.png)
+
+    More information about this page can be found in the [Features To Add](#features-to-add) section.
 
 - ## Drivers
 
@@ -304,6 +389,10 @@ The below colours were not chosen by myself, but are the default colours chosen 
 - ## Admin Dashboard
 
 - ## 404 Page
+
+#
+
+## Features to Add
 
 #
 
@@ -405,6 +494,7 @@ The following steps were taken to deploy the project:
   - [Heroku](https://heroku.com) - Used for deployment and hosting of the project.
   - [JQuery](https://en.wikipedia.org/wiki/JQuery) - Used to simplify definition of DOM elements, but used minimally with a preference for vanilla Javascript.
   - [JSHint](https://jshint.com/about/) - Linter used to flag errors, bugs and warnings.
+  - [Kaggle User Rohanrao](https://www.kaggle.com/datasets/rohanrao/formula-1-world-championship-1950-2020) - The dataset used for this project was uploaded to Kaggle by the user Rohanrao.
   - [LucidChart](https://lucid.app/) - Used to create the flowchart for this site.
   - [PEP8Online](http://pep8online.com/) - Tool used to ensure app.py is PEP8 compliant.
   - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) - Used for consistent code formatting.

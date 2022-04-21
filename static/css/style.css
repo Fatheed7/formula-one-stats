@@ -111,6 +111,12 @@ table.striped>tbody>tr:nth-child(odd) {
 
 /* Driver and Constructor Styling */
 
+.heroLink {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .infoTable {
   display: flex;
   justify-content: center;
@@ -223,7 +229,7 @@ hr {
 .icon-block {
   margin-top: 30px;
   padding: 15px;
-  background: rgba(97, 97, 97, 0.712);
+  background: rgba(89, 89, 89, 0.712);
   border-radius: 50px;
 }
 

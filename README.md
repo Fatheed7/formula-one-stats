@@ -21,6 +21,10 @@ The website can be [found here](https://formula-one-statistics.herokuapp.com/).
   - [Flowchart](#flowchart)
 - [Features](#features)
   - [Home Page](#home-page)
+  - [Auth](#auth)
+    - [Login](#login)
+    - [Register](#register)
+    - [Logout](#logout)
   - [Circuits](#circuits)
   - [Constructors](#constructors)
   - [Drivers](#drivers)
@@ -32,6 +36,7 @@ The website can be [found here](https://formula-one-statistics.herokuapp.com/).
     - [Delete Account](#delete-account)
   - [Admin Dashboard](#admin-dashboard)
   - [404 Page](#404-page)
+  - [Footer](#footer)
 - [Deployment](#deployment)
 - [Testing](#testing)
   - [Validator Testing](#validator-testing)
@@ -124,22 +129,24 @@ I spent time thinking about the logic and flow of the site to make sure I had a 
 - ## Colours
 
 #
-  - ![#b71c1c](https://via.placeholder.com/15/b71c1c/000000?text=+) - `#b71c1c` - This colour was chosen for the navbar and footer as a subtle nod to the main colour of the official FORMULA 1 logo.
-  - ![#03a9f4](https://via.placeholder.com/15/03a9f4/000000?text=+) - `#03a9f4` - This colour is used for the icons on the main page and was chosen as it contrasts well against the striking red colour of the navbar.
-  - ![#01579b](https://via.placeholder.com/15/01579b/000000?text=+) - `#01579b` - This colour was used for the submit buttons at the bottom of the pages for editing drivers & races. This colour was chosen as it contrasts well against the ![#fff](https://via.placeholder.com/15/fff/000000?text=+) white background of the main section, and also against the footer of the page which, as described above, uses the colour ![#b71c1c](https://via.placeholder.com/15/b71c1c/000000?text=+) `#b71c1c`.
 
-  #
+- ![#b71c1c](https://via.placeholder.com/15/b71c1c/000000?text=+) - `#b71c1c` - This colour was chosen for the navbar and footer as a subtle nod to the main colour of the official FORMULA 1 logo.
+- ![#03a9f4](https://via.placeholder.com/15/03a9f4/000000?text=+) - `#03a9f4` - This colour is used for the icons on the main page and was chosen as it contrasts well against the striking red colour of the navbar.
+- ![#01579b](https://via.placeholder.com/15/01579b/000000?text=+) - `#01579b` - This colour was used for the submit buttons at the bottom of the pages for editing drivers & races. This colour was chosen as it contrasts well against the ![#fff](https://via.placeholder.com/15/fff/000000?text=+) white background of the main section, and also against the footer of the page which, as described above, uses the colour ![#b71c1c](https://via.placeholder.com/15/b71c1c/000000?text=+) `#b71c1c`.
 
-  The below colours were not chosen by myself, but are the default colours chosen for the background used from the site [SVG Backgrounds](https://www.svgbackgrounds.com/). I decided to stick with the default colours of the theme chosen due to the close resemblance with the current livery of the [Williams team](https://www.google.com/search?q=Williams+2022+livery&tbm=isch).
-  - ![#000022](https://via.placeholder.com/15/000022/000000?text=+) - `#002222`
-  - ![#002266](https://via.placeholder.com/15/002266/000000?text=+) - `#002266`
-  - ![#001133](https://via.placeholder.com/15/001133/000000?text=+) - `#001133`
+#
+
+The below colours were not chosen by myself, but are the default colours chosen for the background used from the site [SVG Backgrounds](https://www.svgbackgrounds.com/). I decided to stick with the default colours of the theme chosen due to the close resemblance with the current livery of the [Williams team](https://www.google.com/search?q=Williams+2022+livery&tbm=isch).
+
+- ![#000022](https://via.placeholder.com/15/000022/000000?text=+) - `#002222`
+- ![#002266](https://via.placeholder.com/15/002266/000000?text=+) - `#002266`
+- ![#001133](https://via.placeholder.com/15/001133/000000?text=+) - `#001133`
 
 #
 
 - ## Favicon
 
-    The website [Favicon.io](https://favicon.io/) was used to generate the favicon image for the website. The chequered flag Unicode emoji , 🏁, was chosen as the icon as it is relative to the theme of the website and is recognisable due to its association with and use in motorsport.
+  The website [Favicon.io](https://favicon.io/) was used to generate the favicon image for the website. The chequered flag Unicode emoji , 🏁, was chosen as the icon as it is relative to the theme of the website and is recognisable due to its association with and use in motorsport.
 
 #
 
@@ -149,13 +156,134 @@ I spent time thinking about the logic and flow of the site to make sure I had a 
 
   Upon first accessing the site the user is shown the home page which contains 3 main elements.
 
-  - Navbar
-    
+1.  Navbar
+
+    ![F1 Statistics - Home Navbar](docs/readme_images/home_navbar.png)
+
     The navbar is shown on all pages and is part of the base.html template. The navbar has 3 different configurations.
-      
-      - If no user session exists the navbar displays the title of the site on the left side, 'F1 Statistics', and links to either 'Login' or 'Register' on the right side. Alternatively, on mobile devices a hamburger menu icon is shown, with a side nav appearing when pressed.
-      - If a user session exists, the navbar displays the title of the site on the left side, 'F1 Statistics', and links to all content options and the users profile, as well as the option to log out on the right. Alternatively, on mobile devices a hamburger menu icon is shown, with a side nav appearing when pressed.
-      - If the admin user is logged in, the navbar displays the title of the site on the left side, 'F1 Statistics', and links to all content options and access to the admin dashboard, as well as the option to log out on the right. Alternatively, on mobile devices a hamburger menu icon is shown, with a side nav appearing when pressed.
+
+- If no user session exists the navbar displays the title of the site on the left side, 'F1 Statistics', and links to either 'Login' or 'Register' on the right side. Alternatively, on mobile devices a hamburger menu icon is shown, with a side nav appearing when pressed.
+- If a user session exists, the navbar displays the title of the site on the left side, 'F1 Statistics', and links to all content options and the users profile, as well as the option to log out on the right. Alternatively, on mobile devices a hamburger menu icon is shown, with a side nav appearing when pressed.
+- If the admin user is logged in, the navbar displays the title of the site on the left side, 'F1 Statistics', and links to all content options and access to the admin dashboard, as well as the option to log out on the right. Alternatively, on mobile devices a hamburger menu icon is shown, with a side nav appearing when pressed.
+
+#
+
+2.  Hero Section
+
+    ![F1 Statistics - Home Hero Section](docs/readme_images/home_hero.png)
+
+    The hero section contains the main content of the page. It is contained within a div styled with a background of ![#595959](https://via.placeholder.com/15/595959/000000?text=+) `RGBA(89,89,89,0.712)` to contrast it against the background and maintain readability, with a WCAG (Web Content Accessibility Guidelines) score of 7:1, or Level AAA.
+
+    The section welcomes the user to the site, also containing the name of the site, gives a brief description of the purpose of the website, and clear instructions on the actions the user should take next with emphasis also given to clickable links.
+
+3.  Info Section
+
+    ![F1 Statistics - Home Info Section](docs/readme_images/home_info.png)
+
+    The info section contains 3 seperate divs containing information about the site. The divs are styled with the same background detailed in the hero section, but also each contain animated icons to draw the users attention to the main benefits of using the site. These icons were provided by Font Awesome and have a colour of ![#03a9f4](https://via.placeholder.com/15/03a9f4/000000?text=+) - `#03a9f4` applied as this matches with the background of the main page, but also provides sufficient contrast to remain easily viewable, although the icons themselves are not an important part of the content of the page.
+
+- ## Auth
+
+  - Login
+
+    ![F1 Statistics - Login Page Navbar](docs/readme_images/login_navbar.png)
+
+    The Login page has intentionally been kept as simple as possible to direct the actions by the user without the need for any additional instructions.
+
+    The first noticable difference, and a theme throughout the rest of the site is a div displaying the title of the page. This was achieved by using Jinja2 templating and the use of `{% block title %}` at the head of the page.
+
+    The colour of the login div was intentionally kept the same as that of the navbar, but a shadow was applied to the top of the div to provide some separation between the elements.
+
+    #
+
+    ![F1 Statistics - Login Page Form](docs/readme_images/login_form.png)
+
+    Directly below the header of the page is the form allowing the user to login. The form contains 3 main elements - Username, Password and the login button itself.
+
+    Both the Username and Password fields have been given the following pattern of `^[a-zA-Z0-9]{5,15}$` which has the requirements of:
+
+    - Only containing alphanumeric characters.
+    - A minimum length of 5 characters.
+    - A maximum length of 15 characters.
+
+    Both fields are marked as required and are validated when the user clicks the 'Log In' button.
+
+    The input field for Username and Password are underlined red whilst the minimum or maximum length requirements are not met, with a tooltip being displayed to the user if they try to submit an invalid form, as shown below.
+
+    ![F1 Statistics - Login Form Validation](docs/readme_images/login_validate.png)
+
+    #
+
+    Below the Login form is a small section for users who have not yet registered and will be unable to login, with the hyperlink directing the customer to the registration page.
+
+    ![F1 Statistics - Login Form Validation](docs/readme_images/login_newhere.png)
+
+    #
+
+    Upon attempting to login, and once validation checks have been passed, the database is accessed in the following manner:
+
+    ![F1 Statistics - Login Form Validation](docs/readme_images/login_schema.png)
+
+    1. The `users` collection is searched for a value matching the username entered into the form in the "username" field.
+       - If this fails, the user is returned to the login page and a flash message of `Incorrect Username and/or Password` is displayed.
+    2. The `check_password_hash` function from `Werkzeug` is called and is passed the value entered into the password field on the input form. This hashed value is checked against the value held in the `password` field in the `users` collection.
+       - If this fails, the user is returned to the login page and a flash message of `Incorrect Username and/or Password` is displayed.
+    3. Upon both of the above checks passing, the user is directed to the Profile page, with the `username` value being passed as the current session user.
+
+    The display_name value is not used at any point in the login process, but is described in more detail in the Register and Profile sections.
+
+    #
+
+  - Register
+
+    ![F1 Statistics - Register Page Navbar](docs/readme_images/register_navbar.png)
+
+    As with the Login page, the Register page has intentionally been kept as simple as possible to direct the actions by the user without the need for any additional instructions.
+
+    The colour of the login div was intentionally kept the same as that of the navbar, but a shadow was applied to the top of the div to provide some separation between the elements.
+
+    #
+
+    ![F1 Statistics - Register Page Form](docs/readme_images/register_form.png)
+
+    Directly below the header of the page is the form allowing the user to login. The form contains 3 main elements - Username, Password and the Register button itself.
+
+    Both the Username and Password fields have been given the following pattern of `^[a-zA-Z0-9]{5,15}$` which has the requirements of:
+
+    - Only containing alphanumeric characters.
+    - A minimum length of 5 characters.
+    - A maximum length of 15 characters.
+
+    Both fields are marked as required and are validated when the user clicks the 'Register' button.
+
+    The input field for Username and Password are underlined red whilst the minimum or maximum length requirements are not met, with a tooltip being displayed to the user if they try to submit an invalid form, as shown below.
+
+    ![F1 Statistics - Login Form Validation](docs/readme_images/login_validate.png)
+
+    #
+
+    Below the Register form is a small section for users who have already registered and are not required to register again, with the hyperlink directing the customer to the log in. page.
+
+    ![F1 Statistics - Login Form Validation](docs/readme_images/register_already.png)
+
+    #
+
+    Upon attempting to register, and once validation checks have been passed, the database is accessed in the following manner:
+
+    ![F1 Statistics - Login Form Validation](docs/readme_images/login_schema.png)
+
+    1. The `users` collection is searched for a value matching the username entered into the form in the "username" field. Unlike the login form, this check will fail if the username already existing within the database, as the same username cannot be used twice.
+       - If this fails, the user is returned to the register page and a flash message of `Username already exists` is displayed.
+    2. A new entry is made into the database with the following details:
+       - Username is converted to lower case added to the `username` field
+       - Username is added, as it was entered in the form, to the `display_name`
+       - The `generate_password_hash` from `Werkzeug` is called and this value is added to the `password` field.
+    3. A session cookie is created with the name `user` and the value from the `username` field on the register form.
+    4. The user is directed to the Profile page, with the `username` value being passed as the current session user and a flash message is shown stating `Registration Successful!`.
+
+  - Logout
+
+    When the user selects the `Logout` button, the session cookie is removed with `session.pop` and the user is directed to the login page.
 
 - ## Circuits
 

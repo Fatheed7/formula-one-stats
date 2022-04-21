@@ -123,20 +123,39 @@ I spent time thinking about the logic and flow of the site to make sure I had a 
 
 - ## Colours
 
-  - ![#b71c1c](https://via.placeholder.com/15/b71c1c/000000?text=+) - This colour was chosen for the navbar and footer as a subtle nod to the main colour of the official FORMULA 1 logo.
-  - ![#03a9f4](https://via.placeholder.com/15/03a9f4/000000?text=+) - This colour is used for the icons on the main page and was chosen as it contrasts well against the striking red colour of the navbar.
-  - ![#01579b](https://via.placeholder.com/15/01579b/000000?text=+)
-  - ![#000022](https://via.placeholder.com/15/000022/000000?text=+)
-  - ![#002266](https://via.placeholder.com/15/002266/000000?text=+)
-  - ![#001133](https://via.placeholder.com/15/001133/000000?text=+)
+#
+  - ![#b71c1c](https://via.placeholder.com/15/b71c1c/000000?text=+) - `#b71c1c` - This colour was chosen for the navbar and footer as a subtle nod to the main colour of the official FORMULA 1 logo.
+  - ![#03a9f4](https://via.placeholder.com/15/03a9f4/000000?text=+) - `#03a9f4` - This colour is used for the icons on the main page and was chosen as it contrasts well against the striking red colour of the navbar.
+  - ![#01579b](https://via.placeholder.com/15/01579b/000000?text=+) - `#01579b` - This colour was used for the submit buttons at the bottom of the pages for editing drivers & races. This colour was chosen as it contrasts well against the ![#fff](https://via.placeholder.com/15/fff/000000?text=+) white background of the main section, and also against the footer of the page which, as described above, uses the colour ![#b71c1c](https://via.placeholder.com/15/b71c1c/000000?text=+) `#b71c1c`.
+
+  #
+
+  The below colours were not chosen by myself, but are the default colours chosen for the background used from the site [SVG Backgrounds](https://www.svgbackgrounds.com/). I decided to stick with the default colours of the theme chosen due to the close resemblance with the current livery of the [Williams team](https://www.google.com/search?q=Williams+2022+livery&tbm=isch).
+  - ![#000022](https://via.placeholder.com/15/000022/000000?text=+) - `#002222`
+  - ![#002266](https://via.placeholder.com/15/002266/000000?text=+) - `#002266`
+  - ![#001133](https://via.placeholder.com/15/001133/000000?text=+) - `#001133`
 
 #
 
 - ## Favicon
 
+    The website [Favicon.io](https://favicon.io/) was used to generate the favicon image for the website. The chequered flag Unicode emoji , 🏁, was chosen as the icon as it is relative to the theme of the website and is recognisable due to its association with and use in motorsport.
+
+#
+
 # Features
 
 - ## Home Page
+
+  Upon first accessing the site the user is shown the home page which contains 3 main elements.
+
+  - Navbar
+    
+    The navbar is shown on all pages and is part of the base.html template. The navbar has 3 different configurations.
+      
+      - If no user session exists the navbar displays the title of the site on the left side, 'F1 Statistics', and links to either 'Login' or 'Register' on the right side. Alternatively, on mobile devices a hamburger menu icon is shown, with a side nav appearing when pressed.
+      - If a user session exists, the navbar displays the title of the site on the left side, 'F1 Statistics', and links to all content options and the users profile, as well as the option to log out on the right. Alternatively, on mobile devices a hamburger menu icon is shown, with a side nav appearing when pressed.
+      - If the admin user is logged in, the navbar displays the title of the site on the left side, 'F1 Statistics', and links to all content options and access to the admin dashboard, as well as the option to log out on the right. Alternatively, on mobile devices a hamburger menu icon is shown, with a side nav appearing when pressed.
 
 - ## Circuits
 

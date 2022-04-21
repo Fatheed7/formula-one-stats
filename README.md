@@ -514,8 +514,6 @@ The below colours were not chosen by myself, but are the default colours chosen 
 
 - ## Seasons
 
-- ## Constructors
-
   - ### Season Overview
 
     The Season page itself is a table of information retrieved from the database (which is described below) and contains the following information:

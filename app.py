@@ -945,7 +945,7 @@ def manage_users():
     else:
         username = mongo.db.users.find_one(
             {"username": session["user"]})["username"]
-        users = list(mongo.db.users.find())
+        users = list(mongo.db.users.find({"username": {"$ne": "admin"}}))
     if username == "admin":
         return render_template("admin/manage_users.html",
                                username=username,

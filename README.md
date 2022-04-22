@@ -865,8 +865,164 @@ The below colours were not chosen by myself, but are the default colours chosen 
     #
 
   - ### Edit Driver
+
+    When logged in as the `admin` user and viewing the `Drivers` page, an additional button is shown to allow the details of a driver to be edited.
+
+    The data is obtained from the same fields it is entered into on the `Add Driver` page and populates the form.
+
+    ![F1 Statistics - Add Driver Schema](docs/readme_images/add_driver.png)
+
+    The same requirements are present as on the `Add Driver` page ([View 'Add Driver' for more information](#add-driver)).
+
+    Once the required alterations are made and the form submitted, assuming all validation checks have been passed, the data is then `updated` in the database, rather than an entirely new entry being created as happens on the `Add Driver` page.
+
+    #
+
   - ### Edit Race
+
+    The `Edit Race` page has **2** main functions split across **4** different sections.
+
+    The **2** functions depend upon if any data exists in the databse.
+
+    This is important as the admin user may edit existing races (eg. Races that have already happened), but also races for the current season that have not happened yet.
+
+    As the overall goal of the page is the same (to add or update the database), I will explain each of the **4** sections, and go into detail about the different ways in which data is submitted at the end.
+
+    A common theme between all of the sections is the user of the `Select Driver` and `Select Constructor` modals which work in a the same way as those used in the [Add Race](#add-race) and [Add Season](#add-season) pages.
+
+    As such, I will not explain the details of these modals again, to save repition.
+
+    The length of the pages is dictated by the current number of drivers in the F1 championship, 20.
+
+    - Edit Qualifying
+
+      The qualifying data requires the name of the driver, their constructor and the appropriate qualifying times be provided. The first two pieces of information are provided using the aformentioned `Select Driver` and `Select Constructor` modals.
+
+      The resulting qualifying times are to be entered manually depending upon the drivers final finishing position.
+
+      - Drivers who qualify in the top 10 require times for Q1, Q2 & Q3.
+      - Drivers who qualify between 11-15 require times for Q1 & Q2.
+      - Drivers who qualify 16-20 require times for Q1 only.
+
+      All Q1, Q2 and Q3 fields have the following pattern applied to them:
+
+      `^([0-9]{2}:[0-5][0-9].[0-9]{1,3})$`
+
+      The qualifying times are broken down into minutes, seconds and milliseconds.
+
+      - Minutes - Requires 2 numerical characters.
+      - Seconds - Requires 2 numerical characters. The first can be between 0-5, and the second between 0-9.
+      - Milliseconds - Requires between 1 and 3 numerical characters. Existing data only has data to the first decimal place, but this gives the user the option to add values upto the 3 decimal place.
+
+      The times are seperated by a colon and a full-stop/period respectively.
+
+      The resulting time should be provided as `MM:SS.SSS`
+
+      The `Submit Changes` button at the bottom of the page is generated depending on if data exists in the database on page load.
+
+      - If no data exists, the button is given a value of `qualifying` and [this code](https://github.com/Fatheed7/formula-one-stats/blob/main/app.py#L144-L158) is executed, with new data being inserted into the database.
+      - If data already exists, the button is given a value of `qualifying-update` and [this code](https://github.com/Fatheed7/formula-one-stats/blob/main/app.py#L160-L176) is executed, with the existing code being replaced in the database.
+
+      #
+
+    - Edit Race
+
+      The race data requires the position, position text, driver forename & surname, constructor, points, laps and status.
+
+      The `Driver Forename`, `Driver Surname`, `Constructor` and `Status` are all populated in the same manner as described previously, and as mentioned at the top of this section.
+
+      The position value is read only, and is populated either from the value held in `position` within the `results` collection, or by using `for n in range(20)`.
+
+      The position text value is to be populated by the user and must fall into one of the following values:
+
+      - Position number if the driver finished the race.
+      - D - Disqualified
+      - E - Excluded
+      - F - Failed to qualify
+      - N - Not Classified
+      - R - Retired
+      - W - Did Not Start - Withdrew
+
+      A tooltip for each letter is provided in the table head for this column.
+
+      Both the `Points` and `Laps` fields are to be completed by the user dependent upon the finishing position of each driver. Some consideration was given to automatically generating the points information, but this does not account for changes in the scoring system or for the additional point from a fastest lap.
+
+      Both fields have the pattern of `^[0-9]{1,2}$` requiring 1-2 numerical characters.
+
+      The `Submit Changes` button at the bottom of the page is generated depending on if data exists in the database on page load.
+
+      - If no data exists, the button is given a value of `race` and [this code](https://github.com/Fatheed7/formula-one-stats/blob/main/app.py#L178-L199) is executed, with new data being inserted into the database.
+      - If data already exists, the button is given a value of `race-update` and [this code](https://github.com/Fatheed7/formula-one-stats/blob/main/app.py#L201-L225) is executed, with the existing code being replaced in the database.
+
+      #
+
+    - Edit Driver Standings
+
+      The Driver Standings data requires the position, driver name, number of wins and points be entered.
+
+      The `Driver Name` is populated in the same manner as described previously, and as mentioned at the top of this section.
+
+      The position value is read only, and is populated either from the value held in `position` within the `driver_standings` collection, or by using `for n in range(20)`.
+
+      The `Wins` and `Points` fields are to be completed manually and are representative of the standings at the end of the given race.
+
+      Both fields have the pattern of `^[0-9]{1,2}$` requiring 1-2 numerical characters.
+
+      The `Submit Changes` button at the bottom of the page is generated depending on if data exists in the database on page load.
+
+      - If no data exists, the button is given a value of `driver` and [this code](https://github.com/Fatheed7/formula-one-stats/blob/main/app.py#L227-L241) is executed, with new data being inserted into the database.
+      - If data already exists, the button is given a value of `driver-update` and [this code](https://github.com/Fatheed7/formula-one-stats/blob/main/app.py#L243-L259) is executed, with the existing code being replaced in the database.
+
+      #
+
+    - Edit Constructor Standings
+
+      The Constructor Standings data requires the position, driver name, number of wins and points be entered.
+
+      The `Constructor` field is populated in the same manner as described previously, and as mentioned at the top of this section.
+
+      The position value is read only, and is populated either from the value held in `position` within the `constructor_standings` collection, or by using `for n in range(20)`.
+
+      The `Wins` and `Points` fields are to be completed manually and are representative of the standings at the end of the given race.
+
+      Both fields have the pattern of `^[0-9]{1,2}$` requiring 1-2 numerical characters.
+
+      The `Submit Changes` button at the bottom of the page is generated depending on if data exists in the database on page load.
+
+      - If no data exists, the button is given a value of `constructor` and [this code](https://github.com/Fatheed7/formula-one-stats/blob/main/app.py#L261-L276) is executed, with new data being inserted into the database.
+      - If data already exists, the button is given a value of `constructor-update` and [this code](https://github.com/Fatheed7/formula-one-stats/blob/main/app.py#L278-L295) is executed, with the existing code being replaced in the database.
+
+    #
+
   - ### Manage Users
+
+    The `Manage Users` page allows the admin user to view a list of currently registered users and their chosen display names.
+
+    ![F1 Statistics - Manage Users Page](docs/readme_images/manage_users.png)
+
+    Although the display name is only available to the user logged into that account, this is something that could potentially change in the future and it is therefore important for the `admin` user to have an oversight of the users to prevent unsuitable or offensive usernames or display names being used.
+
+    To this end, the `admin` user has two options available:
+
+    - Edit User
+
+      This gives the `admin` user the option to update the display name value in use and is useful for the reasons mentioned above. It is important that the username never be changed as this can cause issues when the user next attempts to sign in.
+
+      ![F1 Statistics - Edit Users Page](docs/readme_images/edit_user.png)
+
+      Once this form is submitted, assuming it meets the same 5-15 character requirements for all usernames, the `display_name` field is updated in the `users` collection. The `admin` user is returned to the `Manage Users` page and a flash message is shown stating `Display Name has been updated successfully.`.
+
+    - Delete User
+
+      Expanding upon the previous action, sometimes an `admin` user may want to remove a user entirely if certain rules have been broken or a username is offensive.
+
+      When selecting `Delete`, the `admin` user is taken to a similar warning page as if a user were to delete their own account, as shown below.
+
+      Most importantly, the `admin` user is excluded from this list and, as such, is unable to delete their own account.
+
+      ![F1 Statistics - Edit Users Page](docs/readme_images/delete_user.png)
+
+      Once this form is submitted, the user is deleted using `delete_one`, however as the `admin` user can delete any account, there are no checks against the `session["user"]` value, as this is not needed.
 
 - ## 404 Page
 

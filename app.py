@@ -696,16 +696,16 @@ def change_password():
     return render_template("profile/change_password.html", username=username)
 
 
-    @app.route("/deleteaccount", methods=["GET", "POST"])
-    def delete_account():
+@app.route("/deleteaccount", methods=["GET", "POST"])
+def delete_account():
 
-        if session.get("user") is None:
+    if session.get("user") is None:
             return redirect(url_for("home"))
-        else:
+    else:
             username = mongo.db.users.find_one(
                 {"username": session["user"]})["username"]
 
-        if request.method == "POST":
+    if request.method == "POST":
             # check if username matches
             user_to_be_deleted = mongo.db.users.find_one(
                 {"username": request.form.get("username").lower()})
@@ -718,7 +718,7 @@ def change_password():
             else:
                 flash("Username does not match.")
                 return redirect(url_for("delete_account"))
-        return render_template("profile/delete_account.html", username=username)
+    return render_template("profile/delete_account.html", username=username)
 
 
 @app.route("/favourites", methods=["GET", "POST"])

@@ -310,7 +310,6 @@ The below colours were not chosen by myself, but are the default colours chosen 
     When the user selects the `Logout` button, the session cookie is removed with `session.pop` and the user is directed to the login page.
     A flash message is then shown to the user advising `You have been logged out.`
 
-
 - ## Note For Sections Below
 
   A number of the sections below contain similar features as [DataTables](https://datatables.net/) was used to add functionality and, for the purpose of simplicity, I wanted to describe the features present on multiple pages to save on repetition.
@@ -586,6 +585,8 @@ The below colours were not chosen by myself, but are the default colours chosen 
 
   The URL in the address bar will show the current user's username. This means the user can type another username into the address bar if they wish, however they will always be directed back to their own profile.
 
+  ![F1 Statistics - Profile Example ](docs/readme_images/profile.png)
+
   The header of the page shows the title, which pulls the users `display_name` from the `users` collection.
 
   Below the title is an input field allowing the user to update their display name for the site. This allows the user to update this, if they wish, however the display name will only be shown to them and their username will remain unchanged.
@@ -598,26 +599,33 @@ The below colours were not chosen by myself, but are the default colours chosen 
 
     The page is split into four sections:
 
-      1. Circuits
-      2. Constructors
-      3. Drivers
-      4. Races
+    1. Circuits
+    2. Constructors
+    3. Drivers
+    4. Races
 
     #
 
     Each section of the page contains a `for` loop which searches the `favourites` collection for any entries in which the `username` matches the current `session["user]` value.
 
+    Entries into the database are only made with the relevant ID attached to them. For example, a circuit added to the favourites will contain the username and circuit ID, but **NOT** a Constructor, Driver or Race ID.
+
+    ![F1 Statistics - Favourites Schema](docs/readme_images/favourites_schema.png)
+
     Once these entries have been retrievied any values are shown in:
-      1. Circuits if the entry contains a circuitId
-      2. Constructors if the entry contains a ConstructorId
-      3. Drivers if the entry contains a driverId
-      4. Races if the entry contains a raceId.
-     
+
+    1. Circuits if the entry contains a circuitId
+    2. Constructors if the entry contains a ConstructorId
+    3. Drivers if the entry contains a driverId
+    4. Races if the entry contains a raceId.
+
     #
 
     An assumption is made that a user has some knowledge of the content they have added to their favourites and, as such, less data is shown on the favourites page, but the user has a direct link to the more in-depth view for each entry.
 
     The images below show an example of this, including the relevant information that is obtained from the database.
+
+    ![F1 Statistics - Favourites Example](docs/readme_images/favourites.png)
 
     #
 
@@ -626,6 +634,8 @@ The below colours were not chosen by myself, but are the default colours chosen 
     The user has the option to update their password from the profile page, if they wish to.
 
     Once the `Change Password` button has been clicked, the user is directed to the `Change Password` page.
+
+    ![F1 Statistics - Change Password Example](docs/readme_images/change_password.png)
 
     As with other pages, the title of the page is within the template itself and reports the current page the user is on.
 
@@ -644,14 +654,15 @@ The below colours were not chosen by myself, but are the default colours chosen 
     #
 
     Once the above validation checks have passed, the next step is for the value of the `Current Password` input field to be passed to the `check_password_hash` from `Werkzeug`. This is then checked against the value held in the `users` collection, under the `password` field.
-      - If this check fails, the user is returned to the change password page, and a flash message is displayed stating `Incorrect Password`.
-    
+
+    - If this check fails, the user is returned to the change password page, and a flash message is displayed stating `Incorrect Password`.
+
     Following this, the `generate_password_hash` is passed the value from the `New Password` input field, which then updates the value in the `users` collection, under the `password` field.
 
     The user is then returned to the profile page and a flash message is displayed stating `Password has been updated successfully`.
 
     #
-      
+
   - ### Delete Account
 
     The final option available to users on their profile page is to delete their account entirely and is accessed by clicking the `Delete Account` button.
@@ -665,16 +676,16 @@ The below colours were not chosen by myself, but are the default colours chosen 
     The first validation step taken after this is to ensure the checkbox has a value of `checked`.
 
     The value of the `username` input field is then checked against the `username` value in `session["user"]`.
-      - If this check fails, the user is returned to the delete account page and a flash message is displayed stating `Username does not match`. This prevents users from deleting the accounts of others.
+
+    - If this check fails, the user is returned to the delete account page and a flash message is displayed stating `Username does not match`. This prevents users from deleting the accounts of others.
 
     Once all other checks have passed, the following actions are taken:
 
-      - The entry in the `users` collection is deleted where `username` matches the username obtained from `session["user"]`.
-      - The cookie session is deleted using `session.pop("user)`
-      - The user is returned to the login page.
+    - The entry in the `users` collection is deleted where `username` matches the username obtained from `session["user"]`.
+    - The cookie session is deleted using `session.pop("user)`
+    - The user is returned to the login page.
 
   #
-
 
 - ## Admin Dashboard and Admin Edit
 
@@ -706,6 +717,10 @@ The below colours were not chosen by myself, but are the default colours chosen 
 
     The data is then applied to the database in the following manner:
 
+    ![F1 Statistics - Add Circuit Schema](docs/readme_images/add_circuit.png)
+
+    #
+
   - ### Add Constructor
 
     The `Add Constructor` page adds a new circuit entry into the `constructors` collection.
@@ -720,7 +735,7 @@ The below colours were not chosen by myself, but are the default colours chosen 
 
     It is required to select a nationality for the constructor to be added to the database successfully. This is achieved with a `for` loop over the `countries` collection.
 
-    This collection was created manually using the data from the [Flag Icons](https://github.com/lipis/flag-icons) repository created by [Lipis](https://github.com/lipis). 
+    This collection was created manually using the data from the [Flag Icons](https://github.com/lipis/flag-icons) repository created by [Lipis](https://github.com/lipis).
 
     The select field also takes advantage of the ability to include an image with each option. Within the `for` loop, the name of the country and its 2 letter code is returned, which corresponds to an SVG image of the flag.
 
@@ -732,14 +747,130 @@ The below colours were not chosen by myself, but are the default colours chosen 
 
     The data is then applied to the database in the following manner:
 
+    ![F1 Statistics - Add Constructor Schema](docs/readme_images/add_constructor.png)
+
+    #
+
   - ### Add Driver
+
+    The `Add Driver` page adds a new circuit entry into the `drivers` collection.
+
+    Once again, the `Driver ID` field is automatically populated when the page is loaded. This is achieved by accessing the `drivers` collection and ordering entries in descending order by `driverId`, and selecting the first entry.
+
+        mongo.db.drivers.find_one(sort=[("driverId", -1)])
+
+    The value is then incremented by 1, ensuring that any future constructors added have a sequential `driverId`.
+
+    The `Forename`, `Surname` and `Driver Ref` input fields are required, but do not possess any other requirements such as a minimum or maximum length.
+
+    The `Number` and `Code` input fields are not required, but do have pattern requirements if information is to be entered.
+
+    The `Number` field will accept upto 2 numeric characters, enforced with the pattern `^[0-9\]{2}$`, whilst the `Code` field will only accept letter which is enforced with the pattern `^[a-zA-Z]{3}$`.
+
+    It is required to select a nationality for the driver to be added to the database successfully. This is achieved with a `for` loop over the `countries` collection.
+
+    This collection was created manually using the data from the [Flag Icons](https://github.com/lipis/flag-icons) repository created by [Lipis](https://github.com/lipis).
+
+    The select field also takes advantage of the ability to include an image with each option. Within the `for` loop, the name of the country and its 2 letter code is returned, which corresponds to an SVG image of the flag.
+
+    The `Date of Birth` field uses the Date Picker provided with [Materialize](https://materializecss.com/) and is formatted to match the UK style of date recording with `format: "dd/mm/yyyy"`.
+
+    The input field for the `Wikipedia Link` has neither a required tag, or a minimum or maximum length requirement. This is due to entries potentially being created before the relevant Wikipedia articles exist.
+
+    The `Cancel` button returns the admin user back to the `Admin Dashboard`
+
+    Upon clicking the `Submit Changes`, the form is validated ensuring all required input fields have been completed.
+
+    The data is then applied to the database in the following manner:
+
+    ![F1 Statistics - Add Driver Schema](docs/readme_images/add_driver.png)
+
+    #
+
   - ### Add Race
+
+    The `Add Race` page adds a new circuit entry into the `races` collection.
+
+    Once again, the `Race ID` field is automatically populated when the page is loaded. This is achieved by accessing the `races` collection and ordering entries in descending order by `raceID`, and selecting the first entry.
+
+        mongo.db.races.find_one(sort=[("raceId", -1)])
+
+    The value is then incremented by 1, ensuring that any future constructors added have a sequential `raceId`.
+
+    All but the `Wikipedia Link` input fields are required when adding a race, and the data is obtained as detailed below.
+
+    The `Year` input field will only accept numbers and exactly 4 numbers must be entered for the input field to be valid. This is achieved with a pattern of `^[0-9]{4}$`.
+
+    The `Round` input field will accept between 1 and 2 numbers, as round number traditionally start counting up from 1. This was done as the current record for the number of races in a season is 23. It is unlikely that this will exceed the 2 number limit any time soon. This is achieved with a pattern of `^[0-9]{1,2}$`.
+
+    The `Date of Birth` field uses the Date Picker provided with [Materialize](https://materializecss.com/) and is formatted to match the UK style of date recording with `format: "dd/mm/yyyy"`.
+
+    The `Time` field uses the Time Picker provided with [Materialize](https://materializecss.com/). By default the time picker outputs time in a 12-hour format. This has been disabled with `twelveHour: false` in `script.js`. As the existing data in the dataset contains entries with the format of `HH:MM:SS`, the output is amended using the jQuery code below.
+
+        $(".timepicker").on("change", function () {
+        let receivedVal = $(this).val();
+        $(this).val(receivedVal + ":00");
+        });
+
+    The `Race Name` field is still required to be completed, but does not have any minimum or maximum requirements, but it is expected that the correctly formatted name is entered. Due to the variety of names, applying any sort of restriction is likely to cause more problems than it will solve.
+
+    As entries in the `races` collection contain the Circuit ID, I needed to find a way for the user to obtain this without having to search or memorise any information.
+
+    I achieved this by using the modal built into [Materialize](https://materializecss.com/). The modal is loaded and populated with data from the `circuits` collection, with only the circuit name and circuit ID shown, with a "Select" button allowing the user to pick a circuit.
+
+    ![F1 Statistics - Select Circuit](docs/readme_images/select_circuit.png)
+
+    Above the list of circuits is a search box, again provided as part of [Materialize](https://materializecss.com/), allowing the user to filter the list of circuits, speeding up completion of the form.
+
+    The input field for the `Wikipedia Link` has neither a required tag, or a minimum or maximum length requirement. This is due to entries potentially being created before the relevant Wikipedia articles exist.
+
+    The `Cancel` button returns the admin user back to the `Admin Dashboard`
+
+    Upon clicking the `Submit Changes`, the form is validated ensuring all required input fields have been completed.
+
+    The data is then applied to the database in the following manner:
+
+    ![F1 Statistics - Add Race Schema](docs/readme_images/add_race.png)
+
+    #
+
   - ### Add Season
+
+    The `Add Season` page adds a new circuit entry into the `seasons` collection.
+
+    Unlike the other options to add content, the `seasons` collection does not contain a `seasonId`, instead using `year` to identify each season.
+
+    The `Year` input field will only accept numbers and exactly 4 numbers must be entered for the input field to be valid. This is achieved with a pattern of `^[0-9]{4}$`.
+
+    The `Number of Races` input field will accept between 1 and 2 numbers, as round number traditionally start counting up from 1. This was done as the current record for the number of races in a season is 23. It is unlikely that this will exceed the 2 number limit any time soon. This is achieved with a pattern of `^[0-9]{1,2}$`.
+
+    I have added 2 fields to the `seasons` database of `driversChampionId` and `constructorChampionId`, with data being manually entered to populate the database with the relevant information.
+
+    As with the `Add Race` page, a modal has been employed to aid in the selection of the Drivers Champion and Constructors Champion.
+
+    I achieved this by using the modal built into [Materialize](https://materializecss.com/). The modal is loaded and populated with data from the `drivers` or `constructors` collection, with only the name and relevant ID shown, with a "Select" button allowing the user to pick a driver or constructor required..
+
+    Above the list is a search box, again provided as part of [Materialize](https://materializecss.com/), allowing the user to filter the list, speeding up completion of the form.
+
+    The input field for the `Wikipedia Link` has neither a required tag, or a minimum or maximum length requirement. This is due to entries potentially being created before the relevant Wikipedia articles exist.
+
+    The `Cancel` button returns the admin user back to the `Admin Dashboard`
+
+    Upon clicking the `Submit Changes`, the form is validated ensuring all required input fields have been completed.
+
+    The data is then applied to the database in the following manner:
+
+    ![F1 Statistics - Add Season Schema](docs/readme_images/add_season.png)
+
+    #
+
   - ### Edit Driver
   - ### Edit Race
   - ### Manage Users
 
 - ## 404 Page
+
+- ## Footer
 
 #
 

@@ -8,7 +8,7 @@ The website can be [found here](https://formula-one-statistics.herokuapp.com/).
 
 ## Table of Contents
 
-- [Objective](#objective)
+- [The Use of Mongo DB](#the-use-of-mongo-db)
 - [UX and UI](#ux-and-ui)
   - [Site Owner Goals](#site-owner-goals)
   - [User Stories](#user-stories)
@@ -16,6 +16,7 @@ The website can be [found here](https://formula-one-statistics.herokuapp.com/).
 - [Design](#design)
   - [Background](#background)
   - [Colours](#colours)
+  - [Buttons](#buttons)
   - [Favicon](#favicon)
 - [Logic](#logic)
   - [Flowchart](#flowchart)
@@ -70,7 +71,17 @@ The website can be [found here](https://formula-one-statistics.herokuapp.com/).
   - [Frameworks, Libraries and Tools](#frameworks-libraries-and-tools)
   - [Images](#images)
 
-## Objective
+## The Use of Mongo DB
+
+Initially, when starting to design this website, the use of a non-relational database was required, but this later changed to require a relational database.
+
+The decision was made to stick with Mongo DB due to the amount of work already completed, however given more time I would have liked to change this due to the following reasons:
+
+- The ability to access multiple data elements in a relational database
+- The ability to link data together in a more comprehensive manner
+- The added redundancy available with a relational database.
+
+In this project, it would have been beneficial to create more comprehensive search functionality relying on greater read/write operations.
 
 #
 
@@ -167,6 +178,12 @@ The below colours were not chosen by myself, but are the default colours chosen 
 - ![#001133](https://via.placeholder.com/15/001133/000000?text=+) - `#001133`
 
 #
+
+- ## Buttons
+
+  Throughout the site, unless specified, all buttons were styled in the same manner using the code taken from the [CSS Button Hover Glow Effect Code Pen](https://codepen.io/kocsten/pen/rggjXp) created by Kocsten.
+
+  This code was adapted in some ways, but the original code was created by, and all credit goes to, Kocsten.
 
 - ## Favicon
 
@@ -1120,6 +1137,14 @@ The following steps were taken to deploy the project:
 
 - ## Lighthouse Testing
 
+  Lighthouse Tests, using Chrome Dev Tools, were used on different pages on the website to ensure best practices were followed throughout the site.
+
+  The results of some of these tests can be seen [here](/docs/lighthouse/).
+
+  The main issues seen during the lightouse tests were in the 'Best Practices' section regarding the site not using HTTPS.
+
+  I believe this is due to the use of Heroku as a hosting platform, and I'm confident I would be able to overcome this issue should I be hosting the site myself, as my personal domains all possess valid SSL certificates.
+
 #
 
 - ## Wave Testing
@@ -1160,6 +1185,7 @@ The following steps were taken to deploy the project:
   - [JQuery](https://en.wikipedia.org/wiki/JQuery) - Used to simplify definition of DOM elements, but used minimally with a preference for vanilla Javascript.
   - [JSHint](https://jshint.com/about/) - Linter used to flag errors, bugs and warnings.
   - [Kaggle User Rohanrao](https://www.kaggle.com/datasets/rohanrao/formula-1-world-championship-1950-2020) - The dataset used for this project was uploaded to Kaggle by the user Rohanrao.
+  - [Kocsten's CSS Button Hover Glow Effect](https://codepen.io/kocsten/pen/rggjXp) - Adapted slightly and used extensively throughout the site.
   - [LucidChart](https://lucid.app/) - Used to create the flowchart for this site.
   - [PEP8Online](http://pep8online.com/) - Tool used to ensure app.py is PEP8 compliant.
   - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) - Used for consistent code formatting.
@@ -1175,3 +1201,5 @@ The following steps were taken to deploy the project:
   The emoji graphic used for the favicon is from the open source project [Twemoji](https://twemoji.twitter.com/). The graphics are copyright 2020 Twitter, Inc and other contributors. The graphics are licensed under [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
   The [404 - Page Not Found](static/img/404.jpg) image was created by, and used with permission from, Reddit user [heyitsalex85](https://www.reddit.com/user/heyitsalex85/).
+
+  Images on the `View Driver` and `View Constructor` page are accessed directly from Wikipedia using their API and as such have not been curated before being displayed on the site. Under most circumstances, these images are available under the [Creative Commons CC0 License](https://creativecommons.org/share-your-work/public-domain/cc0/).

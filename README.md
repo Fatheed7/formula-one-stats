@@ -50,6 +50,14 @@ The website can be [found here](https://formula-one-statistics.herokuapp.com/).
     - [Change Password](#change-password)
     - [Delete Account](#delete-account)
   - [Admin Dashboard and Admin Edit](#admin-dashboard-and-admin-edit)
+    - [Add Circuit](#add-circuit)
+    - [Add Constructor](#add-constructor)
+    - [Add Driver](#add-driver)
+    - [Add Race](#add-race)
+    - [Add Season](#add-Season)
+    - [Edit Driver](#edit-driver)
+    - [Edit Race](#edit-race)
+    - [Manage Users](#manage-users)
   - [404 Page](#404-page)
   - [Footer](#footer)
 - [Features to Add](#features-to-add)
@@ -300,6 +308,8 @@ The below colours were not chosen by myself, but are the default colours chosen 
   - Logout
 
     When the user selects the `Logout` button, the session cookie is removed with `session.pop` and the user is directed to the login page.
+    A flash message is then shown to the user advising `You have been logged out.`
+
 
 - ## Note For Sections Below
 
@@ -667,6 +677,42 @@ The below colours were not chosen by myself, but are the default colours chosen 
 
 
 - ## Admin Dashboard and Admin Edit
+
+  The `Admin Dashboard` contains several options for adding entries to the database, which are described below.
+
+  When a user attempts to access the page, the value of `session["user"]` is checked. If the `username` value is **NOT** equal to `admin` the user is redirected to the home page. Otherwise, the `Admin Dashboard` is displayed.
+
+  All pages below also share this feature, which prevents other users from circumventing the admin dashboard page.
+
+  - ### Add Circuit
+
+    The `Add Circuit` page adds a new circuit entry into the `circuits` collection.
+
+    The `Circuit ID` field is automatically populated when the page is loaded. This is achieved by accessing the `circuits` collection and ordering entries in descending order by `circuitID`, and selecting the first entry.
+
+        mongo.db.circuits.find_one(sort=[("circuitId", -1)])
+
+    The value is then incremented by 1, ensuring that any future circuits added have a sequential `circuitId`.
+
+    The `Circuit Ref`, `Circuit Name`, `Location` and `Country` input fields are required, but do not possess any other requirements such as a minimum or maximum length.
+
+    Both the `Latitude` and `Longitude` input fields have a pattern of `^[0-9\.]*$` ensuring only numerical values or a full-stop/period can be entered. When the form is submit, both these values are stored in the database as `floats` rather than `integers`.
+
+    The input field for the `Wikipedia Link` has neither a required tag, or a minimum or maximum length requirement. This is due to entries potentially being created before the relevant Wikipedia articles exist.
+
+    The `Cancel` button returns the admin user back to the `Admin Dashboard`
+
+    Upon clicking the `Submit Changes`, the form is validated ensuring all required input fields have been completed.
+
+    The data is then applied to the database in the following manner:
+    
+  - ### Add Constructor
+  - ### Add Driver
+  - ### Add Race
+  - ### Add Season
+  - ### Edit Driver
+  - ### Edit Race
+  - ### Manage Users
 
 - ## 404 Page
 

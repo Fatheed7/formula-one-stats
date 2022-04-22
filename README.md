@@ -344,6 +344,12 @@ The below colours were not chosen by myself, but are the default colours chosen 
 
     Upon clicking the `View` button on the Circuits page, the user is shown a more in depth break down of information about the circuit.
 
+    At the top of the page, either an `Add to Favourites` or `Remove From Favourites` button is displayed.
+
+    When the page is loaded, the `Favourites` collection is checked for any entries in which the `username` and `circuitId` fields match the `_id` of the current circuit.
+
+    More information about this can be found in the [Favourites](#favourites) section.
+
     The user is shown some information that matches the previous page such as the Location, Country and a link to Google Maps for the Circuit.
 
     Below this section is a table containing all F1 races that have been held at the circuit.
@@ -374,6 +380,12 @@ The below colours were not chosen by myself, but are the default colours chosen 
   - ### Constructor View
 
     Upon clicking the `View` button on the Constructor page, the user is shown a more in depth break down of information about the Constructor.
+
+    At the top of the page, either an `Add to Favourites` or `Remove From Favourites` button is displayed.
+
+    When the page is loaded, the `Favourites` collection is checked for any entries in which the `username` and `constructorId` fields match the `_id` of the current constructor.
+
+    More information about this can be found in the [Favourites](#favourites) section.
 
     The [Wikipedia API](https://www.mediawiki.org/wiki/API:Main_page) is called using the constructor `name` as the title of the Wikipedia page. The API returns the head image of the Wikipedia article. If no image exists, the user is instead shown a 'No image available' replacement.
 
@@ -419,6 +431,12 @@ The below colours were not chosen by myself, but are the default colours chosen 
 
     Upon clicking the `View` button on the Driver page, the user is shown a more in depth break down of information about the Driver.
 
+    At the top of the page, either an `Add to Favourites` or `Remove From Favourites` button is displayed.
+
+    When the page is loaded, the `Favourites` collection is checked for any entries in which the `username` and `driverId` fields match the `_id` of the current driver.
+
+    More information about this can be found in the [Favourites](#favourites) section.
+
     The [Wikipedia API](https://www.mediawiki.org/wiki/API:Main_page) is called using the Driver `forename` and `surname` as the title of the Wikipedia page. The API returns the head image of the Wikipedia article. If no image exists, the user is instead shown a 'No image available' replacement.
 
     The user is shown some information that matches the previous page such as the Name, Nationality, Date of Birth and Driver Code for the Driver. Additionally, there is a link to the Wikipedia article at the top of the page.
@@ -463,6 +481,12 @@ The below colours were not chosen by myself, but are the default colours chosen 
     ![F1 Statistics - General Driver View](docs/readme_images/races.png)
 
   - ### Race View
+
+    At the top of the page, either an `Add to Favourites` or `Remove From Favourites` button is displayed.
+
+    When the page is loaded, the `Favourites` collection is checked for any entries in which the `username` and `raceId` fields match the `_id` of the current race.
+
+    More information about this can be found in the [Favourites](#favourites) section.
 
     - ### Qualifying Results
 
@@ -548,7 +572,43 @@ The below colours were not chosen by myself, but are the default colours chosen 
 
 - ## Profile
 
+  After the user has logged in, or after clicking `Profile` in the Navbar, the user will be directed to their profile.
+
+  The URL in the address bar will show the current user's username. This means the user can type another username into the address bar if they wish, however they will always be directed back to their own profile.
+
+  The header of the page shows the title, which pulls the users `display_name` from the `users` collection.
+
+  Below the title is an input field allowing the user to update their display name for the site. This allows the user to update this, if they wish, however the display name will only be shown to them and their username will remain unchanged.
+
+  Once the user clicks the `Save Changes` button, the `display_name` field is updated in the `users` collection. The user should then be returned to their profile, but with the new display name shown in the title of the page.
+
   - ### Favourites
+
+    Below the `Save Changes` button on the users profile is the `Favourites` button.
+
+    The page is split into four sections:
+
+      1. Circuits
+      2. Constructors
+      3. Drivers
+      4. Races
+
+    #
+
+    Each section of the page contains a `for` loop which searches the `favourites` collection for any entries in which the `username` matches the current `session["user]` value.
+
+    Once these entries have been retrievied any values are shown in:
+      1. Circuits if the entry contains a circuitId
+      2. Constructors if the entry contains a ConstructorId
+      3. Drivers if the entry contains a driverId
+      4. Races if the entry contains a raceId.
+     
+    #
+
+    An assumption is made that a user has some knowledge of the content they have added to their favourites and, as such, less data is shown on the favourites page, but the user has a direct link to the more in-depth view for each entry.
+
+    The images below show an example of this, including the relevant information that is obtained from the database.
+
   - ### Change Password
   - ### Delete Account
 

@@ -609,7 +609,39 @@ The below colours were not chosen by myself, but are the default colours chosen 
 
     The images below show an example of this, including the relevant information that is obtained from the database.
 
+    #
+
   - ### Change Password
+
+    The user has the option to update their password from the profile page, if they wish to.
+
+    Once the `Change Password` button has been clicked, the user is directed to the `Change Password` page.
+
+    As with other pages, the title of the page is within the template itself and reports the current page the user is on.
+
+    The `Change Password` form can be broken down into several important parts.
+
+    #
+
+    - As with the login & register pages, all input fields on this page have a pattern requirement of `^[a-zA-Z0-9]{5,15}$`, indicating between 5 - 15 alphanumeric characters are required.
+
+    - All input fields on this page require validation and this is handled in 2 seperate ways.
+
+      - The `Current Password` field is only required to meet the minimum and maximum character requirments to pass the validation check.
+      - The `New Password` and `Confirm New Password` are also required to meet the minimum and maximum character requirements, but also uses `this.setCustomValidity(this.validity.patternMismatch ?` to confirm if the previous requirements are met and if both the `New Password` and `Confirm New Password` fields have matching values.
+        - If the password do not match, a tooltip is shown to the user advising `Passwords do not match`.
+
+    #
+
+    Once the above validation checks have passed, the next step is for the value of the `Current Password` input field to be passed to the `check_password_hash` from `Werkzeug`. This is then checked against the value held in the `users` collection, under the `password` field.
+      - If this check fails, the user is returned to the change password page, and a flash message is displayed stating `Incorrect Password`.
+    
+    Following this, the `generate_password_hash` is passed the value from the `New Password` input field, which then updates the value in the `users` collection, under the `password` field.
+
+    The user is then returned to the profile page and a flash message is displayed stating `Password has been updated successfully`.
+
+    #
+      
   - ### Delete Account
 
 - ## Admin Dashboard and Admin Edit

@@ -1050,6 +1050,15 @@ The below colours were not chosen by myself, but are the default colours chosen 
 
 ## Features to Add
 
+Given more time I would have liked to add the following features to the site.
+
+- Points to be automatically calculated and updated in the database based upon the results of a race.
+- More information to be displayed on the View Driver and View Constructor pages.
+- To implement a MongoDB chart on the constructors page with similiar information shown.
+- Update the Drivers and Constructors pages to display number of wins and number of entries by drivers, or other statistics, to enable easier searching for information by the user.
+- More `admin` user functions to allow editing of seasons, circuits and constructors. This was not implemented as the details of these elements do not change often, but would still be useful on occasion.
+- More information to be shown on the View Circuit page, such as a circuit map with details of corners, DRS Zones etc.
+
 #
 
 ## Deployment

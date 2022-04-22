@@ -705,8 +705,33 @@ The below colours were not chosen by myself, but are the default colours chosen 
     Upon clicking the `Submit Changes`, the form is validated ensuring all required input fields have been completed.
 
     The data is then applied to the database in the following manner:
-    
+
   - ### Add Constructor
+
+    The `Add Constructor` page adds a new circuit entry into the `constructors` collection.
+
+    The `Constructor ID` field is automatically populated when the page is loaded. This is achieved by accessing the `constructors` collection and ordering entries in descending order by `constructorId`, and selecting the first entry.
+
+        mongo.db.constructors.find_one(sort=[("constructorId", -1)])
+
+    The value is then incremented by 1, ensuring that any future constructors added have a sequential `constructorId`.
+
+    The `Constructor Ref` and `Constructor Name` input fields are required, but do not possess any other requirements such as a minimum or maximum length.
+
+    It is required to select a nationality for the constructor to be added to the database successfully. This is achieved with a `for` loop over the `countries` collection.
+
+    This collection was created manually using the data from the [Flag Icons](https://github.com/lipis/flag-icons) repository created by [Lipis](https://github.com/lipis). 
+
+    The select field also takes advantage of the ability to include an image with each option. Within the `for` loop, the name of the country and its 2 letter code is returned, which corresponds to an SVG image of the flag.
+
+    The input field for the `Wikipedia Link` has neither a required tag, or a minimum or maximum length requirement. This is due to entries potentially being created before the relevant Wikipedia articles exist.
+
+    The `Cancel` button returns the admin user back to the `Admin Dashboard`
+
+    Upon clicking the `Submit Changes`, the form is validated ensuring all required input fields have been completed.
+
+    The data is then applied to the database in the following manner:
+
   - ### Add Driver
   - ### Add Race
   - ### Add Season

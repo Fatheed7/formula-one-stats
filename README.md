@@ -644,6 +644,28 @@ The below colours were not chosen by myself, but are the default colours chosen 
       
   - ### Delete Account
 
+    The final option available to users on their profile page is to delete their account entirely and is accessed by clicking the `Delete Account` button.
+
+    The user is presented with a large warning advising that deleting an account is an action that cannot be reversed.
+
+    The user is required to check a checkbox which advises `I understand this action will delete my account and is not reversable`.
+
+    The user is then required to type their username in the input field before clicking the `Delete Account` button.
+
+    The first validation step taken after this is to ensure the checkbox has a value of `checked`.
+
+    The value of the `username` input field is then checked against the `username` value in `session["user"]`.
+      - If this check fails, the user is returned to the delete account page and a flash message is displayed stating `Username does not match`. This prevents users from deleting the accounts of others.
+
+    Once all other checks have passed, the following actions are taken:
+
+      - The entry in the `users` collection is deleted where `username` matches the username obtained from `session["user"]`.
+      - The cookie session is deleted using `session.pop("user)`
+      - The user is returned to the login page.
+
+  #
+
+
 - ## Admin Dashboard and Admin Edit
 
 - ## 404 Page

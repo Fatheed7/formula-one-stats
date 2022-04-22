@@ -1026,7 +1026,25 @@ The below colours were not chosen by myself, but are the default colours chosen 
 
 - ## 404 Page
 
+  The 404 page was created to handle any error returned by the user accessing a page that does not exist, either with a broken link or by manually navigating to a non-existent page.
+
+  This is achieved with the [following code](https://github.com/Fatheed7/formula-one-stats/blob/main/app.py#L38-L45).
+
+  The [404 - Page Not Found](static/img/404.jpg) image was created by, and used with permission from, Reddit user [heyitsalex85](https://www.reddit.com/user/heyitsalex85/).
+
 - ## Footer
+
+  The footer for the site was intentionally kept as basic as possible and was created with the built in options provided by [Materialize](https://materializecss.com/).
+
+  The main content of the footer displays a message stating `The F1 Word Mark is used in accordance with the guidance issued by FORMULA 1.`
+
+  This is, obviously, outlined in the guidance and more information can be found [here](https://www.formula1.com/en/toolbar/guidelines.html).
+
+  The footer contains a copyright symbol on the bottom left corner, and also a `span` element with the value of `currentYear`.
+
+  This span is then populated with the jQuery code `$("#currentYear").html(new Date().getFullYear());`.
+
+  Finally, in a bottom right is a link to view the source code of the project. I would provide a link, but you're already here!
 
 #
 
